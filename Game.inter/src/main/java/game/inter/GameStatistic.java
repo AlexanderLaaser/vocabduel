@@ -1,3 +1,5 @@
+package game.inter;
+
 public class GameStatistic {
 
     private int gameID;
