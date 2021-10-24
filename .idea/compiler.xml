@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="usermanagement.inter" />
         <module name="vocabmanagement.impl" />
         <module name="vocabmanagement.inter" />
+        <module name="Game.impl" />
+        <module name="usermanagement.impl" />
+        <module name="Game.inter" />
       </profile>
     </annotationProcessing>
   </component>
