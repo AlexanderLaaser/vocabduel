@@ -10,6 +10,10 @@ public class VocabList {
     private String category;
     private List<vocabmanagement.inter.VocabItem> VocabList;
 
+    public VocabList(){
+        super();
+    }
+
     public VocabList(int listID, String first_language, String sec_language, String category, List<vocabmanagement.inter.VocabItem> vocabList) {
         super();
         this.listID = listID;

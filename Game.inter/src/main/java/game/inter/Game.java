@@ -1,4 +1,5 @@
 package game.inter;
+
 import usermanagement.inter.User;
 import vocabmanagement.inter.VocabList;
 
@@ -13,6 +14,9 @@ public class Game {
     private GameStatistic gameStatus;
     private List<String> gameCategory;
 
+    public Game(){
+        super();
+    }
     public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, VocabList vocablist, GameStatistic gameStatus, List<String> gameCategory) {
         this.gameID = gameID;
         User = user;
@@ -23,20 +27,22 @@ public class Game {
     }
 
     //create a Game with 2 User and VocabList
-    private void createGame(User user1, User user2, VocabList vocablist){
+    public void createGame(User user1, User user2, VocabList vocablist){
+        System.out.println("User created");
 
     }
 
     //find 2 user and match them for a game
-    private List<User> matchUser(){
+    public List<User> matchUser(){
         List<User> userList = null;
-
+        userList.add(new User());
+        userList.add(new User());
 
         return userList;
     }
 
     //generate the Vocabluary for the Rounds
-    private VocabList generateCustomVocabSet(VocabList vocablist){
+    public VocabList generateCustomVocabSet(VocabList vocablist){
 
 
         return vocablist;

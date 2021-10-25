@@ -11,6 +11,9 @@ public class User {
     private int gamesWon;
     private int gamesLost;
 
+    public User(){
+        super();
+    }
     public User(int userID, String firstName, String lastName, String userName, String password, int totalGames, int gamesWon, int gamesLost) {
         super();
         this.userID = userID;
