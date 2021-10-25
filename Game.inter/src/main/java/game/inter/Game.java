@@ -1,17 +1,18 @@
 package game.inter;
+import usermanagement.inter.User;
+
 import java.util.List;
 
 public class Game {
 
     private int gameID;
-    private List<usermanagement.inter.User> User;
-    private List<Game.inter.Round> Round;
-    private Vocablist vocablist;
+    private List<User> User;
+    private List<Round> Round;
+    private List<String> vocablist;
     private GameStatistic gameStatus;
     private List<String> gameCategory;
 
-    public Game(int gameID, List<usermanagement.inter.User> user, List<Game.inter.Round> round, Vocablist vocablist,
-                GameStatistic gameStatus, List<String> gameCategory) {
+    public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, List<String> vocablist, GameStatistic gameStatus, List<String> gameCategory) {
         this.gameID = gameID;
         User = user;
         Round = round;
@@ -19,19 +20,6 @@ public class Game {
         this.gameStatus = gameStatus;
         this.gameCategory = gameCategory;
     }
-
-    private void matchUser(){
-
-    }
-
-    private void createRounds(){
-
-    }
-
-    private List<String> generateQuestionSet(){
-        return null;
-    }
-
 
     public int getGameID() {
         return gameID;
@@ -41,11 +29,11 @@ public class Game {
         return User;
     }
 
-    public List<Game.inter.Round> getRound() {
+    public List<game.inter.Round> getRound() {
         return Round;
     }
 
-    public Vocablist getVocablist() {
+    public List<String> getVocablist() {
         return vocablist;
     }
 
@@ -65,11 +53,11 @@ public class Game {
         User = user;
     }
 
-    public void setRound(List<Game.inter.Round> round) {
+    public void setRound(List<game.inter.Round> round) {
         Round = round;
     }
 
-    public void setVocablist(Vocablist vocablist) {
+    public void setVocablist(List<String> vocablist) {
         this.vocablist = vocablist;
     }
 

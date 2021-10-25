@@ -1,4 +1,5 @@
 package game.inter;
+import usermanagement.inter.User;
 
 public class GameStatistic {
 
