@@ -17,6 +17,7 @@ public class Game {
     public Game(){
         super();
     }
+
     public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, VocabList vocablist, GameStatistic gameStatus, List<String> gameCategory) {
         this.gameID = gameID;
         User = user;
@@ -47,8 +48,6 @@ public class Game {
 
         return vocablist;
     }
-
-
 
 
 
