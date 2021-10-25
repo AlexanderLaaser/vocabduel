@@ -1,5 +1,6 @@
 package game.inter;
 import usermanagement.inter.User;
+import vocabmanagement.inter.VocabList;
 
 import java.util.List;
 
@@ -8,11 +9,11 @@ public class Game {
     private int gameID;
     private List<User> User;
     private List<Round> Round;
-    private List<String> vocablist;
+    private VocabList vocablist;
     private GameStatistic gameStatus;
     private List<String> gameCategory;
 
-    public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, List<String> vocablist, GameStatistic gameStatus, List<String> gameCategory) {
+    public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, VocabList vocablist, GameStatistic gameStatus, List<String> gameCategory) {
         this.gameID = gameID;
         User = user;
         Round = round;
@@ -20,6 +21,30 @@ public class Game {
         this.gameStatus = gameStatus;
         this.gameCategory = gameCategory;
     }
+
+    //create a Game with 2 User and VocabList
+    private void createGame(User user1, User user2, VocabList vocablist){
+
+    }
+
+    //find 2 user and match them for a game
+    private List<User> matchUser(){
+        List<User> userList = null;
+
+
+        return userList;
+    }
+
+    //generate the Vocabluary for the Rounds
+    private VocabList generateCustomVocabSet(VocabList vocablist){
+
+
+        return vocablist;
+    }
+
+
+
+
 
     public int getGameID() {
         return gameID;
@@ -33,7 +58,7 @@ public class Game {
         return Round;
     }
 
-    public List<String> getVocablist() {
+    public VocabList getVocablist() {
         return vocablist;
     }
 
@@ -57,7 +82,7 @@ public class Game {
         Round = round;
     }
 
-    public void setVocablist(List<String> vocablist) {
+    public void setVocablist(VocabList vocablist) {
         this.vocablist = vocablist;
     }
 
