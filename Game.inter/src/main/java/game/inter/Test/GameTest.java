@@ -29,7 +29,7 @@ public class GameTest {
         Game tester = new Game();
         User testUser1 = new User();
         User testUser2 = new User();
-        VocabList testVocablist = new VocabList();
+        //VocabList testVocablist = new VocabList();
 
         //Act
         List<User> testUserList = tester.matchUser();

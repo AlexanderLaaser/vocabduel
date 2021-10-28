@@ -4,28 +4,37 @@ import java.util.List;
 
 public class VocabItem {
 
-    private String vocabName;
-    private List<String> translations;
+    private Long vocabItemID;
+    private List<String> firstLanguage;
+    private List<String> secLanguage;
 
-    public VocabItem(String vocabName, List<String> translations) {
-        super();
-        this.vocabName = vocabName;
-        this.translations = translations;
+    public VocabItem(Long vocabItemID, List<String> vocabName, List<String> translations) {
+        this.vocabItemID = vocabItemID;
+        this.firstLanguage = vocabName;
+        this.secLanguage = translations;
     }
 
-    public String getVocabName() {
-        return vocabName;
+    public Long getVocabItemID() {
+        return vocabItemID;
     }
 
-    public void setVocabName(String vocabName) {
-        this.vocabName = vocabName;
+    public void setVocabItemID(Long vocabItemID) {
+        this.vocabItemID = vocabItemID;
     }
 
-    public List<String> getTranslations() {
-        return translations;
+    public List<String> getFirstLanguage() {
+        return firstLanguage;
     }
 
-    public void setTranslations(List<String> translations) {
-        this.translations = translations;
+    public void setFirstLanguage(List<String> firstLanguage) {
+        this.firstLanguage = firstLanguage;
+    }
+
+    public List<String> getSecLanguage() {
+        return secLanguage;
+    }
+
+    public void setSecLanguage(List<String> secLanguage) {
+        this.secLanguage = secLanguage;
     }
 }

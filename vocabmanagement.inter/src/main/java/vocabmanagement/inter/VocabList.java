@@ -5,20 +5,15 @@ import java.util.List;
 public class VocabList {
 
     private int listID;
-    private String first_language;
-    private String sec_language;
-    private String category;
-    private List<vocabmanagement.inter.VocabItem> VocabList;
+    private Language firstLanguage;
+    private Language secLanguage;
+    private Category category;
+    private List<VocabItem> VocabList;
 
-    public VocabList(){
-        super();
-    }
-
-    public VocabList(int listID, String first_language, String sec_language, String category, List<vocabmanagement.inter.VocabItem> vocabList) {
-        super();
+    public VocabList(int listID, Language first_language, Language sec_language, Category category, List<VocabItem> vocabList) {
         this.listID = listID;
-        this.first_language = first_language;
-        this.sec_language = sec_language;
+        this.firstLanguage = first_language;
+        this.secLanguage = sec_language;
         this.category = category;
         VocabList = vocabList;
     }
@@ -31,35 +26,35 @@ public class VocabList {
         this.listID = listID;
     }
 
-    public String getCategory() {
+    public Language getFirstLanguage() {
+        return firstLanguage;
+    }
+
+    public void setFirstLanguage(Language firstLanguage) {
+        this.firstLanguage = firstLanguage;
+    }
+
+    public Language getSecLanguage() {
+        return secLanguage;
+    }
+
+    public void setSecLanguage(Language secLanguage) {
+        this.secLanguage = secLanguage;
+    }
+
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public List<vocabmanagement.inter.VocabItem> getVocabList() {
+    public List<VocabItem> getVocabList() {
         return VocabList;
     }
 
-    public void setVocabList(List<vocabmanagement.inter.VocabItem> vocabList) {
+    public void setVocabList(List<VocabItem> vocabList) {
         VocabList = vocabList;
-    }
-
-    public String getFirst_language() {
-        return first_language;
-    }
-
-    public void setFirst_language(String first_language) {
-        this.first_language = first_language;
-    }
-
-    public String getSec_language() {
-        return sec_language;
-    }
-
-    public void setSec_language(String sec_language) {
-        this.sec_language = sec_language;
     }
 }
