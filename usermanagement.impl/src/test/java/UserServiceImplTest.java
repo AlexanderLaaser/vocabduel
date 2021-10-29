@@ -6,12 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class UserServiceTest {
+public class UserServiceImplTest {
 
     private UserService userService;
-
-    @Before
-    public void setUp() { this.userService = new UserServicImpl(); }
 
     @Test
     public void testGetUserByID() {
