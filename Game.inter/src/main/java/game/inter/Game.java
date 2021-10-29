@@ -27,30 +27,6 @@ public class Game {
         this.gameCategory = gameCategory;
     }
 
-    //create a Game with 2 User and VocabList
-    public void createGame(User user1, User user2, VocabList vocablist){
-        System.out.println("User created");
-
-    }
-
-    //find 2 user and match them for a game
-    public List<User> matchUser(){
-        List<User> userList = null;
-        userList.add(new User());
-        userList.add(new User());
-
-        return userList;
-    }
-
-    //generate the Vocabluary for the Rounds
-    public VocabList generateCustomVocabSet(VocabList vocablist){
-
-
-        return vocablist;
-    }
-
-
-
     public int getGameID() {
         return gameID;
     }
@@ -98,4 +74,5 @@ public class Game {
     public void setGameCategory(List<String> gameCategory) {
         this.gameCategory = gameCategory;
     }
+
 }

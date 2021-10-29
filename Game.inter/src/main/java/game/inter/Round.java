@@ -19,11 +19,6 @@ public class Round {
         this.winningUser = winningUser;
     }
 
-    private void askGuess(){
-
-    }
-
-
     public int getRoundID() {
         return roundID;
     }

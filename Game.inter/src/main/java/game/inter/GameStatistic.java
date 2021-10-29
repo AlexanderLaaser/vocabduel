@@ -10,6 +10,10 @@ public class GameStatistic {
     private int losses;
     private int ties;
 
+    public GameStatistic(){
+        super();
+    }
+
     public GameStatistic(int gameID, String username, User gameWinner,
                          int wins, int losses, int ties) {
         this.gameID = gameID;
@@ -18,14 +22,6 @@ public class GameStatistic {
         this.wins = wins;
         this.losses = losses;
         this.ties = ties;
-    }
-
-    private void createStatistic(){
-
-    }
-    //return Statistic???
-    private void getStatistic() {
-
     }
 
 
