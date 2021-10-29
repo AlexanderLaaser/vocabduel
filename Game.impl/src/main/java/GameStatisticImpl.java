@@ -1,5 +1,5 @@
-import game.inter.Game;
 import game.inter.GameStatistic;
+import game.inter.GameStatisticService;
 
 public class GameStatisticImpl implements GameStatisticService {
 

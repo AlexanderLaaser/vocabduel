@@ -3,8 +3,7 @@ import vocabmanagement.inter.VocabList;
 public class VocabListServiceImpl {
 
     public VocabList receiveVocabList(int VocabListId){
-        VocabList placeHolderVocabList = null;
-        return placeHolderVocabList;
+        return null;
     }
 
     public VocabList addItemToVocabSet(int VocabItemId, int VocabListID){

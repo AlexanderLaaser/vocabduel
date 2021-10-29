@@ -1,12 +1,10 @@
-import game.inter.Game;
+import game.inter.GameService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import usermanagement.inter.User;
 import usermanagement.inter.UserService;
 import vocabmanagement.inter.VocabList;
@@ -30,6 +28,7 @@ public class GameServiceTest {
     public void setUp(){
         //this.gameService = new GameServiceImpl();
        // this.vocabservice = new VocabListServiceImpl();
+        //mockuser = mock(User.class);
 
     }
 
@@ -45,15 +44,15 @@ public class GameServiceTest {
         Assert.assertNotNull(testUserList);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCreateGame()  {
 
         //Arrange
-
         User user1 = new User(1, "Max", "Test", "maxtest", "1234",5,1,4);
-        User user2 = new User(2, "Nax", "Test", "maxtest", "1234",5,1,4);
+        User user2 = new User(1, "Nax", "Test", "maxtest", "1234",5,1,4);
 
-        Mockito.when(userService.getUserByID(1)).thenReturn(user1);
+        //Hier muss thenReturn(Game instanz zurückgegeben werden)
+        //Mockito.when(userService.getUserByID(1)).thenReturn(user1);
 
         //Act
         VocabList vocablist = vocabservice.receiveVocabList(1);
@@ -61,9 +60,13 @@ public class GameServiceTest {
 
         //Assert
         Mockito.verify(userService, Mockito.times(1)).getUserByID(1);
-        Assert.assertNotNull(user1);
+        Assert.assertNotNull(user1.getUserID());
         Assert.assertNotNull(user2);
+        Assert.assertNotNull(vocablist);
+        Assert.assertNotEquals(user1.getUserID(), user2.getUserID());
 
     }
+
+    // testing receive VocabList
 
 }

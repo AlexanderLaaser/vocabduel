@@ -1,3 +1,5 @@
+package game.inter;
+
 public interface RoundService {
     //asks the User for his Answer
     void askForGuess();

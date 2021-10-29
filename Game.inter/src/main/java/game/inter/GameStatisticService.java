@@ -1,3 +1,5 @@
+package game.inter;
+
 import game.inter.GameStatistic;
 
 public interface GameStatisticService {
