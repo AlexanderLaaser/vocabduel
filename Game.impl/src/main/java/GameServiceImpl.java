@@ -6,6 +6,11 @@ import java.util.List;
 
 public class GameServiceImpl implements GameService {
 
+    //Aks the User for the Category and the Language and the List
+    @Override
+    public void chooseCategoryLanguageList(){
+
+    }
 
     //create a Game with 2 User and VocabList
     @Override
@@ -30,6 +35,16 @@ public class GameServiceImpl implements GameService {
 
 
         return vocablist;
+    }
+
+    @Override
+    public void InitRounds(){
+
+    }
+
+    @Override
+    public void calcualteTotalWinner(){
+
     }
 
 

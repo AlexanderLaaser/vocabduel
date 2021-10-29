@@ -7,4 +7,7 @@ public interface VocabListService {
 
     //Methode fügt ein bestehendes Item einer List hinzu
     VocabList addItemToVocabSet(int VocabItemId, int VocabListID);
+
+    void createVocabList();
+
 }

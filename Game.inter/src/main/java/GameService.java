@@ -12,4 +12,11 @@ public interface GameService {
 
     //generate the Vocabluary for the Rounds
     VocabList generateCustomVocabSet(VocabList vocablist);
+
+    //Aks the User for the Category and the Language and the List
+    void chooseCategoryLanguageList();
+
+    void InitRounds();
+
+    void calcualteTotalWinner();
 }
