@@ -33,10 +33,10 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testCreateUserWithS() throws InvalidNameException {
+    public void testCreateUserWithSpecialCharacters() throws InvalidNameException {
         //Arrage
         int testUserID = 1234;
-        String testFirstName = "Max";
+        String testFirstName = "M%&s";
         String testLastName = "Mustermann";
         String testUserName = "MaxMustermann";
         String testPassword = "Passwort";
