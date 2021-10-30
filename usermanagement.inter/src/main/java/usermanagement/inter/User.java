@@ -1,5 +1,7 @@
 package usermanagement.inter;
 
+import java.util.List;
+
 public class User {
 
     private int userID;
@@ -89,4 +91,5 @@ public class User {
     public void setGamesLost(int gamesLost) {
         this.gamesLost = gamesLost;
     }
+
 }
