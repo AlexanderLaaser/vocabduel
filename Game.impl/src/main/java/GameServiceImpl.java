@@ -1,5 +1,6 @@
 import game.inter.Game;
 import game.inter.GameService;
+import game.inter.Round;
 import usermanagement.inter.User;
 import vocabmanagement.inter.VocabList;
 
@@ -12,6 +13,11 @@ public class GameServiceImpl implements GameService {
     @Override
     public void chooseCategoryLanguageList(){
 
+    }
+
+    @Override
+    public Round InitRound() {
+        return null;
     }
 
     //create a Game with 2 User and VocabList
@@ -41,13 +47,42 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void InitRounds(){
+    public Round InitRound(List<User> userList, int gameID, int roundNumber){
 
+        return null;
     }
 
-    @Override
-    public void calcualteTotalWinner(){
 
+    @Override
+    public int calcualteTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3){
+        int winningUser = 0;
+        if (winningUserRound1 == 2){
+            winningUser=+1;
+        }else if(winningUserRound1 == 3){
+            winningUser =-1;
+        }
+        if (winningUserRound2 == 2){
+            winningUser=+1;
+        } else if(winningUserRound1 == 3){
+        winningUser =-1;
+        }
+        if (winningUserRound3 == 2){
+            winningUser=+1;
+        } else if(winningUserRound1 == 3){
+        winningUser =-1;
+        }
+
+        if(winningUser == 0){
+            System.out.println("Its a tie");
+        }
+        if(winningUser < 0){
+            System.out.println("Player 2 won");
+        }
+        if(winningUser > 0){
+            System.out.println("Player 1 won");
+        }
+
+      return winningUser;
     }
 
 

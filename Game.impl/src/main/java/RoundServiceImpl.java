@@ -5,21 +5,18 @@ public class RoundServiceImpl implements RoundService {
 
     //asks the User for his Answer
     @Override
-    public void askForGuess(){
-
+    public int askForGuess(){
+        int answer = 0;
+        return answer;
     }
 
     //calculates the Winner of the Round and gives back a Integer
-    //0=tie 1= User1 wins 2= User2 wins
+    //1=tie 2= User1 wins 3= User2 wins
     @Override
-    public int calculateRoundResults(int winningUser){
-
+    public int calculateRoundResults(){
+        int winningUser= 0;
 
         return winningUser;
     }
 
-    @Override
-    public void createRound(){
-
-    }
 }
