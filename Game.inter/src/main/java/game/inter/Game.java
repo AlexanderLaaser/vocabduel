@@ -13,18 +13,28 @@ public class Game {
     private VocabList vocablist;
     private GameStatistic gameStatus;
     private List<String> gameCategory;
+    private int Winner;
 
     public Game(){
         super();
     }
 
-    public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, VocabList vocablist, GameStatistic gameStatus, List<String> gameCategory) {
+    public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, VocabList vocablist, GameStatistic gameStatus, List<String> gameCategory, int winningUser) {
         this.gameID = gameID;
         User = user;
         Round = round;
         this.vocablist = vocablist;
         this.gameStatus = gameStatus;
         this.gameCategory = gameCategory;
+        this.Winner = winningUser;
+    }
+
+    public int getWinner() {
+        return Winner;
+    }
+
+    public void setWinner(int winner) {
+        this.Winner = winner;
     }
 
     public int getGameID() {

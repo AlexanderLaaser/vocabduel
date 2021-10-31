@@ -1,12 +1,24 @@
 package game.inter;
 
 public interface RoundService {
-    //asks the User for his Answer
-    void askForGuess();
+
+    /***
+     * asks the User for his Answer
+     * stores the Answer
+     *
+     */
+    int askForGuess();
 
     //calculates the Winner of the Round and gives back a Integer
-    //0=tie 1= User1 wins 2= User2 wins
-    int calculateRoundResults(int winningUser);
 
-    void createRound();
+    /***
+     *
+     * @return Round winner as int
+     * 1= tie
+     * 2= User1 wins
+     * 3= User2 wins
+     * 3= User2 wins
+     */
+    int calculateRoundResults();
+
 }
