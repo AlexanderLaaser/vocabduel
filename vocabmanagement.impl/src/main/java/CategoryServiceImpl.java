@@ -7,7 +7,6 @@ public class CategoryServiceImpl implements CategoryService {
     
     @Override
     public Category createCategory(String categoryName) throws InvalidNameException {
-        
         checkingCategoryName(categoryName);
         
         return new Category(1L,categoryName);
@@ -19,7 +18,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private void checkingCategoryName(String categoryName) throws InvalidNameException {
-
         //checking for empty inputs or spaces
         if ((categoryName == null) || categoryName.contains(" ") || categoryName.equals("")){
             throw new InvalidNameException("Kategorie-Name darf nicht leer sein!");

@@ -4,9 +4,16 @@ import game.inter.GameStatistic;
 
 public interface GameStatisticService {
 
-    //combine the information of game
+    /**
+     * Erstellt eine GameStatistik Objekt
+     * @return GameStatistik Objekt
+     */
     GameStatistic createGameStatistik();
 
-    //Implement something, that pushes the Statistic in the terminal
-    void showGameStatistic();
+
+    /**
+     * Gibt ein Objekt einer GameStatistik zurück
+     * @return GameStatistik Objekt
+     */
+    GameStatistic getGameStatsById(int GamestatId);
 }

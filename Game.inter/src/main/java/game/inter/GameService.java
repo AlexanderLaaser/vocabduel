@@ -1,25 +1,68 @@
 package game.inter;
 
 import game.inter.Game;
+import usermanagement.inter.InvalidUserException;
 import usermanagement.inter.User;
+import vocabmanagement.inter.Category;
 import vocabmanagement.inter.VocabList;
 
 import java.util.List;
 
 public interface GameService {
-    //create a Game with 2 User and VocabList
-    Game createGame(User user1, User user2, VocabList vocablist);
 
-    //find 2 user and match them for a gamee
-    List<User> matchUser();
+    /**
+     *
+     * @param userId1
+     * @param userId2
+     * @param vocabListId
+     * @return
+     * @throws InvalidUserException
+     */
+    //create a Game with 2 existing Users and one VocabList
+    Game createGame(int userId1, int userId2, int vocabListId) throws InvalidUserException;
 
-    //generate the Vocabluary for the Rounds
-    VocabList generateCustomVocabSet(VocabList vocablist);
+    /**
+     *
+     * @param RoundId
+     * @param AnzahlRunden
+     * @param game
+     * @return
+     */
+    Round InitRounds(int RoundId, int AnzahlRunden, Game game);
 
-    //Aks the User for the Category and the Language and the List
-    void chooseCategoryLanguageList();
+    /**
+     *
+     */
+    void calculateTotalWinner();
 
-    void InitRounds();
+    /**
+     *
+     * @param categoryName
+     * @return
+     */
+    int getVocabListByCategory(String categoryName);
 
-    void calcualteTotalWinner();
+    /**
+     *
+     * @param userId1
+     * @param userId2
+     * @throws InvalidUserException
+     */
+    //Checkt ob 2 User gleich sind oder nicht
+    public void validateUserMatch(int userId1,int userId2) throws InvalidUserException;
+
+    /**
+     *
+     * @param userId
+     */
+    public void UpdateUserDataAfterGame(int userId);
+
+    /**
+     *
+     * @param winningUserIdRound1
+     * @param winningUserIdRound2
+     * @param winningUserIdRound3
+     * @return
+     */
+    int calcualteTotalWinner(int winningUserIdRound1, int winningUserIdRound2, int winningUserIdRound3);
 }

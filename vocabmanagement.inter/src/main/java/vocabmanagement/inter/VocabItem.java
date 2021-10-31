@@ -7,6 +7,7 @@ public class VocabItem {
     private Long vocabItemID;
     private List<String> firstLanguage;
     private List<String> secLanguage;
+    private String Lernstatus;
 
     public VocabItem(Long vocabItemID, List<String> vocabName, List<String> translations) {
         this.vocabItemID = vocabItemID;

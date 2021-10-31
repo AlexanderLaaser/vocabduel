@@ -2,21 +2,30 @@ import usermanagement.inter.User;
 import usermanagement.inter.UserService;
 
 import javax.naming.InvalidNameException;
+import java.util.LinkedList;
 
 public class UserServiceImpl implements UserService {
 
+    /**
+     * temporäre Liste als DB Ersatz. Im weiteren Verlauf des Projekts würden die Listenoperationen als DB-Kommunikation dienen
+     */
+    public LinkedList<User> userList = new LinkedList<User>();
+
     @Override
-    public User createUser(int userID, String firstName, String lastName, String userName, String password) throws InvalidNameException {
+    public User createUser(long userID, String firstName, String lastName, String userName, String password) throws InvalidNameException {
         validateUserID(userID);
         validateName(firstName);
         validateName(lastName);
         validateName(userName);
         validatePassword(password);
 
-        return new User(userID, firstName, lastName, userName, password, 1, 1, 1);
+        User createdUser = new User(userID, firstName, lastName, userName, password);
+        userList.add(createdUser);
+
+        return createdUser;
     }
 
-    public void validateUserID(int userID) {
+    public void validateUserID(Long userID) {
         //check if userID exists
     }
 
@@ -40,26 +49,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int userID) {
-        return null;
+    public User getUserById(long userID) {
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserID() == userID) {
+                return userList.element();
+            }
+        } return null;
+
     }
 
     @Override
     public void removeUser(int userID) {
-        //getUserByID(userID);
-        //System.out.println("User entfernt");
+        userList.remove(getUserById(userID));
     }
 
     @Override
     public void changePassword(int userID, String password) {
-        //getUserById(userID);
-        //newUser.setPassword(password);
+        getUserById(userID).setPassword(password);
     }
 
     @Override
     public void increaseTotalGames(int userID) {
-        //getUserById(userID);
-        //newUser.setTotalGames(+1);
+        getUserById(userID).setTotalGames(+1);
     }
 }
 

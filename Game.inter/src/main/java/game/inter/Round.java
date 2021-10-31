@@ -1,22 +1,20 @@
 package game.inter;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Round {
 
     private int roundID;
     private Game game;
-    private List<String> vocabSet;
+    private HashMap vocabSet;
     private int roundNumber;
     private int winningUser;
 
-    public Round(int roundID, Game game, List<String> vocabSet,
-                 int roundNumber, int winningUser) {
+    public Round(int roundID, Game game, HashMap vocabSet) {
         this.roundID = roundID;
         this.game = game;
         this.vocabSet = vocabSet;
-        this.roundNumber = roundNumber;
-        this.winningUser = winningUser;
     }
 
     public int getRoundID() {
@@ -25,10 +23,6 @@ public class Round {
 
     public Game getGame() {
         return game;
-    }
-
-    public List<String> getVocabSet() {
-        return vocabSet;
     }
 
     public int getRoundNumber() {
@@ -47,15 +41,19 @@ public class Round {
         this.game = game;
     }
 
-    public void setVocabSet(List<String> vocabSet) {
-        this.vocabSet = vocabSet;
-    }
-
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
     }
 
     public void setWinningUser(int winningUser) {
         this.winningUser = winningUser;
+    }
+
+    public HashMap getVocabSet() {
+        return vocabSet;
+    }
+
+    public void setVocabSet(HashMap vocabSet) {
+        this.vocabSet = vocabSet;
     }
 }

@@ -1,6 +1,7 @@
 package game.inter;
 
 import usermanagement.inter.User;
+import vocabmanagement.inter.Category;
 import vocabmanagement.inter.VocabList;
 
 import java.util.List;
@@ -8,71 +9,73 @@ import java.util.List;
 public class Game {
 
     private int gameID;
-    private List<User> User;
+    private User GameOwner;
+    private User GamePartner;
     private List<Round> Round;
     private VocabList vocablist;
-    private GameStatistic gameStatus;
-    private List<String> gameCategory;
+    private GameStatistic gameStatistic;
+    private Category gameCategory;
 
-    public Game(){
-        super();
-    }
-
-    public Game(int gameID, List<usermanagement.inter.User> user, List<game.inter.Round> round, VocabList vocablist, GameStatistic gameStatus, List<String> gameCategory) {
+    public Game(int gameID, User gameOwner, User gamePartner, VocabList vocablist) {
         this.gameID = gameID;
-        User = user;
-        Round = round;
+        GameOwner = gameOwner;
+        GamePartner = gamePartner;
         this.vocablist = vocablist;
-        this.gameStatus = gameStatus;
-        this.gameCategory = gameCategory;
     }
 
     public int getGameID() {
         return gameID;
     }
 
-    public List<usermanagement.inter.User> getUser() {
-        return User;
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
+
+    public User getGameOwner() {
+        return GameOwner;
+    }
+
+    public void setGameOwner(User gameOwner) {
+        GameOwner = gameOwner;
+    }
+
+    public User getGamePartner() {
+        return GamePartner;
+    }
+
+    public void setGamePartner(User gamePartner) {
+        GamePartner = gamePartner;
     }
 
     public List<game.inter.Round> getRound() {
         return Round;
     }
 
-    public VocabList getVocablist() {
-        return vocablist;
-    }
-
-    public GameStatistic getGameStatus() {
-        return gameStatus;
-    }
-
-    public List<String> getGameCategory() {
-        return gameCategory;
-    }
-
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
-    }
-
-    public void setUser(List<usermanagement.inter.User> user) {
-        User = user;
-    }
-
     public void setRound(List<game.inter.Round> round) {
         Round = round;
+    }
+
+    public VocabList getVocablist() {
+        return vocablist;
     }
 
     public void setVocablist(VocabList vocablist) {
         this.vocablist = vocablist;
     }
 
-    public void setGameStatus(GameStatistic gameStatus) {
-        this.gameStatus = gameStatus;
+    public GameStatistic getGameStatistic() {
+        return gameStatistic;
     }
 
-    public void setGameCategory(List<String> gameCategory) {
+    public void setGameStatistic(GameStatistic gameStatistic) {
+        this.gameStatistic = gameStatistic;
+    }
+
+    public Category getGameCategory() {
+        return gameCategory;
+    }
+
+    public void setGameCategory(Category gameCategory) {
         this.gameCategory = gameCategory;
     }
-
 }

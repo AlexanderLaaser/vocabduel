@@ -1,10 +1,8 @@
 package usermanagement.inter;
 
-import java.util.List;
-
 public class User {
 
-    private int userID;
+    private Long userID;
     private String firstName;
     private String lastName;
     private String userName;
@@ -13,26 +11,20 @@ public class User {
     private int gamesWon;
     private int gamesLost;
 
-    public User(){
-        super();
-    }
-    public User(int userID, String firstName, String lastName, String userName, String password, int totalGames, int gamesWon, int gamesLost) {
+    public User(long userID, String firstName, String lastName, String userName, String password) {
         super();
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.totalGames = totalGames;
-        this.gamesWon = gamesWon;
-        this.gamesLost = gamesLost;
     }
 
-    public int getUserID() {
+    public long getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(long userID) {
         this.userID = userID;
     }
 

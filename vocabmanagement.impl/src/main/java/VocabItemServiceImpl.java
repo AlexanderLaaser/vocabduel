@@ -11,12 +11,13 @@ public class VocabItemServiceImpl implements VocabItemService {
     }
 
     @Override
-    public VocabItem addVocabName(String Translation, List<String> Lan, int VocabItemID) {
-        return null;
+    public void addVocabName(List<String> leftLan, List<String> rightLan, int VocabItemID) {
+
     }
 
     @Override
     public VocabItem getVocabName(int VocabItem) {
         return null;
     }
+
 }

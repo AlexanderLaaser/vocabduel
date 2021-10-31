@@ -57,4 +57,8 @@ public class VocabList {
     public void setVocabList(List<VocabItem> vocabList) {
         VocabList = vocabList;
     }
+
+    public VocabList getVocabListByID(int vocablistId) {
+        return null;
+    }
 }
