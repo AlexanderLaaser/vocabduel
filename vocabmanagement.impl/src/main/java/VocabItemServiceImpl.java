@@ -6,7 +6,7 @@ import java.util.List;
 public class VocabItemServiceImpl implements VocabItemService {
 
     @Override
-    public VocabItem createVocabitem(List<String> leftLan, List<String> rightLan) {
+    public VocabItem createVocabItem(List<String> leftLan, List<String> rightLan) {
         return null;
     }
 

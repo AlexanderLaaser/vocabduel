@@ -10,7 +10,7 @@ public interface VocabItemService {
      * @param rightLan - Liste von übersetzten Bedeutungen
      * @return VocabItem Objekt
      */
-    VocabItem createVocabitem(List<String> leftLan, List<String> rightLan);
+    VocabItem createVocabItem(List<String> leftLan, List<String> rightLan);
 
     /**
      * Methode fügt dem VocabItem Listen von Bedeutungen für die linken und rechten Listen eines bestehenden Objekts hinzu
