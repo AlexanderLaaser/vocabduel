@@ -8,7 +8,7 @@ public interface GameStatisticService {
      * Erstellt eine GameStatistik Objekt
      * @return GameStatistik Objekt
      */
-    GameStatistic createGameStatistik();
+    GameStatistic createGameStatistic();
 
 
     /**

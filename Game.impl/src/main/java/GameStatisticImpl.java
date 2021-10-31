@@ -5,7 +5,7 @@ public class GameStatisticImpl implements GameStatisticService {
 
     //combine the information of game
     @Override
-    public GameStatistic createGameStatistik(){
+    public GameStatistic createGameStatistic(){
 
         GameStatistic gameStats = new GameStatistic();
         return gameStats;
