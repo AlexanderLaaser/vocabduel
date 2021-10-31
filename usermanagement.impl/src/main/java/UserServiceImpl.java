@@ -25,12 +25,10 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int userID) {
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getUserID() == userID) {
-                System.out.println(userList);
                 return userList.element();
             }
         } return null;
     }
-
 
     @Override
     public void removeUser(int userID) {
