@@ -47,7 +47,7 @@ public class GameServiceTest {
 
     /**
      * Test bekommt 2x die gleiche UserID und wirft daher eine InvalidUserException
-     * @throws InvalidUserException
+     * @throws InvalidUserException invalid User
      */
     @Test(expected = InvalidUserException.class)
     public void testValidateUserMatchFail() throws InvalidUserException {
@@ -61,7 +61,7 @@ public class GameServiceTest {
 
     /**
      * Test bekommt 2 unterschiedliche UserIds daher sind die User valide
-     * @throws InvalidUserException
+     * @throws InvalidUserException invalid User
      */
     @Test
     public void testValidateUserMatch() throws InvalidUserException {
@@ -83,7 +83,7 @@ public class GameServiceTest {
 
     /**
      * Test erstellt ein Game mit künstlichen Daten aus User und VocabList
-     * @throws InvalidUserException
+     * @throws InvalidUserException invalid User
      */
     @Test
     public void testCreateGame() throws InvalidUserException {
@@ -133,7 +133,7 @@ public class GameServiceTest {
         CustomVocabListmock.put("Tschüss",fakeAnswerList);
 
         Mockito.when(vocabservice.generateCustomVocabSet(anzahlRunden)).thenReturn(CustomVocabListmock);
-        Round roundTestObj = gameService.InitRounds(1,anzahlRunden,mockGame);
+        Round roundTestObj = gameService.initRounds(1,anzahlRunden,mockGame);
 
         Mockito.verify(vocabservice, Mockito.times(1)).generateCustomVocabSet(anzahlRunden);
         Assert.assertNotNull(roundTestObj);
@@ -148,7 +148,7 @@ public class GameServiceTest {
         int UserId = 1;
         User mockuser1 = new User(UserId,"Peter", "Test","Supertester123", "qwer");
 
-        gameService.UpdateUserDataAfterGame(1);
+        gameService.updateUserDataAfterGame(1);
 
         Mockito.verify(userService, Mockito.times(1)).increaseTotalGames(UserId);
     }

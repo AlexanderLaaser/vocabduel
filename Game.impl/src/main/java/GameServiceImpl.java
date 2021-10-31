@@ -33,11 +33,11 @@ public class GameServiceImpl implements GameService {
 
         if(userObj1.getUserID() == userObj2.getUserID()){
             throw new InvalidUserException("Die angegebenen Nutzer sind ungültig!");
-        };
+        }
     }
 
     @Override
-    public void UpdateUserDataAfterGame(int userId) {
+    public void updateUserDataAfterGame(int userId) {
         // Einzelbeispiel zum Updaten der gespielten Spiele
         User userObj1 = userService.getUserById(userId);
         userService.increaseTotalGames(userId);
@@ -47,19 +47,19 @@ public class GameServiceImpl implements GameService {
     public int calculateTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3) {
         int winningUser = 0;
         if (winningUserRound1 == 2){
-            winningUser=+1;
+            winningUser =+ 1;
         }else if(winningUserRound1 == 3){
-            winningUser =-1;
+            winningUser =- 1;
         }
         if (winningUserRound2 == 2){
-            winningUser=+1;
+            winningUser =+ 1;
         } else if(winningUserRound1 == 3){
-            winningUser =-1;
+            winningUser =- 1;
         }
         if (winningUserRound3 == 2){
-            winningUser=+1;
+            winningUser=+ 1;
         } else if(winningUserRound1 == 3){
-            winningUser =-1;
+            winningUser =- 1;
         }
 
         if(winningUser == 0){
@@ -85,7 +85,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Round InitRounds(int RoundId, int AnzahlRunden, Game game){
+    public Round initRounds(int RoundId, int AnzahlRunden, Game game){
         HashMap CustomVocabListmock = vocabListService.generateCustomVocabSet(AnzahlRunden);
         Round round = new Round(RoundId,game,CustomVocabListmock);
 
