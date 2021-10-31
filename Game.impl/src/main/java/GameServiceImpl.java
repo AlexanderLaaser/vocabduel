@@ -44,7 +44,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public int calcualteTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3) {
+    public int calculateTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3) {
         int winningUser = 0;
         if (winningUserRound1 == 2){
             winningUser=+1;
@@ -90,11 +90,6 @@ public class GameServiceImpl implements GameService {
         Round round = new Round(RoundId,game,CustomVocabListmock);
 
         return round;
-
-    }
-
-    @Override
-    public void calculateTotalWinner(){
 
     }
 }

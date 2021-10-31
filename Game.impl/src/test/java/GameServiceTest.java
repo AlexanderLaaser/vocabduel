@@ -82,7 +82,7 @@ public class GameServiceTest {
     }
 
     /**
-     *
+     * Test erstellt ein Game mit künstlichen Daten aus User und VocabList
      * @throws InvalidUserException
      */
     @Test
@@ -117,7 +117,7 @@ public class GameServiceTest {
     }
 
     /**
-     *
+     * test initialisiert Runden
      */
     @Test
     public void testInitRounds(){
@@ -141,7 +141,7 @@ public class GameServiceTest {
     }
 
     /**
-     *
+     * Test aktualisiert User Daten
      */
     @Test
     public void testUpdateUserDataAfterGame(){
@@ -154,7 +154,7 @@ public class GameServiceTest {
     }
 
     /**
-     *
+     * Testet Algorithmus zum Feststellen des Gewinners
      */
     @Test
     public void testCalcualteTotalWinner() {
@@ -164,7 +164,8 @@ public class GameServiceTest {
         int winningUserRound3 = 2;
         int winningUser;
 
-        winningUser = gameService.calcualteTotalWinner(winningUserRound1, winningUserRound2, winningUserRound3);
+        winningUser = gameService.calculateTotalWinner(winningUserRound1, winningUserRound2, winningUserRound3);
+        Assert.assertEquals(1,winningUser);
 
     }
 
