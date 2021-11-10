@@ -1,24 +1,12 @@
+import game.inter.Round;
 import game.inter.RoundService;
 
 public class RoundServiceImpl implements RoundService {
 
-
-    //asks the User for his Answer
-    @Override
-    public int askForGuess(){
-
-        return 0;
-    }
-
-    @Override
-    public int calculateRoundResults(int winningUser) {
-        return 0;
-    }
-
     //calculates the Winner of the Round and gives back a Integer
     //0=tie 1= User1 wins 2= User2 wins
     @Override
-    public int calculateRoundResults(){
+    public int calculateRoundResults(Round round){
 
 
         return 0;
@@ -26,6 +14,11 @@ public class RoundServiceImpl implements RoundService {
 
     @Override
     public void createRound(){
+
+    }
+
+    @Override
+    public void initNextQuestion(Round round){
 
     }
 }

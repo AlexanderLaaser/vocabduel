@@ -1,41 +1,43 @@
 package game.inter;
 
+import usermanagement.inter.User;
+
 public class Guess {
 
-    private Long userID;
-    private Long gameID;
-    private Long roundID;
+    private User user;
+    private Game game;
+    private Round round;
     private int guess;
 
-    public Guess(Long userID, Long gameID, Long roundID, int guess) {
-        this.userID = userID;
-        this.gameID = gameID;
-        this.roundID = roundID;
+    public Guess(User user, Game game, Round round, int guess) {
+        this.user = user;
+        this.game = game;
+        this.round = round;
         this.guess = guess;
     }
 
-    public Long getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getGameID() {
-        return gameID;
+    public Game getGame() {
+        return game;
     }
 
-    public void setGameID(Long gameID) {
-        this.gameID = gameID;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
-    public Long getRoundID() {
-        return roundID;
+    public Round getRound() {
+        return round;
     }
 
-    public void setRoundID(Long roundID) {
-        this.roundID = roundID;
+    public void setRound(Round round) {
+        this.round = round;
     }
 
     public int getGuess() {

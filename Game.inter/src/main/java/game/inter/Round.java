@@ -1,17 +1,19 @@
 package game.inter;
 
-import java.util.HashMap;
+import usermanagement.inter.User;
+
 import java.util.List;
+import java.util.Map;
 
 public class Round {
 
     private int roundID;
     private Game game;
-    private HashMap vocabSet;
+    private Map vocabSet;
     private int roundNumber;
-    private int winningUser;
+    private User winningUser;
 
-    public Round(int roundID, Game game, HashMap vocabSet) {
+    public Round(int roundID, Game game, Map vocabSet) {
         this.roundID = roundID;
         this.game = game;
         this.vocabSet = vocabSet;
@@ -29,7 +31,7 @@ public class Round {
         return roundNumber;
     }
 
-    public int getWinningUser() {
+    public User getWinningUser() {
         return winningUser;
     }
 
@@ -45,15 +47,15 @@ public class Round {
         this.roundNumber = roundNumber;
     }
 
-    public void setWinningUser(int winningUser) {
+    public void setWinningUser(User winningUser) {
         this.winningUser = winningUser;
     }
 
-    public HashMap getVocabSet() {
+    public Map getVocabSet() {
         return vocabSet;
     }
 
-    public void setVocabSet(HashMap vocabSet) {
+    public void setVocabSet(Map vocabSet) {
         this.vocabSet = vocabSet;
     }
 }
