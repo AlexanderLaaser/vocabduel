@@ -1,5 +1,5 @@
-import Game.impl.GuessServiceImpl;
-import game.inter.GuessService;
+import de.htwberlin.Game.impl.GuessServiceImpl;
+import de.htwberlin.game.inter.GuessService;
 import org.junit.Before;
 
 /***

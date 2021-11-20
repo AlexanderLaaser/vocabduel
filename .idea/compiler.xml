@@ -7,11 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="usermanagement.inter" />
+        <module name="usermanagement.impl" />
+        <module name="game_ui.inter" />
+        <module name="game.impl" />
+        <module name="game_ui.impl" />
         <module name="vocabmanagement.impl" />
         <module name="vocabmanagement.inter" />
-        <module name="Game.impl" />
-        <module name="usermanagement.impl" />
         <module name="Game.inter" />
+        <module name="configuration_manager" />
       </profile>
     </annotationProcessing>
   </component>

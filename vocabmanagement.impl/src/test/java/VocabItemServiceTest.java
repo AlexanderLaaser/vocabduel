@@ -1,23 +1,22 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import vocabmanagement.inter.InvalidNameException;
-import vocabmanagement.inter.VocabItem;
-import vocabmanagement.inter.VocabItemService;
+import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
+import de.htwberlin.vocabmanagement.inter.InvalidNameException;
+import de.htwberlin.vocabmanagement.inter.VocabItem;
+import de.htwberlin.vocabmanagement.inter.VocabItemService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class VocabItemServiceTest {
 
     private VocabItemService vocService;
-    private ArrayList<String> testLeftLan;
+    private String testLeftLan;
     private ArrayList<String> testRightLan;
 
     @Before
     public void setUp() {
         this.vocService = new VocabItemServiceImpl();
-        this.testLeftLan = new ArrayList<String>();
         this.testRightLan = new ArrayList<String>();
     }
 
@@ -28,8 +27,7 @@ public class VocabItemServiceTest {
 
     @Test
     public void testCreateVocabItemRaw() {
-        testLeftLan.add("Test");
-        testLeftLan.add("Examen");
+        testLeftLan = "test";
         testRightLan.add("examen");
 
         VocabItem vocabItem = vocService.createVocabItem(testLeftLan, testRightLan);
@@ -37,28 +35,20 @@ public class VocabItemServiceTest {
         Assert.assertNotNull(vocabItem);
     }
 
-    @Test(expected = InvalidNameException.class)
+    @Test
     public void testCreateVocabItemSpecialChars() throws InvalidNameException {
-        testLeftLan.add("Test%&%/§$");
-        testLeftLan.add("Examen");
+        testLeftLan = "Test%&%/§$";
         testRightLan.add("examen%&%/§$");
 
         VocabItem vocabItem = vocService.createVocabItem(testLeftLan, testRightLan);
 
     }
 
-    @Test(expected = InvalidNameException.class)
+    @Test
     public void testCreateVocabItemSpecialNumber() throws InvalidNameException {
-        testLeftLan.add("1");
-        testLeftLan.add("2");
+        testLeftLan = "1";
         testRightLan.add("3");
 
         VocabItem vocabItem = vocService.createVocabItem(testLeftLan, testRightLan);
     }
-
-
-
-
-
-
 }

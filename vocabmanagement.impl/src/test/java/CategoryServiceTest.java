@@ -1,9 +1,10 @@
-import vocabmanagement.inter.Category;
-import vocabmanagement.inter.CategoryService;
+import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
+import de.htwberlin.vocabmanagement.inter.Category;
+import de.htwberlin.vocabmanagement.inter.CategoryService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import vocabmanagement.inter.InvalidNameException;
+import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 
 public class CategoryServiceTest {
 

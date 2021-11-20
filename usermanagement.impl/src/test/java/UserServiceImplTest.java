@@ -1,5 +1,6 @@
-import usermanagement.inter.User;
-import usermanagement.inter.UserService;
+import de.htwberlin.usermanagement.impl.UserServiceImpl;
+import de.htwberlin.usermanagement.inter.User;
+import de.htwberlin.usermanagement.inter.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

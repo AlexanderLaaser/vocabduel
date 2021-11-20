@@ -72,7 +72,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class VocabList" class="title">Class VocabList</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">vocabmanagement.inter.VocabList</div>
+<div class="inheritance">VocabList</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
@@ -116,7 +116,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,vocabmanagement.inter.Language,vocabmanagement.inter.Language,vocabmanagement.inter.Category,java.util.List)" class="member-name-link">VocabList</a><wbr>(int&nbsp;listID,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,Language,Language,Category,java.util.List)" class="member-name-link">VocabList</a><wbr>(int&nbsp;listID,
  <a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;first_language,
  <a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;sec_language,
  <a href="Category.html" title="class in vocabmanagement.inter">Category</a>&nbsp;category,
@@ -155,16 +155,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVocabListByID(int)" class="member-name-link">getVocabListByID</a><wbr>(int&nbsp;vocablistId)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCategory(vocabmanagement.inter.Category)" class="member-name-link">setCategory</a><wbr>(<a href="Category.html" title="class in vocabmanagement.inter">Category</a>&nbsp;category)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCategory(Category)" class="member-name-link">setCategory</a><wbr>(<a href="Category.html" title="class in vocabmanagement.inter">Category</a>&nbsp;category)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFirstLanguage(vocabmanagement.inter.Language)" class="member-name-link">setFirstLanguage</a><wbr>(<a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;firstLanguage)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFirstLanguage(Language)" class="member-name-link">setFirstLanguage</a><wbr>(<a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;firstLanguage)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setListID(int)" class="member-name-link">setListID</a><wbr>(int&nbsp;listID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSecLanguage(vocabmanagement.inter.Language)" class="member-name-link">setSecLanguage</a><wbr>(<a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;secLanguage)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSecLanguage(Language)" class="member-name-link">setSecLanguage</a><wbr>(<a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;secLanguage)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setVocabList(java.util.List)" class="member-name-link">setVocabList</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="VocabItem.html" title="class in vocabmanagement.inter">VocabItem</a>&gt;&nbsp;vocabList)</code></div>
@@ -225,7 +225,7 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int,vocabmanagement.inter.Language,vocabmanagement.inter.Language,vocabmanagement.inter.Category,java.util.List)">
+<section class="detail" id="&lt;init&gt;(int,Language,Language,Category,java.util.List)">
 <h3>VocabList</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">VocabList</span><wbr><span class="parameters">(int&nbsp;listID,
  <a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;first_language,
@@ -261,7 +261,7 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setFirstLanguage(vocabmanagement.inter.Language)">
+<section class="detail" id="setFirstLanguage(Language)">
 <h3>setFirstLanguage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFirstLanguage</span><wbr><span class="parameters">(<a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;firstLanguage)</span></div>
 </section>
@@ -273,7 +273,7 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setSecLanguage(vocabmanagement.inter.Language)">
+<section class="detail" id="setSecLanguage(Language)">
 <h3>setSecLanguage</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSecLanguage</span><wbr><span class="parameters">(<a href="Language.html" title="class in vocabmanagement.inter">Language</a>&nbsp;secLanguage)</span></div>
 </section>
@@ -285,7 +285,7 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setCategory(vocabmanagement.inter.Category)">
+<section class="detail" id="setCategory(Category)">
 <h3>setCategory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCategory</span><wbr><span class="parameters">(<a href="Category.html" title="class in vocabmanagement.inter">Category</a>&nbsp;category)</span></div>
 </section>
