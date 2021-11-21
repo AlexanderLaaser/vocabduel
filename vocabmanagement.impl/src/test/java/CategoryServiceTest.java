@@ -1,14 +1,12 @@
-import vocabmanagement.inter.Category;
-import vocabmanagement.inter.CategoryService;
-
+import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
+import de.htwberlin.vocabmanagement.inter.Category;
+import de.htwberlin.vocabmanagement.inter.CategoryService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import vocabmanagement.inter.InvalidNameException;
+import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 
 public class CategoryServiceTest {
-
-    //Parameterized Test?
 
     private CategoryService catService;
 
@@ -19,33 +17,32 @@ public class CategoryServiceTest {
 
     @Test
     public void testCreateCategoryRaw() throws InvalidNameException {
-        //Arrage
         String testCatName = "Auto";
-        //Act
+
         Category category = catService.createCategory(testCatName);
-        //Assert
+
         Assert.assertNotNull(category);
     }
 
     @Test(expected = InvalidNameException.class)
     public void testCreateCategorySpecialChar() throws InvalidNameException {
-        //Arrage
+
         String testCatName = "Auto&Bahn%&%/§$";
-        //Act
+
         catService.createCategory(testCatName);
-        //Assert
+
         //Exception expected
     }
 
     @Test(expected = InvalidNameException.class)
     public void testCreateCategoryNumber() throws InvalidNameException {
-        //Arrage
+
         String testCatName = "2";
-        //Act
+
         catService.createCategory(testCatName);
     }
 
-    //Test zum Checken ob eine Kategorie bereits existiert
+
 
 
 
