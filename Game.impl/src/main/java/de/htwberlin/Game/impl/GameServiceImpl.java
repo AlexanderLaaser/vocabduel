@@ -31,12 +31,16 @@ public class GameServiceImpl implements GameService {
         }
 
         int gameID = 1;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Bitte geben sie eine Vocballist ID an. Auswahl 1, 2 ,3 oder 4");
 
+        //eventuell vor dem erzeugen der Klasse
+
+        System.out.println("Bitte geben sie eine Vocballist ID an. Auswahl 1, 2 ,3 oder 4");
+        Scanner scanner = new Scanner(System.in);
+        //Frage nach Vocablliste die Abgefragt werden soll
         int eingabe = 1;
+        //folgendes auslagern in UI
         //eingabe = scanner.nextInt();
-        System.out.println("Sie haben Liste " + eingabe +" gewählt");
+       // System.out.println("Sie haben Liste " + eingabe +" gewählt");
 
         User mockuser1 = new User(user1Id,"Peter", "Test","Supertester123", "qwer");
         User mockuser2 = new User(user2Id,"Peter", "Test","Supertester123", "qwer");
