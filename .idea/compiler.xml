@@ -13,6 +13,7 @@
         <module name="game_ui.impl" />
         <module name="vocabmanagement.impl" />
         <module name="vocabmanagement.inter" />
+        <module name="Game.impl" />
         <module name="Game.inter" />
         <module name="configuration_manager" />
       </profile>
