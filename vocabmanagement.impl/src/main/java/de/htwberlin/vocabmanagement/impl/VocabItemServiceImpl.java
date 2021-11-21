@@ -2,9 +2,11 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabItemService;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class VocabItemServiceImpl implements VocabItemService {
 
     @Override

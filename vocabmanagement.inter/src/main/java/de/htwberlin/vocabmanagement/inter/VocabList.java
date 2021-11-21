@@ -1,28 +1,40 @@
 package de.htwberlin.vocabmanagement.inter;
 
 import java.util.List;
+import java.util.Map;
 
 public class VocabList {
 
-    private int listID;
+    private long listID;
     private Language firstLanguage;
     private Language secLanguage;
     private Category category;
-    private List<VocabItem> VocabList;
+    private Map<String, List<VocabItem>> itemlist;
 
-    public VocabList(int listID, Language first_language, Language sec_language, Category category, List<VocabItem> vocabList) {
+    public VocabList(long listID, Language first_language, Language sec_language, Category category, Map<String,List<VocabItem>> itemlist) {
         this.listID = listID;
         this.firstLanguage = first_language;
         this.secLanguage = sec_language;
         this.category = category;
-        VocabList = vocabList;
+        this.itemlist = itemlist;
     }
 
-    public int getListID() {
+    public VocabList(long listID, Language first_language, Language sec_language, Category category) {
+        this.listID = listID;
+        this.firstLanguage = first_language;
+        this.secLanguage = sec_language;
+        this.category = category;
+    }
+
+    public void setVocabList(Map<String, List<VocabItem>> itemlist) {
+        this.itemlist = itemlist;
+    }
+
+    public long getListID() {
         return listID;
     }
 
-    public void setListID(int listID) {
+    public void setListID(long listID) {
         this.listID = listID;
     }
 
@@ -50,12 +62,12 @@ public class VocabList {
         this.category = category;
     }
 
-    public List<VocabItem> getVocabList() {
-        return VocabList;
+    public Map<String, List<VocabItem>> getItemlist() {
+        return itemlist;
     }
 
     public void setVocabList(List<VocabItem> vocabList) {
-        VocabList = vocabList;
+        vocabList = vocabList;
     }
 
     public VocabList getVocabListByID(int vocablistId) {

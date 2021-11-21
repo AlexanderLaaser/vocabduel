@@ -1,6 +1,8 @@
 package de.htwberlin.vocabmanagement.inter;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface VocabListService {
 
@@ -9,7 +11,7 @@ public interface VocabListService {
      * @param VocabListId - ID einer existierenden Vocabelliste
      * @return VocabList Objekt
      */
-    VocabList getVocabListByID(int VocabListId);
+    VocabList getVocabListByID(long VocabListId);
 
     /**
      * Methode fügt ein bestehendes Item einer List hinzu
@@ -22,7 +24,7 @@ public interface VocabListService {
      * erstellt eine Vocabelliste aus mehreren Vocabitems
      * @param VocabItemList Liste von VocabItem Objekten
      */
-    void createVocabList(List<VocabItem> VocabItemList);
+    VocabList createVocabList(Map VocabItemList, Language languageLeft, Language languageRight, Category category);
 
     /**
      *
@@ -34,12 +36,12 @@ public interface VocabListService {
     /**
      * @return - gibt eine Liste von VocabItem IDs zurück
      */
-    List<Integer> getAllItemsInVocabList(int VocabListId);
+    List<String> getAllItemsInVocabList(VocabList vocabList);
 
     /**
      * Methode liest Übersetzungen aus Textfiles ein und erstellt pro Json item eine Vocabitem String
      */
-    void importVocabStringsFromTextFile();
+    Map importVocabStringsFromTextFile(String filename) throws IOException;
 
     /**
      * Methode löscht eine bestehende VocabListe anhand der Listen ID

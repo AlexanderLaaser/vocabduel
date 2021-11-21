@@ -4,7 +4,9 @@ import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.CategoryService;
 
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CategoryServiceImpl implements CategoryService {
     
     @Override

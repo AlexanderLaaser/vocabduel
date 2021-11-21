@@ -2,15 +2,15 @@ package de.htwberlin.vocabmanagement.inter;
 
 public class Language {
 
-    private int languageID;
+    private long languageID;
     private String LanguageName;
 
-    public Language(int languageID, String languageName) {
+    public Language(long languageID, String languageName) {
         this.languageID = languageID;
         LanguageName = languageName;
     }
 
-    public int getLanguageID() {
+    public long getLanguageID() {
         return languageID;
     }
 
