@@ -19,14 +19,7 @@ public class VocabList {
         this.itemlist = itemlist;
     }
 
-    public VocabList(long listID, Language first_language, Language sec_language, Category category) {
-        this.listID = listID;
-        this.firstLanguage = first_language;
-        this.secLanguage = sec_language;
-        this.category = category;
-    }
-
-    public void setVocabList(Map<String, List<VocabItem>> itemlist) {
+     public void setVocabList(Map<String, List<VocabItem>> itemlist) {
         this.itemlist = itemlist;
     }
 

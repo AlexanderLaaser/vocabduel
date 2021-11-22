@@ -2,6 +2,7 @@ package de.htwberlin.game_ui.impl;
 
 import de.htwberlin.game.inter.Game;
 import de.htwberlin.game_ui.inter.GameUiController;
+import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
 import de.htwberlin.vocabmanagement.impl.LanguageServiceImpl;
 import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
@@ -36,7 +37,9 @@ public class GameUiControllerImpl implements GameUiController {
     }
 
     @Autowired
-    public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl, VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl, CategoryServiceImpl categoryServiceImpl, GameServiceImpl gameServiceImpl) {
+    public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl,
+                                VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl,
+                                CategoryServiceImpl categoryServiceImpl, GameServiceImpl gameServiceImpl) {
         super();
         this.gameUiView = gameuiView;
         this.vocabListServiceimpl = vocabListServiceimpl;
@@ -64,6 +67,10 @@ public class GameUiControllerImpl implements GameUiController {
 
     public void setGameView(LanguageServiceImpl languageServiceImpl) {
         this.languageServiceImpl = languageServiceImpl;
+    }
+
+    public void setGameServiceImpl(GameServiceImpl gameServiceImpl) {
+        this.gameServiceImpl = gameServiceImpl;
     }
 
     @Override
@@ -96,14 +103,17 @@ public class GameUiControllerImpl implements GameUiController {
             System.out.println(vocabList.getSecLanguage());
             //}
         }
+
         else if(component == 2){
             int User1Id = gameUiView.askForInt("Gib uns die ID vom Game Host");
             int User2Id = gameUiView.askForInt("Gib uns die ID vom Game Participant");
             int vocablistId = gameUiView.askForInt("Gib uns die ID der gewünschten VocabListe");
 
-          //  Game game = GameServiceImpl.createGame(User1Id, User2Id,vocablistId);
-
-
+            try {
+                Game game = gameServiceImpl.createGame(User1Id, User2Id, vocablistId);
+            } catch (InvalidUserException e) {
+                e.printStackTrace();
+            }
 
         }
 
