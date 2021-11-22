@@ -6,13 +6,13 @@ import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
 import de.htwberlin.vocabmanagement.inter.*;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-@Component
+@Controller
 public class GameServiceImpl implements GameService {
 
     private UserService userService;
