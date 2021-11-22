@@ -10,12 +10,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vocabduel.Game.impl</artifactId>
+    <artifactId>Game.impl</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>de.htwberlin</groupId>
-            <artifactId>vocabduel.Game.inter</artifactId>
+            <artifactId>Game.inter</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -23,6 +23,12 @@
             <artifactId>mockito-core</artifactId>
             <version>4.0.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.12</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -1,22 +1,26 @@
-import game.inter.RoundService;
+package de.htwberlin.Game.impl;
 
+import de.htwberlin.game.inter.Round;
+import de.htwberlin.game.inter.RoundService;
+import org.springframework.stereotype.Component;
+
+@Component
 public class RoundServiceImpl implements RoundService {
 
-
-    //asks the User for his Answer
-    @Override
-    public int askForGuess(){
-        int answer = 0;
-        return answer;
-    }
-
     //calculates the Winner of the Round and gives back a Integer
-    //1=tie 2= User1 wins 3= User2 wins
+    //0=tie 1= User1 wins 2= User2 wins
     @Override
-    public int calculateRoundResults(){
-        int winningUser= 0;
-
-        return winningUser;
+    public int calculateRoundResults(Round round){
+        return 0;
     }
 
+    @Override
+    public void createRound(){
+
+    }
+
+    @Override
+    public void initNextQuestion(Round round){
+
+    }
 }
