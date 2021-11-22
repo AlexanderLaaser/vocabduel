@@ -4,9 +4,7 @@ import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class Game {
 
     private int gameID;

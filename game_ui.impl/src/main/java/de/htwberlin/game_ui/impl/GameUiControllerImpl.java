@@ -1,5 +1,6 @@
 package de.htwberlin.game_ui.impl;
 
+import de.htwberlin.Game.impl.GameServiceImpl;
 import de.htwberlin.game.inter.Game;
 import de.htwberlin.game_ui.inter.GameUiController;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
@@ -11,18 +12,14 @@ import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 import de.htwberlin.vocabmanagement.inter.Language;
 import de.htwberlin.vocabmanagement.inter.VocabList;
-
-import de.htwberlin.Game.impl.GameServiceImpl;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Controller
 public class GameUiControllerImpl implements GameUiController {
 
     private GameUiView gameUiView;
@@ -69,19 +66,17 @@ public class GameUiControllerImpl implements GameUiController {
         this.languageServiceImpl = languageServiceImpl;
     }
 
-    public void setGameServiceImpl(GameServiceImpl gameServiceImpl) {
-        this.gameServiceImpl = gameServiceImpl;
-    }
-
     @Override
     public void run() throws IOException, InvalidNameException {
+
         int component = gameUiView.askForInt("Was tun? 1 = Vocabmanagement Komponente starten  2 = Game Komponente starten");
 
         if (component == 1) {
-            gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
-            String action = gameUiView.askForListAction();
 
-            //if(action == "eins"){
+            gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
+        String action = gameUiView.askForListAction();
+
+        //if(action == "eins"){
             String languageLeft = gameUiView.askSomething("Welcher Hauptsprache soll die Liste angehören?");
             Language languageleftObj = languageServiceImpl.createLanguage(languageLeft);
 
@@ -101,7 +96,7 @@ public class GameUiControllerImpl implements GameUiController {
             System.out.println(vocabList.getCategory());
             System.out.println(vocabList.getFirstLanguage());
             System.out.println(vocabList.getSecLanguage());
-            //}
+        //}
         }
 
         else if(component == 2){
@@ -110,10 +105,12 @@ public class GameUiControllerImpl implements GameUiController {
             int vocablistId = gameUiView.askForInt("Gib uns die ID der gewünschten VocabListe");
 
             try {
+                gameUiView.printMessage("you creating a Game now.");
                 Game game = gameServiceImpl.createGame(User1Id, User2Id, vocablistId);
+                gameUiView.printMessage("you created a Game now.");
             } catch (InvalidUserException e) {
                 e.printStackTrace();
-            }
+           }
 
         }
 

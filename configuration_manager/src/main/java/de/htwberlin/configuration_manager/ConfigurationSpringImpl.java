@@ -2,7 +2,6 @@ package de.htwberlin.configuration_manager;
 
 import de.htwberlin.game_ui.impl.GameUiControllerImpl;
 import de.htwberlin.game_ui.inter.GameUiController;
-import de.htwberlin.usermanagement.inter.InvalidUserException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -15,9 +14,10 @@ public class ConfigurationSpringImpl {
 
     private static ConfigurableApplicationContext context = new AnnotationConfigApplicationContext("de.htwberlin");
 
-    public static void main(String[] args) throws IOException, InvalidNameException, de.htwberlin.vocabmanagement.inter.InvalidNameException, InvalidUserException {
+    public static void main(String[] args) throws IOException, InvalidNameException, de.htwberlin.vocabmanagement.inter.InvalidNameException {
         GameUiController ui = context.getBean(GameUiController.class);
-        ui.run();
+          ui.run();
+
           //Test
     }
 

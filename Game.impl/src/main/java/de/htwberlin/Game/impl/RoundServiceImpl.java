@@ -2,7 +2,9 @@ package de.htwberlin.Game.impl;
 
 import de.htwberlin.game.inter.Round;
 import de.htwberlin.game.inter.RoundService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RoundServiceImpl implements RoundService {
 
     //calculates the Winner of the Round and gives back a Integer

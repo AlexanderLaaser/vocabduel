@@ -1,4 +1,5 @@
 package de.htwberlin.Game.impl;
+
 import de.htwberlin.game.inter.Game;
 import de.htwberlin.game.inter.GameService;
 import de.htwberlin.game.inter.Round;
@@ -7,7 +8,6 @@ import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.stereotype.Component;
-
 
 import java.util.*;
 
@@ -18,7 +18,6 @@ public class GameServiceImpl implements GameService {
     private VocabList vocabList;
     private VocabListService vocabListService;
     private Game game;
-    private VocabItem vocabItem;
 
     @Override
     public Game createGame(int user1Id, int user2Id, int vocablistId) throws InvalidUserException {
@@ -40,7 +39,7 @@ public class GameServiceImpl implements GameService {
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
         System.out.println(game);
 
-        Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
+       // Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
 
         return game;
 
@@ -50,42 +49,43 @@ public class GameServiceImpl implements GameService {
 //          if id null create Test bundle for Testing
 //          delete later for getVocablist by ID
 
-            //create Testlists for VocabItem
-            List<String> testListVI, testListVI2, testListVI3, testListVI4;
-            testListVI = testListVI2 = testListVI3 = testListVI4 = null;
-            testListVI.add("test-engl1");
-            testListVI.add("different1");
-            testListVI2.add("test-engl2");
-            testListVI2.add("different2");
-            testListVI2.add("moredifferent2");
-            testListVI3.add("test-engl3");
-            testListVI4.add("test-engl4");
-            testListVI4.add("different4");
+        //create Testlists for VocabItem
+        List<String> testListVI, testListVI2, testListVI3, testListVI4;
+        testListVI = testListVI2 = testListVI3 = testListVI4 = new ArrayList<>();
+        testListVI.add("test-engl1");
+        testListVI.add("different1");
+        testListVI2.add("test-engl2");
+        testListVI2.add("different2");
+        testListVI2.add("moredifferent2");
+        testListVI3.add("test-engl3");
+        testListVI4.add("test-engl4");
+        testListVI4.add("different4");
 
-            //Test VocabItems for Itemlist with ID, vocabname and translationList
-            VocabItem tVI1 = new VocabItem(1L, "Test1", testListVI);
-            VocabItem tVI2 = new VocabItem(2L, "Test2", testListVI2);
-            VocabItem tVI3 = new VocabItem(3L, "Test3", testListVI3);
-            VocabItem tVI4 = new VocabItem(4L, "Test4", testListVI4);
+        //Test VocabItems for Itemlist with ID, vocabname and translationList
+        VocabItem tVI1 = new VocabItem(1L, "Test1", testListVI);
+        VocabItem tVI2 = new VocabItem(2L, "Test2", testListVI2);
+        VocabItem tVI3 = new VocabItem(3L, "Test3", testListVI3);
+        VocabItem tVI4 = new VocabItem(4L, "Test4", testListVI4);
 
-            //create ItemList for Vocablist
-            List<VocabItem> testItemList = null;
-            testItemList.add(tVI1);
-            testItemList.add(tVI2);
-            testItemList.add(tVI3);
-            testItemList.add(tVI4);
+        //create ItemList for Vocablist
+        List<VocabItem> testItemList = new ArrayList<>();
+        testItemList.add(tVI1);
+        testItemList.add(tVI2);
+        testItemList.add(tVI3);
+        testItemList.add(tVI4);
 
-            //create Vocablist
-            Map<String,List<VocabItem>> testMap = null;
-            testMap.put("Test", testItemList);
+        //create Vocablist
+        Map<String,List<VocabItem>> testMap = new HashMap<String, List<VocabItem>>();
+        testMap.put("Test", testItemList);
 
-            VocabList testVocabList = new VocabList(1L, new Language(1, "German"),
-                    new Language(2, "English"),
-                    new Category(1L, "Test"), testMap );
+        VocabList testVocabList = new VocabList(1L, new Language(1, "German"),
+                new Language(2, "English"),
+                new Category(1L, "Test"), testMap );
 
-            return testVocabList;
+        return testVocabList;
 
     };
+
 
 
 
