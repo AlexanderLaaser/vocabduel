@@ -1,6 +1,9 @@
 package de.htwberlin.game_ui.impl;
 
+import de.htwberlin.Game.impl.GameServiceImpl;
+import de.htwberlin.game.inter.Game;
 import de.htwberlin.game_ui.inter.GameUiController;
+import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
 import de.htwberlin.vocabmanagement.impl.LanguageServiceImpl;
 import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
@@ -24,19 +27,23 @@ public class GameUiControllerImpl implements GameUiController {
     private VocabItemServiceImpl vocabItemServiceImpl;
     private LanguageServiceImpl languageServiceImpl;
     private CategoryServiceImpl categoryServiceImpl;
+    private GameServiceImpl gameServiceImpl;
 
     public GameUiControllerImpl() {
         super();
     }
 
     @Autowired
-    public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl, VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl, CategoryServiceImpl categoryServiceImpl) {
+    public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl,
+                                VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl,
+                                CategoryServiceImpl categoryServiceImpl, GameServiceImpl gameServiceImpl) {
         super();
         this.gameUiView = gameuiView;
         this.vocabListServiceimpl = vocabListServiceimpl;
         this.vocabItemServiceImpl = vocabItemServiceImpl;
         this.languageServiceImpl = languageServiceImpl;
         this.categoryServiceImpl = categoryServiceImpl;
+        this.gameServiceImpl = gameServiceImpl;
     }
 
     public void setGameView(GameUiView gameView) {
@@ -61,7 +68,12 @@ public class GameUiControllerImpl implements GameUiController {
 
     @Override
     public void run() throws IOException, InvalidNameException {
-        gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
+
+        int component = gameUiView.askForInt("Was tun? 1 = Vocabmanagement Komponente starten  2 = Game Komponente starten");
+
+        if (component == 1) {
+
+            gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
         String action = gameUiView.askForListAction();
 
         //if(action == "eins"){
@@ -85,5 +97,22 @@ public class GameUiControllerImpl implements GameUiController {
             System.out.println(vocabList.getFirstLanguage());
             System.out.println(vocabList.getSecLanguage());
         //}
+        }
+
+        else if(component == 2){
+            int User1Id = gameUiView.askForInt("Gib uns die ID vom Game Host");
+            int User2Id = gameUiView.askForInt("Gib uns die ID vom Game Participant");
+            int vocablistId = gameUiView.askForInt("Gib uns die ID der gewünschten VocabListe");
+
+            try {
+                gameUiView.printMessage("you creating a Game now.");
+                Game game = gameServiceImpl.createGame(User1Id, User2Id, vocablistId);
+                gameUiView.printMessage("you created a Game now.");
+            } catch (InvalidUserException e) {
+                e.printStackTrace();
+           }
+
+        }
+
     }
 }

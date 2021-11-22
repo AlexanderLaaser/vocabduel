@@ -11,11 +11,13 @@
         <module name="game_ui.inter" />
         <module name="game.impl" />
         <module name="game_ui.impl" />
+        <module name="vocabduel.Game.inter" />
         <module name="vocabmanagement.impl" />
         <module name="vocabmanagement.inter" />
         <module name="Game.impl" />
         <module name="Game.inter" />
         <module name="configuration_manager" />
+        <module name="vocabduel.Game.impl" />
       </profile>
     </annotationProcessing>
   </component>

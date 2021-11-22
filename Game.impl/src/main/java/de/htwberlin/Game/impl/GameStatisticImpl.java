@@ -2,7 +2,9 @@ package de.htwberlin.Game.impl;
 
 import de.htwberlin.game.inter.GameStatistic;
 import de.htwberlin.game.inter.GameStatisticService;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GameStatisticImpl implements GameStatisticService {
 
     //combine the information of game

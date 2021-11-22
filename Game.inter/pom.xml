@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vocabduel.Game.inter</artifactId>
+    <artifactId>Game.inter</artifactId>
 
     <dependencies>
         <dependency>

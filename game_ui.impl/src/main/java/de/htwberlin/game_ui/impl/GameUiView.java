@@ -27,5 +27,13 @@ public class GameUiView {
 
         return input;
     }
+    public int askForInt(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System. in);
+        int input = scanner.nextInt();
+
+        return input;
+    }
+
 
 }
