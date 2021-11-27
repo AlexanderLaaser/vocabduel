@@ -25,6 +25,8 @@ public class GameUiControllerImpl implements GameUiController {
     private LanguageServiceImpl languageServiceImpl;
     private CategoryServiceImpl categoryServiceImpl;
 
+
+
     public GameUiControllerImpl() {
         super();
     }

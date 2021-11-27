@@ -17,8 +17,6 @@ public class ConfigurationSpringImpl {
     public static void main(String[] args) throws IOException, InvalidNameException, de.htwberlin.vocabmanagement.inter.InvalidNameException {
         GameUiController ui = context.getBean(GameUiController.class);
           ui.run();
-
-          //Test
     }
 
 }

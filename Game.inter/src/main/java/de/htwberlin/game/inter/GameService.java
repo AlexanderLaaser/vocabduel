@@ -1,6 +1,5 @@
 package de.htwberlin.game.inter;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
-import de.htwberlin.vocabmanagement.inter.VocabList;
 
 import java.util.List;
 import java.util.Map;
@@ -64,8 +63,4 @@ public interface GameService {
      * @return gibt eine LinkedHashmap zurück aus Key: Richtige Übersetzung Value; Array aus 3x falschen Übersetzung
      */
     Map<String, List<String>> generateCustomVocabSet(int anzahlRunden);
-
-    Round initRounds(int gameId, int roundId, int AnzahlRunden, VocabList vocabList);
-
-    Game initRounds(Game game, int AnzahlRunden, VocabList vocabList);
 }

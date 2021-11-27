@@ -5,52 +5,29 @@ import de.htwberlin.game.inter.Round;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
-import de.htwberlin.vocabmanagement.inter.*;
-import org.springframework.stereotype.Controller;
+import de.htwberlin.vocabmanagement.inter.VocabList;
+import de.htwberlin.vocabmanagement.inter.VocabListService;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
-@Controller
 public class GameServiceImpl implements GameService {
 
     private UserService userService;
     private VocabList vocabList;
     private VocabListService vocabListService;
-    private Game game;
 
     @Override
-    public Game createGame(int user1Id, int user2Id, int vocablistId) throws InvalidUserException {
-        // boolean usersExist = userService.allUserExist(int user1Id, int user2Id);
-        boolean usersExist = true;
+    public Game createGame(int user1, int user2, int vocablistId) throws InvalidUserException {
+        User userObj1 = userService.getUserById(user1);
+        User userObj2 = userService.getUserById(user2);
+        VocabList vocabListObj = vocabList.getVocabListByID(vocablistId);
+        validateUserMatch(user1,user2);
 
-        if(!usersExist){
-            //throw new UserNotFoundException();
-            throw new InvalidUserException("One User is not existing");
-        }
-
-        int gameID = 1;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Bitte geben sie eine Vocballist ID an. Auswahl 1, 2 ,3 oder 4");
-
-        int eingabe = 1;
-        //eingabe = scanner.nextInt();
-        System.out.println("Sie haben Liste " + eingabe +" gewählt");
-
-        User mockuser1 = new User(user1Id,"Peter", "Test","Supertester123", "qwer");
-        User mockuser2 = new User(user2Id,"Peter", "Test","Supertester123", "qwer");
-
-        //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
-        Game game = new Game(gameID, mockuser1, mockuser2, vocabList.getVocabListByID(vocablistId));
-
-        Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
-
+        Game game = new Game(1,userObj1,userObj2,vocabListObj);
         return game;
 
     }
-
-
 
     @Override
     public void validateUserMatch(int userId1, int userId2) throws InvalidUserException {
@@ -109,11 +86,6 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Round initRounds(int gameId, int roundId, int AnzahlRunden, VocabList vocabList) {
-        return null;
-    }
-
-    @Override
     public int getVocabListByCategory(String SearchCategoryName) {
         //Methode würde Vocablisten DB durchsuchen und eine VocablistenID zurückgeben
         return 1;
@@ -121,27 +93,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Round initRounds(int RoundId, int AnzahlRunden, Game game) {
-        return null;
-    }
+    public Round initRounds(int RoundId, int AnzahlRunden, Game game){
+        Map CustomVocabListmock = generateCustomVocabSet(AnzahlRunden);
+        Round round = new Round(RoundId,game,CustomVocabListmock);
 
-    @Override
-    public Game initRounds(Game game, int maxRounds, VocabList vocabList){
-
-        for (int i = 0; i < maxRounds; i++) {
-            //create VocabSet
-            Map vocabSet = null;
-
-            Round round = new Round(1, vocabSet);
-
-        }
-
-        Map CustomVocabListmock = generateCustomVocabSet(maxRounds);
-        Round round = new Round(1, game,CustomVocabListmock);
-
-        //game.add round()
-
-        return game;
+        return round;
 
     }
 }
