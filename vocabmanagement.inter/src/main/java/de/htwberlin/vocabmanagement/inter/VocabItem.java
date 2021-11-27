@@ -8,6 +8,7 @@ import java.util.List;
 public class VocabItem {
 
     @Id
+    @GeneratedValue
     @Column(name = "id")
     private Long vocabItemID;
     private String leftlan;

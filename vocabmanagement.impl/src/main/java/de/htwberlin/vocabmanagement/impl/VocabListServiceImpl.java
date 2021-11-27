@@ -15,7 +15,7 @@ public class VocabListServiceImpl implements VocabListService{
 
     //private VocabItemServiceImpl vocabItemServiceImpl;
 
-    public VocabList createVocabList(Map VocabItemList, Language languageLeft, Language languageRight, Category category) {
+    public VocabList createVocabList(List VocabItemList, Language languageLeft, Language languageRight, Category category) {
 
         VocabList vocablist = new VocabList(1L,languageLeft,languageRight,category,VocabItemList);
         return vocablist;

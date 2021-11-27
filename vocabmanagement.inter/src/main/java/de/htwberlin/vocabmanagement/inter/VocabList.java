@@ -1,17 +1,33 @@
 package de.htwberlin.vocabmanagement.inter;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
 
+@Entity
+@Table(name = "VocabList")
 public class VocabList {
 
+    @Id
+    @GeneratedValue
     private long listID;
-    private Language firstLanguage;
-    private Language secLanguage;
-    private Category category;
-    private Map<String, List<VocabItem>> itemlist;
 
-    public VocabList(long listID, Language first_language, Language sec_language, Category category, Map<String,List<VocabItem>> itemlist) {
+    @OneToOne
+    @Column(name = "Language")
+    private Language firstLanguage;
+
+    @OneToOne
+    @Column(name = "Language")
+    private Language secLanguage;
+
+    @OneToOne
+    @Column(name = "Category")
+    private Category category;
+
+    @ManyToMany
+    private List<VocabItem> itemlist;
+
+    public VocabList(long listID, Language first_language, Language sec_language, Category category, List<VocabItem> itemlist) {
         this.listID = listID;
         this.firstLanguage = first_language;
         this.secLanguage = sec_language;
@@ -26,7 +42,11 @@ public class VocabList {
         this.category = category;
     }
 
-    public void setVocabList(Map<String, List<VocabItem>> itemlist) {
+    public VocabList() {
+
+    }
+
+    public void setVocabList(List<VocabItem> itemlist) {
         this.itemlist = itemlist;
     }
 
@@ -62,12 +82,8 @@ public class VocabList {
         this.category = category;
     }
 
-    public Map<String, List<VocabItem>> getItemlist() {
+    public List<VocabItem> getItemlist() {
         return itemlist;
-    }
-
-    public void setVocabList(List<VocabItem> vocabList) {
-        vocabList = vocabList;
     }
 
     public VocabList getVocabListByID(int vocablistId) {
