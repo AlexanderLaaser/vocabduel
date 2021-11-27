@@ -24,7 +24,7 @@ public interface VocabListService {
      * erstellt eine Vocabelliste aus mehreren Vocabitems
      * @param VocabItemList Liste von VocabItem Objekten
      */
-    VocabList createVocabList(Map VocabItemList, Language languageLeft, Language languageRight, Category category);
+    VocabList createVocabList(List VocabItemList, Language languageLeft, Language languageRight, Category category);
 
     /**
      *

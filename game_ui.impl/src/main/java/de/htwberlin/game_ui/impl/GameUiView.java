@@ -20,10 +20,17 @@ public class GameUiView {
         return input;
     }
 
-    public String askSomething(String message) {
+    public String askSomethingString(String message) {
         System.out.println(message);
         Scanner scanner = new Scanner(System. in);
-        String input = scanner. nextLine();
+        String input = scanner.nextLine();
+        return input;
+    }
+
+    public int askSomethingInt(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System. in);
+        int input = scanner.nextInt();
 
         return input;
     }
@@ -34,6 +41,8 @@ public class GameUiView {
 
         return input;
     }
+
+
 
 
 }

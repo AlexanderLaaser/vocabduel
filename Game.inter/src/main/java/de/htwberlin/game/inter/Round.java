@@ -18,11 +18,6 @@ public class Round {
         this.vocabSet = vocabSet;
     }
 
-    public Round(int roundID, Map vocabSet) {
-        this.roundID = roundID;
-        this.vocabSet = vocabSet;
-    }
-
     public int getRoundID() {
         return roundID;
     }

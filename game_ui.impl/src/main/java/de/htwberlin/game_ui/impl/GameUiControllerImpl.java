@@ -1,9 +1,6 @@
 package de.htwberlin.game_ui.impl;
 
-import de.htwberlin.Game.impl.GameServiceImpl;
-import de.htwberlin.game.inter.Game;
 import de.htwberlin.game_ui.inter.GameUiController;
-import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
 import de.htwberlin.vocabmanagement.impl.LanguageServiceImpl;
 import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
@@ -27,23 +24,19 @@ public class GameUiControllerImpl implements GameUiController {
     private VocabItemServiceImpl vocabItemServiceImpl;
     private LanguageServiceImpl languageServiceImpl;
     private CategoryServiceImpl categoryServiceImpl;
-    private GameServiceImpl gameServiceImpl;
 
     public GameUiControllerImpl() {
         super();
     }
 
     @Autowired
-    public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl,
-                                VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl,
-                                CategoryServiceImpl categoryServiceImpl, GameServiceImpl gameServiceImpl) {
+    public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl, VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl, CategoryServiceImpl categoryServiceImpl) {
         super();
         this.gameUiView = gameuiView;
         this.vocabListServiceimpl = vocabListServiceimpl;
         this.vocabItemServiceImpl = vocabItemServiceImpl;
         this.languageServiceImpl = languageServiceImpl;
         this.categoryServiceImpl = categoryServiceImpl;
-        this.gameServiceImpl = gameServiceImpl;
     }
 
     public void setGameView(GameUiView gameView) {
@@ -69,50 +62,43 @@ public class GameUiControllerImpl implements GameUiController {
     @Override
     public void run() throws IOException, InvalidNameException {
 
-        int component = gameUiView.askForInt("Was tun? 1 = Vocabmanagement Komponente starten  2 = Game Komponente starten");
-
-        if (component == 1) {
-
-            gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
-        String action = gameUiView.askForListAction();
+        //gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
+        //String action = gameUiView.askForListAction();
 
         //if(action == "eins"){
-            String languageLeft = gameUiView.askSomething("Welcher Hauptsprache soll die Liste angehören?");
-            Language languageleftObj = languageServiceImpl.createLanguage(languageLeft);
+            //String languageLeft = gameUiView.askSomething("Welcher Hauptsprache soll die Liste angehören?");
+            //Language languageleftObj = languageServiceImpl.createLanguage(languageLeft);
 
-            String languageRight = gameUiView.askSomething("Welcher Fremdsprache soll die Liste angehören?");
-            Language languagerightObj = languageServiceImpl.createLanguage(languageRight);
+            //String languageRight = gameUiView.askSomething("Welcher Fremdsprache soll die Liste angehören?");
+            //Language languagerightObj = languageServiceImpl.createLanguage(languageRight);
 
-            String category = gameUiView.askSomething("Welcher Kategorie soll die Liste angehören?");
-            Category categoryObj = categoryServiceImpl.createCategory(category);
+            String categoryName = gameUiView.askSomethingString("Welcher Kategorie soll die Liste angehören?");
+            Category categoryObj = categoryServiceImpl.createCategory(categoryName);
 
-            String pfad = gameUiView.askSomething("Von welchem Pfad soll die Liste eingelesen werden?");
-            Map tempMap = vocabListServiceimpl.importVocabStringsFromTextFile(pfad);
+            while(categoryObj == null){
+                int CatAnswer = gameUiView.askSomethingInt("Diese Kategorie ist schon vorhanden. Möchtest du sie benutzen (1) oder eine neue erstellen (2)?");
+                if(CatAnswer == 1){
+                    categoryObj = categoryServiceImpl.getCategoryByCategoryName(categoryName);
+                    System.out.println("ObjID nach DB:" + categoryObj.getCategoryID());
+                }else{
+                    String categoryName1 = gameUiView.askSomethingString("Welcher Kategorie soll die Liste angehören?");
+                    categoryObj = categoryServiceImpl.createCategory(categoryName1);
+                }
+            }
 
-            VocabList vocabList = vocabListServiceimpl.createVocabList(tempMap,languageleftObj,languagerightObj,categoryObj);
+            System.out.println("ObjID nach DB2:" + categoryObj.getCategoryID());
 
-            System.out.print(tempMap);
-            System.out.println(vocabList.getItemlist());
-            System.out.println(vocabList.getCategory());
-            System.out.println(vocabList.getFirstLanguage());
-            System.out.println(vocabList.getSecLanguage());
+            //String pfad = gameUiView.askSomething("Von welchem Pfad soll die Liste eingelesen werden?");
+            //Fehler mit Listenerstellung
+            //List tempMap = vocabListServiceimpl.importVocabStringsFromTextFile(pfad);
+
+            //VocabList vocabList = vocabListServiceimpl.createVocabList(tempMap,languageleftObj,languagerightObj,categoryObj);
+
+            //System.out.print(tempMap);
+            //System.out.println(vocabList.getItemlist());
+            //System.out.println(vocabList.getCategory());
+            //System.out.println(vocabList.getFirstLanguage());
+            //System.out.println(vocabList.getSecLanguage());
         //}
-        }
-
-        else if(component == 2){
-            int User1Id = gameUiView.askForInt("Gib uns die ID vom Game Host");
-            int User2Id = gameUiView.askForInt("Gib uns die ID vom Game Participant");
-            int vocablistId = gameUiView.askForInt("Gib uns die ID der gewünschten VocabListe");
-
-            try {
-                gameUiView.printMessage("you creating a Game now.");
-                Game game = gameServiceImpl.createGame(User1Id, User2Id, vocablistId);
-                gameUiView.printMessage("you created a Game now.");
-            } catch (InvalidUserException e) {
-                e.printStackTrace();
-           }
-
-        }
-
     }
 }
