@@ -1,6 +1,7 @@
 package de.htwberlin.vocabmanagement.inter;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,10 +11,13 @@ public class Language {
 
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private long languageID;
+
+    @Column(name = "languagename")
     private String LanguageName;
 
-    public Language(long languageID, String languageName) {
+    public Language(String languageName) {
         this.languageID = languageID;
         LanguageName = languageName;
     }

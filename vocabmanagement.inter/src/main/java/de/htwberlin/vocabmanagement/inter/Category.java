@@ -10,7 +10,7 @@ public class Category {
     @Column(name = "id")
     private Long categoryID;
 
-    @Column(name = "categoryname")
+    @Column(name = "categoryName")
     private String categoryName;
 
     public Category(Long categoryID, String categoryName) {

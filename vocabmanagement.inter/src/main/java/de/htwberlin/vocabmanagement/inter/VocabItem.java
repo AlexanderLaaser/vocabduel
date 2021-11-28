@@ -12,14 +12,12 @@ public class VocabItem {
     @Column(name = "id")
     private Long vocabItemID;
     private String leftlan;
-    @Transient
     @ElementCollection
-    @CollectionTable(name = "rightlan", joinColumns = @JoinColumn(name = "id"))
-    @OrderColumn
+    @CollectionTable(name = "Translations", joinColumns = @JoinColumn(name = "id")) // 2
+    @Column(name = "TranslationContent") // 3
     private List<String> rightlan;
 
-    public VocabItem(Long vocabItemID, String vocabName, List<String> translations) {
-        this.vocabItemID = vocabItemID;
+    public VocabItem(String vocabName, List<String> translations) {
         this.leftlan = vocabName;
         this.rightlan = translations;
     }

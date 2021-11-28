@@ -5,16 +5,11 @@ import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
 import de.htwberlin.vocabmanagement.impl.LanguageServiceImpl;
 import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
 import de.htwberlin.vocabmanagement.impl.VocabListServiceImpl;
-import de.htwberlin.vocabmanagement.inter.Category;
-import de.htwberlin.vocabmanagement.inter.InvalidNameException;
-import de.htwberlin.vocabmanagement.inter.Language;
-import de.htwberlin.vocabmanagement.inter.VocabList;
+import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class GameUiControllerImpl implements GameUiController {
@@ -62,43 +57,54 @@ public class GameUiControllerImpl implements GameUiController {
     @Override
     public void run() throws IOException, InvalidNameException {
 
-        //gameUiView.printMessage("Die Vocabmanagement Komponente wird gestartet:");
-        //String action = gameUiView.askForListAction();
+        gameUiView.printMessage("Die App wird gestartet:");
+        int action = gameUiView.askForAction();
 
-        //if(action == "eins"){
-            //String languageLeft = gameUiView.askSomething("Welcher Hauptsprache soll die Liste angehören?");
-            //Language languageleftObj = languageServiceImpl.createLanguage(languageLeft);
+        if(action == 1){
 
-            //String languageRight = gameUiView.askSomething("Welcher Fremdsprache soll die Liste angehören?");
-            //Language languagerightObj = languageServiceImpl.createLanguage(languageRight);
+            gameUiView.printMessage("Willkommen in der Vokabelverwaltung:");
+            int listAction = gameUiView.askForListAction();
 
-            String categoryName = gameUiView.askSomethingString("Welcher Kategorie soll die Liste angehören?");
-            Category categoryObj = categoryServiceImpl.createCategory(categoryName);
+            //Alle Vokabellisten anzeigen
+            if(listAction == 1) {
+                vocabListServiceimpl.prepareExistingListsForOutput();
 
-            while(categoryObj == null){
-                int CatAnswer = gameUiView.askSomethingInt("Diese Kategorie ist schon vorhanden. Möchtest du sie benutzen (1) oder eine neue erstellen (2)?");
-                if(CatAnswer == 1){
-                    categoryObj = categoryServiceImpl.getCategoryByCategoryName(categoryName);
-                    System.out.println("ObjID nach DB:" + categoryObj.getCategoryID());
-                }else{
-                    String categoryName1 = gameUiView.askSomethingString("Welcher Kategorie soll die Liste angehören?");
-                    categoryObj = categoryServiceImpl.createCategory(categoryName1);
-                }
+            //Vokabeln für bestehende Liste anzeigen (Input: ID)
+            }else if(listAction == 2){
+                Long listenIDShow = gameUiView.askSomethingLong("Welche Liste möchten sie anzeigen (Input = ListenID)?");
+                vocabListServiceimpl.getAllItemsInVocabList(listenIDShow);
+
+                //Vocabelliste erstellen
+            }else if(listAction == 3){
+                String languageLeft = gameUiView.askSomethingString("Welcher Hauptsprache soll die Liste angehören?");
+                Language languageleftObj = languageServiceImpl.createLanguage(languageLeft);
+
+                String languageRight = gameUiView.askSomethingString("Welcher Fremdsprache soll die Liste angehören?");
+                Language languagerightObj = languageServiceImpl.createLanguage(languageRight);
+
+                String categoryName = gameUiView.askSomethingString("Welcher Kategorie soll die Liste angehören?");
+                Category categoryObj = categoryServiceImpl.createCategory(categoryName);
+
+                String pfad = gameUiView.askSomethingString("Von welchem Pfad soll die Liste eingelesen werden?");
+                List<VocabItem> VocabItemList = vocabItemServiceImpl.createVocabItemOufOfMap(vocabListServiceimpl.importVocabStringsFromTextFile(pfad));
+
+                VocabList vocabList = vocabListServiceimpl.createVocabList(VocabItemList, languageleftObj, languagerightObj, categoryObj);
+
+            //Vokabeln manuell zu bestehender Liste hinzufügen
+            }else if(listAction == 4){
+                System.out.println("Noch nicht implementiert!");
+
+            //Textfiles zur bestehenden Vokabelliste hinzufügen
+            }else if(listAction == 5){
+                System.out.println("Noch nicht implementiert!");
+
+            //Vokabelliste löschen
+            }else if(listAction == 6){
+                int deleteAction = gameUiView.askSomethingInt("Welche Liste möchten sie löschen (Input = ListenID)?");
+                //getbyId ausimplementieren, sodass eine Überprüfung durchgeführt werden kann
+                vocabListServiceimpl.deleteVocabListbyId(deleteAction);
             }
-
-            System.out.println("ObjID nach DB2:" + categoryObj.getCategoryID());
-
-            //String pfad = gameUiView.askSomething("Von welchem Pfad soll die Liste eingelesen werden?");
-            //Fehler mit Listenerstellung
-            //List tempMap = vocabListServiceimpl.importVocabStringsFromTextFile(pfad);
-
-            //VocabList vocabList = vocabListServiceimpl.createVocabList(tempMap,languageleftObj,languagerightObj,categoryObj);
-
-            //System.out.print(tempMap);
-            //System.out.println(vocabList.getItemlist());
-            //System.out.println(vocabList.getCategory());
-            //System.out.println(vocabList.getFirstLanguage());
-            //System.out.println(vocabList.getSecLanguage());
-        //}
+        }else if(action ==2){
+        }
     }
 }

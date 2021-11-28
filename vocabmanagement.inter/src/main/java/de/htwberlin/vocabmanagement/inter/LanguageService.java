@@ -7,5 +7,5 @@ public interface LanguageService {
      * @param LanguageName - Name der Sprache
      * @return ein Sprachen-Objekt
      */
-    Language createLanguage(String LanguageName);
+    Language createLanguage(String LanguageName) throws InvalidNameException;
 }

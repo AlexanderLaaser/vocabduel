@@ -2,6 +2,11 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,13 +18,16 @@ import java.util.Map;
 @Component
 public class VocabListServiceImpl implements VocabListService{
 
-    //private VocabItemServiceImpl vocabItemServiceImpl;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+    private EntityManager em = emf.createEntityManager();
 
-    public VocabList createVocabList(List VocabItemList, Language languageLeft, Language languageRight, Category category) {
+    public VocabList createVocabList(List<VocabItem> VocabItemList, Language languageLeft, Language languageRight, Category category) {
+        VocabList vocablist = new VocabList(VocabItemList,languageLeft,languageRight,category);
+        em.getTransaction().begin();
+        em.persist(vocablist);
+        em.getTransaction().commit();
 
-        VocabList vocablist = new VocabList(1L,languageLeft,languageRight,category,VocabItemList);
         return vocablist;
-
     }
 
     public VocabList getVocabListByID(long VocabListId){
@@ -35,22 +43,7 @@ public class VocabListServiceImpl implements VocabListService{
     }
 
     @Override
-    public List<String> getAllItemsInVocabList(VocabList vocabList) {
-
-        Map map = (Map) vocabList;
-
-        for (Object key : map.keySet())
-        {
-            // Erstellt pro Map ein Item Objekt
-            //vocabItemServiceImpl.createVocabItem(key,map.get(key));
-            //System.out.println(key + " : " + map.get(key));
-        }
-
-        return null;
-    }
-
-    @Override
-    public Map importVocabStringsFromTextFile(String filename) throws IOException {
+    public HashMap importVocabStringsFromTextFile(String filename) throws IOException {
 
         String filePath = filename;
         HashMap<String, List<String>> map = new HashMap<String, List<String>>();
@@ -85,20 +78,47 @@ public class VocabListServiceImpl implements VocabListService{
                 System.out.println("ignoring line: " + line);
             }
         }
-
-        for (String key : map.keySet())
-        {
-            // Erstellt pro Map ein Item Objekt
-            //vocabItemServiceImpl.createVocabItem(key,map.get(key));
-            //System.out.println(key + " : " + map.get(key));
-        }
         reader.close();
-
         return map;
     }
 
     @Override
-    public void deleteVocabList(int VocabListId) {
+    public void deleteVocabListbyId(int VocabListId) {
 
     }
+
+    public List<VocabList> getAllExistingVocabLists(){
+
+        em.getTransaction().begin();
+        TypedQuery<VocabList> vl = em.createQuery("SELECT vl FROM VocabList AS vl", VocabList.class);
+        List<VocabList> VocabListResult = vl.getResultList();
+        em.getTransaction().commit();
+        return VocabListResult;
+    }
+
+    //Kann man auch in UI view machen
+    public void prepareExistingListsForOutput(){
+
+        for (int i = 0; i < getAllExistingVocabLists().size(); i++) {
+            VocabList vocabList = getAllExistingVocabLists().get(i);
+            System.out.println("ID: " + vocabList.getListID() + " firstLanguage: " + vocabList.getFirstLanguage() + "secLanguage:" + vocabList.getSecLanguage());
+        }
+
+    }
+
+    public List<VocabItem> getAllItemsInVocabList(Long listenId) {
+        em.getTransaction().begin();
+        TypedQuery<VocabItem> vl = (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
+        vl.setParameter("listId", listenId);
+        List<VocabItem> items = vl.getResultList();
+        em.getTransaction().commit();
+
+        List<VocabItem> itemlist = new ArrayList<>();
+        for (VocabItem vocabItem: items) {
+            System.out.println(vocabItem.getVocabItemID());
+        }
+        return items;
+    }
+
+
 }

@@ -24,7 +24,7 @@ public interface VocabListService {
      * erstellt eine Vocabelliste aus mehreren Vocabitems
      * @param VocabItemList Liste von VocabItem Objekten
      */
-    VocabList createVocabList(List VocabItemList, Language languageLeft, Language languageRight, Category category);
+    VocabList createVocabList(List<VocabItem> VocabItemList, Language languageLeft, Language languageRight, Category category);
 
     /**
      *
@@ -36,7 +36,7 @@ public interface VocabListService {
     /**
      * @return - gibt eine Liste von VocabItem IDs zurück
      */
-    List<String> getAllItemsInVocabList(VocabList vocabList);
+    List<VocabList> getAllExistingVocabLists();
 
     /**
      * Methode liest Übersetzungen aus Textfiles ein und erstellt pro Json item eine Vocabitem String
@@ -47,6 +47,6 @@ public interface VocabListService {
      * Methode löscht eine bestehende VocabListe anhand der Listen ID
      * @param VocabListId
      */
-    void deleteVocabList(int VocabListId);
+    void deleteVocabListbyId(int VocabListId);
 
 }

@@ -1,11 +1,8 @@
 package de.htwberlin.vocabmanagement.impl;
-
 import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.CategoryService;
-
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,17 +17,16 @@ public class CategoryServiceImpl implements CategoryService {
     
     @Override
     public Category createCategory(String categoryName) throws InvalidNameException {
+        checkingCategoryName(categoryName);
 
         if(getCategoryByCategoryName(categoryName) == null){
             Category tempCat = new Category(categoryName);
-
             em.getTransaction().begin();
             em.persist(tempCat);
             em.getTransaction().commit();
-
             return tempCat;
         }else{
-            return null;
+            return getCategoryByCategoryName(categoryName);
         }
     }
 
