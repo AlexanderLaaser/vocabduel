@@ -1,8 +1,11 @@
 package de.htwberlin.Game.impl;
 
+import de.htwberlin.game.inter.Game;
 import de.htwberlin.game.inter.Round;
 import de.htwberlin.game.inter.RoundService;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 @Component
 public class RoundServiceImpl implements RoundService {
@@ -15,7 +18,11 @@ public class RoundServiceImpl implements RoundService {
     }
 
     @Override
-    public void createRound(){
+    public Game createRound(int roundId, Game game, Map vocabSet){
+        Round round = new Round(roundId, game, vocabSet);
+
+        return game;
+
 
     }
 

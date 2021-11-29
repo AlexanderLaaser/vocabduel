@@ -9,10 +9,18 @@ import de.htwberlin.usermanagement.inter.UserService;
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+
 import java.util.*;
 
 @Component
 public class GameServiceImpl implements GameService {
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+    private EntityManager em = emf.createEntityManager();
 
     private UserService userService;
     private VocabList vocabList;
@@ -38,7 +46,18 @@ public class GameServiceImpl implements GameService {
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
         System.out.println(game);
+        em.getTransaction().begin();
+        em.persist(game);
+        try{
 
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
+        em.getTransaction().commit();
+
+        initRounds(game, 3, vocabList);
        // Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
 
         return game;
@@ -85,9 +104,6 @@ public class GameServiceImpl implements GameService {
         return testVocabList;
 
     };
-
-
-
 
     @Override
     public void validateUserMatch(int userId1, int userId2) throws InvalidUserException {
@@ -158,27 +174,15 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Round initRounds(int RoundId, int AnzahlRunden, Game game) {
-        return null;
-    }
-
-
-    @Override
     public Game initRounds(Game game, int maxRounds, VocabList vocabList){
 
         for (int i = 0; i < maxRounds; i++) {
             //create VocabSet
             Map vocabSet = null;
-
-            Round round = new Round(1, vocabSet);
+            Round round = new Round(i, game, vocabSet);
+            game.getRounds().add(round);
 
         }
-
-        Map CustomVocabListmock = generateCustomVocabSet(maxRounds);
-        Round round = new Round(1, game,CustomVocabListmock);
-
-        //game.add round()
-
         return game;
 
     }

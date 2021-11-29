@@ -1,6 +1,7 @@
 package de.htwberlin.game_ui.impl;
 
 import de.htwberlin.Game.impl.GameServiceImpl;
+import de.htwberlin.Game.impl.RoundServiceImpl;
 import de.htwberlin.game.inter.Game;
 import de.htwberlin.game_ui.inter.GameUiController;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +30,7 @@ public class GameUiControllerImpl implements GameUiController {
     private LanguageServiceImpl languageServiceImpl;
     private CategoryServiceImpl categoryServiceImpl;
     private GameServiceImpl gameServiceImpl;
+    private RoundServiceImpl roundServiceImpl;
 
     public GameUiControllerImpl() {
         super();
@@ -36,7 +39,7 @@ public class GameUiControllerImpl implements GameUiController {
     @Autowired
     public GameUiControllerImpl(GameUiView gameuiView, VocabListServiceImpl vocabListServiceimpl,
                                 VocabItemServiceImpl vocabItemServiceImpl, LanguageServiceImpl languageServiceImpl,
-                                CategoryServiceImpl categoryServiceImpl, GameServiceImpl gameServiceImpl) {
+                                CategoryServiceImpl categoryServiceImpl, GameServiceImpl gameServiceImpl, RoundServiceImpl roundServiceImpl) {
         super();
         this.gameUiView = gameuiView;
         this.vocabListServiceimpl = vocabListServiceimpl;
@@ -44,6 +47,7 @@ public class GameUiControllerImpl implements GameUiController {
         this.languageServiceImpl = languageServiceImpl;
         this.categoryServiceImpl = categoryServiceImpl;
         this.gameServiceImpl = gameServiceImpl;
+        this.roundServiceImpl = roundServiceImpl;
     }
 
     public void setGameView(GameUiView gameView) {
@@ -108,9 +112,16 @@ public class GameUiControllerImpl implements GameUiController {
                 gameUiView.printMessage("you creating a Game now.");
                 Game game = gameServiceImpl.createGame(User1Id, User2Id, vocablistId);
                 gameUiView.printMessage("you created a Game now.");
+
+                gameUiView.printMessage(game.getGameOwner().toString());
+                gameUiView.printMessage(game.getRounds().getClass().toString());
+
+
             } catch (InvalidUserException e) {
                 e.printStackTrace();
            }
+
+
 
         }
 
