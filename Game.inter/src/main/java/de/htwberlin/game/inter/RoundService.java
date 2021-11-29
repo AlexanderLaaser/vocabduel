@@ -1,5 +1,7 @@
 package de.htwberlin.game.inter;
 
+import java.util.Map;
+
 public interface RoundService {
 
     /**
@@ -11,7 +13,7 @@ public interface RoundService {
 
     int calculateRoundResults(Round round);
 
-    void createRound();
+    Game createRound(int roundId, Game game, Map vocabSet);
 
     void initNextQuestion(Round round);
 }

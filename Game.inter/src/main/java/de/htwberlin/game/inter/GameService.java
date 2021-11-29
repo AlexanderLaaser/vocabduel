@@ -19,15 +19,6 @@ public interface GameService {
     Game createGame(int userId1, int userId2, int vocabListId) throws InvalidUserException;
 
     /**
-     * Initialisiert Runden Objekt
-     * @param RoundId - Id der Runde
-     * @param AnzahlRunden - Anzahl der zu spielenden Runden
-     * @param game - Game Objekt
-     * @return Runden Objekt
-     */
-    Round initRounds(int RoundId, int AnzahlRunden, Game game);
-
-    /**
      * Methode gibt Category ID einer Vocablist mit dem Category Namen des params categoryName
      * @param categoryName - gesuchter Name der VocabList
      * @return ID der VocabList mit dem Namen categoryName
@@ -67,5 +58,12 @@ public interface GameService {
 
     Round initRounds(int gameId, int roundId, int AnzahlRunden, VocabList vocabList);
 
-    Game initRounds(Game game, int AnzahlRunden, VocabList vocabList);
+    /**
+     * Initialisiert Runden Objekt
+     * @param game - Game Objekt
+     * @param anzahlRunden - Anzahl der zu spielenden Runden
+     * @param vocabList - Liste mit Voabeln für das Game
+     * @return Runden Objekt
+     */
+    Game initRounds(Game game, int anzahlRunden, VocabList vocabList);
 }
