@@ -4,10 +4,6 @@ import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
-import java.util.HashSet;
-import java.util.Set;
-
-
 public class Game {
 
     private int gameID;
@@ -16,17 +12,12 @@ public class Game {
     private VocabList vocablist;
     private GameStatistic gameStatistic;
     private Category gameCategory;
-    private Set<Round> rounds;
 
     public Game(int gameID, User gameOwner, User gamePartner, VocabList vocablist) {
         this.gameID = gameID;
         GameOwner = gameOwner;
         GamePartner = gamePartner;
         this.vocablist = vocablist;
-        if (this.rounds == null) {
-            this.rounds = new HashSet<Round>();
-        }
-
     }
 
     public int getGameID() {
@@ -75,13 +66,5 @@ public class Game {
 
     public void setGameCategory(Category gameCategory) {
         this.gameCategory = gameCategory;
-    }
-
-    public Set<Round> getRounds() {
-        return rounds;
-    }
-
-    public void setRounds(Set<Round> rounds) {
-        this.rounds = rounds;
     }
 }

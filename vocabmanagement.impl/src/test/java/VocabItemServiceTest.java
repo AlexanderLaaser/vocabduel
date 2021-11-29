@@ -5,10 +5,18 @@ import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabItemService;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VocabItemServiceTest {
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+    private EntityManager em = emf.createEntityManager();
 
     private VocabItemService vocService;
     private String testLeftLan;
@@ -51,4 +59,44 @@ public class VocabItemServiceTest {
 
         VocabItem vocabItem = vocService.createVocabItem(testLeftLan, testRightLan);
     }
+
+    public static String serialize(List<String> dataList){
+
+        StringBuilder dataBuilder = new StringBuilder("[");
+        dataList.forEach((data) -> {
+            dataBuilder.append(data);
+        });
+        return dataBuilder.append("]").toString();
+    }
+
+    @Test
+    public void testInsertVocabItemInDB(){
+
+        //Arrange
+        testRightLan.add("examen");
+        VocabItem vocabItem = new VocabItem("sprachelink",testRightLan);
+        //Act
+        em.getTransaction().begin();
+        em.persist(vocabItem);
+        em.getTransaction().commit();
+        //Assert
+    }
+
+    @Test
+    public List<VocabItem> getAllItemsInVocabList() {
+        em.getTransaction().begin();
+        TypedQuery<VocabItem> vl = (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID=248");
+        //vl.setParameter("listId", String.valueOf(vocabListId));
+        List<VocabItem> items = vl.getResultList();
+        em.getTransaction().commit();
+
+        List<VocabItem> itemlist = new ArrayList<>();
+        for (VocabItem vocabItem: items) {
+            System.out.println(vocabItem.getVocabItemID());
+        }
+        return items;
+    }
+
+
+
 }

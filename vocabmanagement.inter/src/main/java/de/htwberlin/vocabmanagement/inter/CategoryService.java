@@ -15,5 +15,5 @@ public interface CategoryService {
      * @param categoryName
      * @return
      */
-    Category checkingForDuplicates(String categoryName);
+    Category getCategoryByCategoryName(String categoryName);
 }
