@@ -9,10 +9,18 @@ import de.htwberlin.usermanagement.inter.UserService;
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+
 import java.util.*;
 
 @Component
 public class GameServiceImpl implements GameService {
+
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+    private EntityManager em = emf.createEntityManager();
 
     private UserService userService;
     private VocabList vocabList;
@@ -38,6 +46,16 @@ public class GameServiceImpl implements GameService {
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
         System.out.println(game);
+        em.getTransaction().begin();
+        em.persist(game);
+        try{
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+
+        em.getTransaction().commit();
 
         initRounds(game, 3, vocabList);
        // Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
