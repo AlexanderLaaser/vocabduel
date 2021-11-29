@@ -10,7 +10,7 @@ import javax.naming.InvalidNameException;
 import java.io.IOException;
 
 
-public class ConfigurationSpringImpl {
+public class App {
 
     private static ConfigurableApplicationContext context = new AnnotationConfigApplicationContext("de.htwberlin");
 

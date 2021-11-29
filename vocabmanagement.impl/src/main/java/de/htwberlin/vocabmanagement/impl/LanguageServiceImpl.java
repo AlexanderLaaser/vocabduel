@@ -1,46 +1,36 @@
 package de.htwberlin.vocabmanagement.impl;
 
-import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 import de.htwberlin.vocabmanagement.inter.Language;
 import de.htwberlin.vocabmanagement.inter.LanguageService;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import java.util.List;
+import javax.transaction.Transactional;
 
 @Component
 public class LanguageServiceImpl implements LanguageService {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
-    private EntityManager em = emf.createEntityManager();
+    private LanguageDaoImpl languageDao;
 
     @Override
+    @Transactional
     public Language createLanguage(String languageName) throws InvalidNameException {
         checkingLanguageName(languageName);
 
         if(getLanguageByLanguageName(languageName) == null){
             Language tempLanguage = new Language(languageName);
-            em.getTransaction().begin();
-            em.persist(tempLanguage);
-            em.getTransaction().commit();
+            languageDao.saveLanguage(tempLanguage);
             return tempLanguage;
         }else{
             return getLanguageByLanguageName(languageName);
         }
     }
 
-    public Language getLanguageByLanguageName(String LanguageName) {
-        em.getTransaction().begin();
-        TypedQuery<Language> q = em.createQuery("SELECT l FROM Language AS l WHERE l.LanguageName LIKE :pattern", Language.class);
-        q.setParameter("pattern", LanguageName);
-        List<Language> LanguageResult = q.getResultList();
-        em.getTransaction().commit();
-        if(!LanguageResult.isEmpty()){
-            Language language = LanguageResult.get(0);
+    @Override
+    @Transactional
+    public Language getLanguageByLanguageName(String languageName) {
+        if(!languageDao.getLanguageByLanguageName(languageName).isEmpty()){
+            Language language = languageDao.getLanguageByLanguageName(languageName).get(0);
             return language;
         }else{
             return null;

@@ -21,7 +21,6 @@ public class VocabItemServiceImpl implements VocabItemService {
 
     @Override
     public VocabItem createVocabItem(String leftLan, List<String> rightLan) {
-
         VocabItem vocabItem = new VocabItem(leftLan, rightLan);
 
         em.getTransaction().begin();
@@ -32,14 +31,12 @@ public class VocabItemServiceImpl implements VocabItemService {
     }
 
     public List<VocabItem> createVocabItemOufOfMap(Map<String, List<String>> map){
-
         List<VocabItem> VocabItemList = new ArrayList<VocabItem>();
 
         for (String key : map.keySet())
         {
             VocabItem vocabItem = createVocabItem(key,map.get(key));
             VocabItemList.add(vocabItem);
-
         }
 
         return VocabItemList;

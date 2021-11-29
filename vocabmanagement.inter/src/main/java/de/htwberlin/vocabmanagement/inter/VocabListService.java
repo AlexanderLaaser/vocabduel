@@ -47,6 +47,10 @@ public interface VocabListService {
      * Methode löscht eine bestehende VocabListe anhand der Listen ID
      * @param VocabListId
      */
-    void deleteVocabListbyId(int VocabListId);
+    void deleteVocabListbyId(Long VocabListId);
+
+    List<VocabItem> getAllItemsInVocabList(Long listenId);
+
+
 
 }
