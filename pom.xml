@@ -13,8 +13,8 @@
         <module>vocabmanagement.inter</module>
         <module>usermanagement.impl</module>
         <module>usermanagement.inter</module>
-        <module>Game.impl</module>
-        <module>Game.inter</module>
+        <module>game.impl</module>
+        <module>game.inter</module>
         <module>configuration_manager</module>
         <module>game_ui.inter</module>
         <module>game_ui.impl</module>

@@ -1,7 +1,7 @@
 package de.htwberlin.game_ui.impl;
 
-import de.htwberlin.game.inter.GameService;
 import de.htwberlin.game.inter.Game;
+import de.htwberlin.game.inter.GameService;
 import de.htwberlin.game_ui.inter.GameUiController;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
