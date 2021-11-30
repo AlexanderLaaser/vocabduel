@@ -46,10 +46,10 @@ public class GameServiceImpl implements GameService {
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
         System.out.println(game);
-        em.getTransaction().begin();
-        em.persist(game);
-        try{
 
+        try{
+            em.getTransaction().begin();
+            em.persist(game);
         }
         catch (Exception e){
             System.out.println(e);
