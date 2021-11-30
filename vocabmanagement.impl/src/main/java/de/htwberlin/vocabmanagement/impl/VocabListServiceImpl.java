@@ -2,24 +2,30 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.stereotype.Component;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class VocabListServiceImpl implements VocabListService{
 
-    //private VocabItemServiceImpl vocabItemServiceImpl;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+    private EntityManager em = emf.createEntityManager();
 
-    public VocabList createVocabList(Map VocabItemList, Language languageLeft, Language languageRight, Category category) {
+    public VocabList createVocabList(List<VocabItem> VocabItemList, Language languageLeft, Language languageRight, Category category) {
+        VocabList vocablist = new VocabList(VocabItemList,languageLeft,languageRight,category);
+        em.getTransaction().begin();
+        em.persist(vocablist);
+        em.getTransaction().commit();
 
-        VocabList vocablist = new VocabList(1L,languageLeft,languageRight,category,VocabItemList);
         return vocablist;
-
     }
 
     public VocabList getVocabListByID(long VocabListId){
@@ -35,22 +41,7 @@ public class VocabListServiceImpl implements VocabListService{
     }
 
     @Override
-    public List<String> getAllItemsInVocabList(VocabList vocabList) {
-
-        Map map = (Map) vocabList;
-
-        for (Object key : map.keySet())
-        {
-            // Erstellt pro Map ein Item Objekt
-            //vocabItemServiceImpl.createVocabItem(key,map.get(key));
-            //System.out.println(key + " : " + map.get(key));
-        }
-
-        return null;
-    }
-
-    @Override
-    public Map importVocabStringsFromTextFile(String filename) throws IOException {
+    public HashMap importVocabStringsFromTextFile(String filename) throws IOException {
 
         String filePath = filename;
         HashMap<String, List<String>> map = new HashMap<String, List<String>>();
@@ -85,20 +76,39 @@ public class VocabListServiceImpl implements VocabListService{
                 System.out.println("ignoring line: " + line);
             }
         }
-
-        for (String key : map.keySet())
-        {
-            // Erstellt pro Map ein Item Objekt
-            //vocabItemServiceImpl.createVocabItem(key,map.get(key));
-            //System.out.println(key + " : " + map.get(key));
-        }
         reader.close();
-
         return map;
     }
 
     @Override
-    public void deleteVocabList(int VocabListId) {
-
+    //ToDo Try Catch usw. schreiben
+    //ToDo Was passiert mit den entsprechenden Vokabeln wenn wir eine VocabList löschen?
+    public void deleteVocabListbyId(Long VocabListId) {
+            em.getTransaction().begin();
+            VocabList vocabList = em.find(VocabList.class, VocabListId);
+            em.remove(vocabList);
+            em.getTransaction().commit();
     }
+
+    public List<VocabList> getAllExistingVocabLists(){
+        em.getTransaction().begin();
+        TypedQuery<VocabList> vl = em.createQuery("SELECT vl FROM VocabList AS vl", VocabList.class);
+        List<VocabList> VocabListResult = vl.getResultList();
+        em.getTransaction().commit();
+
+        return VocabListResult;
+    }
+
+    public List<VocabItem> getAllItemsInVocabList(Long listenId) {
+        em.getTransaction().begin();
+        TypedQuery<VocabItem> vl = null;
+//                (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
+        vl.setParameter("listId", listenId);
+        List<VocabItem> items = vl.getResultList();
+        em.getTransaction().commit();
+
+        return items;
+    }
+
+
 }

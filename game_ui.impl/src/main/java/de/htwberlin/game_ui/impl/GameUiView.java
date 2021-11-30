@@ -11,19 +11,53 @@ public class GameUiView {
         System.out.println(message);
     }
 
-    public String askForListAction(){
+    public int askForAction(){
         System.out.println("Was möchten Sie tun?");
-        System.out.println("--eins = Neue Liste anlegen");
-        Scanner scanner = new Scanner(System. in);
-        String input = scanner. nextLine();
+        System.out.println("1 = Vokabelverwaltung öffnen");
+        System.out.println("2 = Userverwaltung öffnen");
+        System.out.println("3 = Spiel aus bestehenden Vokabeln starten");
+        System.out.println("4 = App sofort beenden");
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
 
         return input;
     }
 
-    public String askSomething(String message) {
+    public int askForListAction(){
+        System.out.println("Was möchten Sie tun?");
+        System.out.println("1 = Alle Vokabellisten anzeigen");
+        System.out.println("2 = Vokabeln für bestehende Liste anzeigen (Input: ID)");
+        System.out.println("3 = Neue Vokabelliste hinzufügen");
+        System.out.println("4 = Vokabeln manuell zu bestehender Liste hinzufügen");
+        System.out.println("5 = Textfiles zur bestehenden Vokabelliste hinzufügen");
+        System.out.println("6 = Bestehende Vokabelliste löschen");
+        System.out.println("7 = Ins App Menü zurückkehren");
+        System.out.println("8 = App sofort beenden");
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
+
+        return input;
+    }
+
+    public String askSomethingString(String message) {
         System.out.println(message);
         Scanner scanner = new Scanner(System. in);
-        String input = scanner. nextLine();
+        String input = scanner.nextLine();
+        return input;
+    }
+
+    public int askSomethingInt(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System. in);
+        int input = scanner.nextInt();
+
+        return input;
+    }
+
+    public long askSomethingLong(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System. in);
+        Long input = scanner.nextLong();
 
         return input;
     }
@@ -34,6 +68,8 @@ public class GameUiView {
 
         return input;
     }
+
+
 
 
 }

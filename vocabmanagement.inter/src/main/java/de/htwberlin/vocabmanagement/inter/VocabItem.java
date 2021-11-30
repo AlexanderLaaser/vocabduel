@@ -1,17 +1,29 @@
 package de.htwberlin.vocabmanagement.inter;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
+@Entity(name = "VocabItem")
 public class VocabItem {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private Long vocabItemID;
     private String leftlan;
+    @ElementCollection
+    @CollectionTable(name = "Translations", joinColumns = @JoinColumn(name = "id")) // 2
+    @Column(name = "TranslationContent") // 3
     private List<String> rightlan;
 
-    public VocabItem(Long vocabItemID, String vocabName, List<String> translations) {
-        this.vocabItemID = vocabItemID;
+    public VocabItem(String vocabName, List<String> translations) {
         this.leftlan = vocabName;
         this.rightlan = translations;
+    }
+
+    public VocabItem() {
+
     }
 
     public Long getVocabItemID() {

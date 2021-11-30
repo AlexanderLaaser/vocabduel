@@ -1,6 +1,7 @@
 package de.htwberlin.vocabmanagement.inter;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VocabItemService {
 
@@ -27,4 +28,6 @@ public interface VocabItemService {
      * @return VocabItem Objekt
      */
     VocabItem getVocabName (int VocabItemId);
+
+    List<VocabItem> createVocabItemOufOfMap(Map<String, List<String>> map);
 }
