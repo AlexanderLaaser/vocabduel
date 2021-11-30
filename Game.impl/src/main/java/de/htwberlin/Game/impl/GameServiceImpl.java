@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
-
 import java.util.*;
 
 @Component
@@ -22,10 +20,11 @@ public class GameServiceImpl implements GameService {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
     private EntityManager em = emf.createEntityManager();
 
-    private UserService userService;
-    private VocabList vocabList;
-    private VocabListService vocabListService;
-    private Game game;
+    private UserService uService;
+    private VocabList vL;
+    private VocabListService vLService;
+    private Game g;
+
 
     @Override
     public Game createGame(int user1Id, int user2Id, int vocablistId) throws InvalidUserException {
@@ -50,19 +49,26 @@ public class GameServiceImpl implements GameService {
         try{
             em.getTransaction().begin();
             em.persist(game);
+            em.getTransaction().commit();
+
         }
         catch (Exception e){
             System.out.println(e);
         }
 
-        em.getTransaction().commit();
 
-        initRounds(game, 3, vocabList);
-       // Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
+        initRounds(game, 3, getVocabList(1L));
+        // Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
 
         return game;
 
     }
+
+    @Override
+    public Round initRounds(int RoundId, int AnzahlRunden, Game game) {
+        return null;
+    }
+
     public VocabList getVocabList(Long id){
 
 //          if id null create Test bundle for Testing
@@ -106,8 +112,8 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void validateUserMatch(int userId1, int userId2) throws InvalidUserException {
-        User userObj1 = userService.getUserById(userId1);
-        User userObj2 = userService.getUserById(userId2);
+        User userObj1 = uService.getUserById(userId1);
+        User userObj2 = uService.getUserById(userId2);
 
         if(userObj1.getUserID() == userObj2.getUserID()){
             throw new InvalidUserException("Die angegebenen Nutzer sind ungültig!");
@@ -117,8 +123,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public void updateUserDataAfterGame(int userId) {
         // Einzelbeispiel zum Updaten der gespielten Spiele
-        User userObj1 = userService.getUserById(userId);
-        userService.increaseTotalGames(userId);
+        User userObj1 = uService.getUserById(userId);
+        uService.increaseTotalGames(userId);
     }
 
     @Override
@@ -178,6 +184,7 @@ public class GameServiceImpl implements GameService {
         for (int i = 0; i < maxRounds; i++) {
             //create VocabSet
             Map vocabSet = null;
+            vocabSet = generateVocabSets(maxRounds, vocabList, vocabSet);
             Round round = new Round(i, game, vocabSet);
             game.getRounds().add(round);
 
@@ -185,4 +192,22 @@ public class GameServiceImpl implements GameService {
         return game;
 
     }
+
+    public Map generateVocabSets(int maxRounds, VocabList vocablist, Map vocabSet){
+        Long listId = vocablist.getListID();
+        List<VocabItem> vListItems = vLService.getAllItemsInVocabList(listId);
+        List<String> questions = new ArrayList<String>();
+        int vocabLLength = 3;
+        for(int i = 0; i < maxRounds; i++){
+            int randomItem = getRandomNumberUsingNextInt(0, vocabLLength);
+            String Item = vListItems.get(randomItem).toString();
+            vocabSet.put(i, Item);
+        }
+        return vocabSet;
+    }
+    public int getRandomNumberUsingNextInt(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
+    }
+
 }

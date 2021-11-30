@@ -7,7 +7,6 @@ import de.htwberlin.vocabmanagement.inter.VocabList;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Game {
 
     private int gameID;
@@ -28,7 +27,6 @@ public class Game {
         }
 
     }
-
     public int getGameID() {
         return gameID;
     }
@@ -84,4 +82,5 @@ public class Game {
     public void setRounds(Set<Round> rounds) {
         this.rounds = rounds;
     }
+
 }

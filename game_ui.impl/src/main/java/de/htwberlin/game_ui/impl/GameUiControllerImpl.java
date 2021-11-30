@@ -1,6 +1,9 @@
 package de.htwberlin.game_ui.impl;
 
+import de.htwberlin.game.inter.Game;
+import de.htwberlin.game.inter.GameService;
 import de.htwberlin.game_ui.inter.GameUiController;
+import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
 import de.htwberlin.vocabmanagement.impl.LanguageServiceImpl;
 import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
@@ -8,6 +11,7 @@ import de.htwberlin.vocabmanagement.impl.VocabListServiceImpl;
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -19,19 +23,22 @@ public class GameUiControllerImpl implements GameUiController {
     private VocabItemService vocabItemService;
     private LanguageService languageService;
     private CategoryService categoryService;
+    private GameService gameService;
 
     public GameUiControllerImpl() {
         super();
     }
 
     @Autowired
-    public GameUiControllerImpl(GameUiView gameuiView, VocabListService vocabListService, VocabItemService vocabItemService, LanguageService languageService, CategoryService categoryService) {
+    public GameUiControllerImpl(GameUiView gameuiView, VocabListService vocabListService, VocabItemService vocabItemService,
+                                LanguageService languageService, CategoryService categoryService, GameService gameService) {
         super();
         this.gameUiView = gameuiView;
         this.vocabListService = vocabListService;
         this.vocabItemService = vocabItemService;
         this.languageService = languageService;
         this.categoryService = categoryService;
+        this.gameService = gameService;
     }
 
     public void setGameView(GameUiView gameView) {
@@ -145,7 +152,23 @@ public class GameUiControllerImpl implements GameUiController {
             }else if(action ==2){
                 System.out.println("Noch nicht implementiert!");
             }else if(action ==3){
-                System.out.println("Noch nicht implementiert!");
+                int User1Id = gameUiView.askSomethingInt("Gib uns die ID vom Game Host");
+                int User2Id = gameUiView.askSomethingInt("Gib uns die ID vom Game Participant");
+                int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
+
+                try {
+                    gameUiView.printMessage("you creating a Game now.");
+                    Game game = gameService.createGame(User1Id, User2Id, vocablistId);
+                    gameUiView.printMessage("you created a Game now.");
+
+                    gameUiView.printMessage(game.getGameOwner().toString());
+                    gameUiView.printMessage(game.getRounds().getClass().toString());
+
+
+                } catch (InvalidUserException e) {
+                    e.printStackTrace();
+                }
+
             }else if(action ==4){
                 System.exit(0);
             }

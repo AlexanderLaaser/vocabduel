@@ -1,4 +1,5 @@
 package de.htwberlin.game.inter;
+
 import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
@@ -17,6 +18,15 @@ public interface GameService {
      */
     //create a Game with 2 existing Users and one VocabList
     Game createGame(int userId1, int userId2, int vocabListId) throws InvalidUserException;
+
+    /**
+     * Initialisiert Runden Objekt
+     * @param RoundId - Id der Runde
+     * @param AnzahlRunden - Anzahl der zu spielenden Runden
+     * @param game - Game Objekt
+     * @return Runden Objekt
+     */
+    Round initRounds(int RoundId, int AnzahlRunden, Game game);
 
     /**
      * Methode gibt Category ID einer Vocablist mit dem Category Namen des params categoryName
@@ -56,6 +66,7 @@ public interface GameService {
      */
     Map<String, List<String>> generateCustomVocabSet(int anzahlRunden);
 
+
     Round initRounds(int gameId, int roundId, int AnzahlRunden, VocabList vocabList);
 
     /**
@@ -66,4 +77,5 @@ public interface GameService {
      * @return Runden Objekt
      */
     Game initRounds(Game game, int anzahlRunden, VocabList vocabList);
+
 }
