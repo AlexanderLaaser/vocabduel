@@ -81,10 +81,10 @@ public class GameServiceImpl implements GameService {
         testListVI4.add("different4");
 
         //Test VocabItems for Itemlist with ID, vocabname and translationList
-        VocabItem tVI1 = new VocabItem(1L, "Test1", testListVI);
-        VocabItem tVI2 = new VocabItem(2L, "Test2", testListVI2);
-        VocabItem tVI3 = new VocabItem(3L, "Test3", testListVI3);
-        VocabItem tVI4 = new VocabItem(4L, "Test4", testListVI4);
+        VocabItem tVI1 = new VocabItem("Test1", testListVI);
+        VocabItem tVI2 = new VocabItem("Test2", testListVI2);
+        VocabItem tVI3 = new VocabItem("Test3", testListVI3);
+        VocabItem tVI4 = new VocabItem("Test4", testListVI4);
 
         //create ItemList for Vocablist
         List<VocabItem> testItemList = new ArrayList<>();
@@ -97,9 +97,8 @@ public class GameServiceImpl implements GameService {
         Map<String,List<VocabItem>> testMap = new HashMap<String, List<VocabItem>>();
         testMap.put("Test", testItemList);
 
-        VocabList testVocabList = new VocabList(1L, new Language(1, "German"),
-                new Language(2, "English"),
-                new Category(1L, "Test"), testMap );
+        VocabList testVocabList = new VocabList(testItemList, new Language("German"),
+                new Language("English"), new Category("Test"));
 
         return testVocabList;
 
