@@ -13,8 +13,8 @@
         <module>vocabmanagement.inter</module>
         <module>usermanagement.impl</module>
         <module>usermanagement.inter</module>
-        <module>Game.impl</module>
-        <module>Game.inter</module>
+        <module>game.impl</module>
+        <module>game.inter</module>
         <module>configuration_manager</module>
         <module>game_ui.inter</module>
         <module>game_ui.impl</module>
@@ -46,12 +46,13 @@
             <version>5.6.0.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.0-api -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.2</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework</groupId>

@@ -1,36 +1,43 @@
 package de.htwberlin.game.inter;
 
-import de.htwberlin.usermanagement.inter.User;
+import javax.persistence.*;
+import java.util.ArrayList;
 
-import java.util.Map;
-
+@Entity
 public class Round {
 
+    @Id
+    @Column(name = "roundId")
     private int roundID;
-    private Game game;
-    private Map vocabSet;
-    private int roundNumber;
-    private User winningUser;
 
-    public Round(int roundID, Game game, Map vocabSet) {
+    @ElementCollection
+    private ArrayList<String> vocabSet;
+
+    private int roundNumber;
+    private int winningUser;
+    private String rightAnswer;
+
+    private String answerPlayer1;
+    private String answerPlayer2;
+
+    public Round(int roundID, ArrayList vocabSet) {
         this.roundID = roundID;
-        this.game = game;
         this.vocabSet = vocabSet;
+    }
+
+    public Round() {
+
     }
 
     public int getRoundID() {
         return roundID;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
     public int getRoundNumber() {
         return roundNumber;
     }
 
-    public User getWinningUser() {
+    public int getWinningUser() {
         return winningUser;
     }
 
@@ -38,23 +45,43 @@ public class Round {
         this.roundID = roundID;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
     public void setRoundNumber(int roundNumber) {
         this.roundNumber = roundNumber;
     }
 
-    public void setWinningUser(User winningUser) {
+    public void setWinningUser(int winningUser) {
         this.winningUser = winningUser;
     }
 
-    public Map getVocabSet() {
+    public ArrayList<String> getVocabSet() {
         return vocabSet;
     }
 
-    public void setVocabSet(Map vocabSet) {
+    public void setVocabSet(ArrayList vocabSet) {
         this.vocabSet = vocabSet;
+    }
+
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void setRightAnswer(String rightAnswer) {
+        this.rightAnswer = rightAnswer;
+    }
+
+    public String getAnswerPlayer1() {
+        return answerPlayer1;
+    }
+
+    public void setAnswerPlayer1(String answertPlayer1) {
+        this.answerPlayer1 = answertPlayer1;
+    }
+
+    public String getAnswerPlayer2() {
+        return answerPlayer2;
+    }
+
+    public void setAnswerPlayer2(String answertPlayer2) {
+        this.answerPlayer2 = answertPlayer2;
     }
 }
