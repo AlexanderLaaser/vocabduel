@@ -159,8 +159,9 @@ public class GameUiControllerImpl implements GameUiController {
 
 
             } else if (action == 3) {
-                int User1Id = gameUiView.askSomethingInt("Gib uns die ID vom Game Host");
-                int User2Id = gameUiView.askSomethingInt("Gib uns die ID vom Game Participant");
+                //Long benötigt statt int
+                Long User1Id = gameUiView.askSomethingInt("Gib uns die ID vom Game Host");
+                Long User2Id = gameUiView.askSomethingInt("Gib uns die ID vom Game Participant");
                 int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
 
                 try {

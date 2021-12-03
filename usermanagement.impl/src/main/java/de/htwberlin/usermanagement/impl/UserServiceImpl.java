@@ -1,49 +1,90 @@
-import usermanagement.inter.User;
-import usermanagement.inter.UserService;
+package de.htwberlin.usermanagement.impl;
+
+import de.htwberlin.usermanagement.inter.User;
+import de.htwberlin.usermanagement.inter.UserService;
+
+import org.springframework.stereotype.Component;
 
 import javax.naming.InvalidNameException;
-import java.util.LinkedList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
+
+@Component
 public class UserServiceImpl implements UserService {
 
-    public LinkedList<User> userList = new LinkedList<User>();
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+    private EntityManager em = emf.createEntityManager();
 
     @Override
-    public User createUser(int userID, String firstName, String lastName, String userName, String password, int totalGames, int gamesWon, int gamesLost) throws InvalidNameException {
+    public User createUser(String firstName, String lastName, String userName, String password) throws InvalidNameException {
         validateName(firstName);
         validateName(lastName);
-        validateName(userName);
+
+        User tempUser = new User(firstName, lastName, userName, password);
+        em.getTransaction().begin();
+        em.persist(tempUser);
+        em.getTransaction().commit();
+
+        return tempUser;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        em.getTransaction().begin();
+        TypedQuery<User> q = em.createQuery("SELECT u FROM User u WHERE u.userID=:id", User.class);
+        q.setParameter("id", id);
+        List<User> userResult = q.getResultList();
+        em.getTransaction().commit();
+        if (!userResult.isEmpty()) {
+            User user = userResult.get(0);
+            return user;
+        } else {
+            return null;
+        }
+    }
+
+    public List<User> getAllUser(){
+        em.getTransaction().begin();
+        TypedQuery<User> q = em.createQuery("SELECT u FROM User AS u", User.class);
+        List<User> allUser = q.getResultList();
+        em.getTransaction().commit();
+        return allUser;
+    }
+
+    @Override
+    public void removeUser(Long userID) {
+        User user = getUserById(userID);
+
+        em.getTransaction().begin();
+        em.remove(user);
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public void changePassword(Long userID, String password) throws InvalidNameException {
         validatePassword(password);
-        User createdUser = new User(userID, firstName, lastName, userName, password, totalGames, gamesWon, gamesLost);
-        userList.add(createdUser);
+        User user = getUserById(userID);
+        user.setPassword(password);
 
-        return createdUser;
-
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
     }
 
     @Override
-    public User getUserById(int userID) {
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getUserID() == userID) {
-                return userList.element();
-            }
-        } return null;
+    public void increaseTotalGames(Long userID) {
+        User user = getUserById(userID);
+        user.setTotalGames(user.getTotalGames()+1);
+
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
     }
 
-    @Override
-    public void removeUser(int userID) {
-        userList.remove(getUserById(userID));
-    }
-
-    @Override
-    public void changePassword(int userID, String password) {
-        getUserById(userID).setPassword(password);
-    }
-
-    @Override
-    public void increaseTotalGames(int userID) {
-        getUserById(userID).setTotalGames(+1);
-    }
 
     public void validateName(String name) throws InvalidNameException {
         if (name == null || name.contains(" ") || name == "") {
@@ -63,5 +104,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidNameException("Das Passwort ist zu leicht zu erraten.");
         }
     }
+
 }
+
 

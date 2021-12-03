@@ -27,7 +27,7 @@ public class GameServiceImpl implements GameService {
 
 
     @Override
-    public Game createGame(int user1Id, int user2Id, int vocablistId) throws InvalidUserException {
+    public Game createGame(Long user1Id, Long user2Id, int vocablistId) throws InvalidUserException {
         // boolean usersExist = userService.allUserExist(int user1Id, int user2Id);
         boolean usersExist = true;
 
@@ -39,8 +39,8 @@ public class GameServiceImpl implements GameService {
         //durch JPA autocreate ersetzten
         int gameID = 1;
 
-        User mockuser1 = new User(user1Id,"Peter", "Test","Supertester123", "qwer");
-        User mockuser2 = new User(user2Id,"Peter", "Test","Supertester123", "qwer");
+        User mockuser1 = new User("Peter", "Test","Supertester123", "qwer");
+        User mockuser2 = new User("Peter", "Test","Supertester123", "qwer");
 
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
@@ -102,7 +102,7 @@ public class GameServiceImpl implements GameService {
     };
 
     @Override
-    public void validateUserMatch(int userId1, int userId2) throws InvalidUserException {
+    public void validateUserMatch(Long userId1, Long userId2) throws InvalidUserException {
         User userObj1 = uService.getUserById(userId1);
         User userObj2 = uService.getUserById(userId2);
 
@@ -112,7 +112,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void updateUserDataAfterGame(int userId) {
+    public void updateUserDataAfterGame(Long userId) {
         // Einzelbeispiel zum Updaten der gespielten Spiele
         User userObj1 = uService.getUserById(userId);
         uService.increaseTotalGames(userId);

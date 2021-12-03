@@ -18,7 +18,7 @@ public interface GameService {
      * @throws InvalidUserException for invalid User
      */
     //create a Game with 2 existing Users and one VocabList
-    Game createGame(int userId1, int userId2, int vocabListId) throws InvalidUserException;
+    Game createGame(Long userId1, Long userId2, int vocabListId) throws InvalidUserException;
 
     /**
      * Methode gibt Category ID einer Vocablist mit dem Category Namen des params categoryName
@@ -36,14 +36,14 @@ public interface GameService {
      * @throws InvalidUserException invalide User
      */
     //Checkt ob 2 User gleich sind oder nicht
-    void validateUserMatch(int userId1, int userId2) throws InvalidUserException;
+    void validateUserMatch(Long userId1, Long userId2) throws InvalidUserException;
 
     /**
      * Methode aktualisiert Spieler Daten nach einem Game
      *
      * @param userId - Id des zu aktualisierenden Nutzers
      */
-    void updateUserDataAfterGame(int userId);
+    void updateUserDataAfterGame(Long userId);
 
     /**
      * Methode berechnet den Gewinner

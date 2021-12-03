@@ -3,36 +3,24 @@ package de.htwberlin.usermanagement.inter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User")
+@Table(name="`user`")
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "userID")
+    @Column(name = "id")
     private Long userID;
 
-    @Column(
-            name = "firstName",
-            nullable = false
-    )
+    @Column(name = "firstName")
     private String firstName;
 
-    @Column(
-            name = "lastName",
-            nullable = false
-    )
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column(
-            name = "userName",
-            nullable = false,
-            unique = true
-    )
+    @Column(name = "userName")
     private String userName;
 
-    @Column(
-            name = "password",
-            nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "totalGames")
@@ -44,24 +32,24 @@ public class User {
     @Column(name = "gamesLost")
     private int gamesLost;
 
-    public User(long userID, String firstName, String lastName, String userName, String password) {
-        super();
-        this.userID = userID;
+    public User(String firstName, String lastName, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
     }
 
-    public User() {
+
+    public User () {
 
     }
 
-    public long getUserID() {
+
+    public Long getUserID() {
         return userID;
     }
 
-    public void setUserID(long userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 
@@ -120,6 +108,5 @@ public class User {
     public void setGamesLost(int gamesLost) {
         this.gamesLost = gamesLost;
     }
-
 }
 
