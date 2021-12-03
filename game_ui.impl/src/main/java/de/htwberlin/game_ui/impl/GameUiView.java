@@ -14,7 +14,9 @@ public class GameUiView {
     public int askForAction(){
         System.out.println("Was möchten Sie tun?");
         System.out.println("1 = Vokabelverwaltung öffnen");
-        System.out.println("2 = Spiel aus bestehenden Vokabeln starten");
+        System.out.println("2 = Userverwaltung öffnen");
+        System.out.println("3 = Spiel aus bestehenden Vokabeln starten");
+        System.out.println("4 = App sofort beenden");
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
 
@@ -29,6 +31,8 @@ public class GameUiView {
         System.out.println("4 = Vokabeln manuell zu bestehender Liste hinzufügen");
         System.out.println("5 = Textfiles zur bestehenden Vokabelliste hinzufügen");
         System.out.println("6 = Bestehende Vokabelliste löschen");
+        System.out.println("7 = Ins App Menü zurückkehren");
+        System.out.println("8 = App sofort beenden");
         Scanner scanner = new Scanner(System.in);
         int input = scanner.nextInt();
 

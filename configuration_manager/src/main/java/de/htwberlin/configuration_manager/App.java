@@ -10,13 +10,14 @@ import javax.naming.InvalidNameException;
 import java.io.IOException;
 
 
-public class ConfigurationSpringImpl {
+public class App {
 
     private static ConfigurableApplicationContext context = new AnnotationConfigApplicationContext("de.htwberlin");
 
     public static void main(String[] args) throws IOException, InvalidNameException, de.htwberlin.vocabmanagement.inter.InvalidNameException {
         GameUiController ui = context.getBean(GameUiController.class);
           ui.run();
+
     }
 
 }

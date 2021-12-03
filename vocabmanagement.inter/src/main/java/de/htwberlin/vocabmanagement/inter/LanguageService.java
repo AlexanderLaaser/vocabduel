@@ -8,4 +8,6 @@ public interface LanguageService {
      * @return ein Sprachen-Objekt
      */
     Language createLanguage(String LanguageName) throws InvalidNameException;
+
+    Language getLanguageByLanguageName(String LanguageName);
 }

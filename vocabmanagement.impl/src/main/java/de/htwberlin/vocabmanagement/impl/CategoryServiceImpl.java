@@ -2,28 +2,23 @@ package de.htwberlin.vocabmanagement.impl;
 import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.CategoryService;
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
-import org.springframework.stereotype.Component;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
-@Component
+import javax.transaction.Transactional;
+
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
-    private EntityManager em = emf.createEntityManager();
+    private CategoryDaoImpl categoryDao;
     
     @Override
+    @Transactional
     public Category createCategory(String categoryName) throws InvalidNameException {
         checkingCategoryName(categoryName);
 
         if(getCategoryByCategoryName(categoryName) == null){
             Category tempCat = new Category(categoryName);
-            em.getTransaction().begin();
-            em.persist(tempCat);
-            em.getTransaction().commit();
+            categoryDao.saveCategory(tempCat);
             return tempCat;
         }else{
             return getCategoryByCategoryName(categoryName);
@@ -31,29 +26,22 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public Category getCategoryByCategoryName(String categoryName) {
-
-        em.getTransaction().begin();
-        TypedQuery<Category> q = em.createQuery("SELECT c FROM Category AS c WHERE c.categoryName LIKE :pattern", Category.class);
-        q.setParameter("pattern", categoryName);
-        List<Category> CatResult = q.getResultList();
-        em.getTransaction().commit();
-        if(!CatResult.isEmpty()){
-            Category category = CatResult.get(0);
+        if(!categoryDao.getCategoryByCategoryName(categoryName).isEmpty()){
+            Category category = categoryDao.getCategoryByCategoryName(categoryName).get(0);
             return category;
         }else{
             return null;
         }
     }
 
+    @Override
+    @Transactional
     public Category getCategoryById(Long id) throws InvalidNameException {
+        Category category = categoryDao.getCategoryById(id);
 
-        em.getTransaction().begin();
-        Category actualCategory = em.find(Category.class, id);
-        em.getTransaction().commit();
-
-        System.out.println(actualCategory.getCategoryID());
-        return actualCategory;
+        return category;
     }
 
     private void checkingCategoryName(String categoryName) throws InvalidNameException {

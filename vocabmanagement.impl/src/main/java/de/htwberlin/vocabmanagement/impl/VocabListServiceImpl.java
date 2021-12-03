@@ -2,7 +2,6 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class VocabListServiceImpl implements VocabListService{
@@ -83,40 +81,32 @@ public class VocabListServiceImpl implements VocabListService{
     }
 
     @Override
-    public void deleteVocabListbyId(int VocabListId) {
-
+    //ToDo Try Catch usw. schreiben
+    //ToDo Was passiert mit den entsprechenden Vokabeln wenn wir eine VocabList löschen?
+    public void deleteVocabListbyId(Long VocabListId) {
+            em.getTransaction().begin();
+            VocabList vocabList = em.find(VocabList.class, VocabListId);
+            em.remove(vocabList);
+            em.getTransaction().commit();
     }
 
     public List<VocabList> getAllExistingVocabLists(){
-
         em.getTransaction().begin();
         TypedQuery<VocabList> vl = em.createQuery("SELECT vl FROM VocabList AS vl", VocabList.class);
         List<VocabList> VocabListResult = vl.getResultList();
         em.getTransaction().commit();
+
         return VocabListResult;
-    }
-
-    //Kann man auch in UI view machen
-    public void prepareExistingListsForOutput(){
-
-        for (int i = 0; i < getAllExistingVocabLists().size(); i++) {
-            VocabList vocabList = getAllExistingVocabLists().get(i);
-            System.out.println("ID: " + vocabList.getListID() + " firstLanguage: " + vocabList.getFirstLanguage() + "secLanguage:" + vocabList.getSecLanguage());
-        }
-
     }
 
     public List<VocabItem> getAllItemsInVocabList(Long listenId) {
         em.getTransaction().begin();
-        TypedQuery<VocabItem> vl = (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
+        TypedQuery<VocabItem> vl = null;
+//        (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
         vl.setParameter("listId", listenId);
         List<VocabItem> items = vl.getResultList();
         em.getTransaction().commit();
 
-        List<VocabItem> itemlist = new ArrayList<>();
-        for (VocabItem vocabItem: items) {
-            System.out.println(vocabItem.getVocabItemID());
-        }
         return items;
     }
 
