@@ -102,7 +102,7 @@ public class VocabListServiceImpl implements VocabListService{
     public List<VocabItem> getAllItemsInVocabList(Long listenId) {
         em.getTransaction().begin();
         TypedQuery<VocabItem> vl = null;
-//                (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
+//        (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
         vl.setParameter("listId", listenId);
         List<VocabItem> items = vl.getResultList();
         em.getTransaction().commit();

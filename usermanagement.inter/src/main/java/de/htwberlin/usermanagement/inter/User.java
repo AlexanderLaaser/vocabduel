@@ -1,14 +1,47 @@
 package de.htwberlin.usermanagement.inter;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "User")
 public class User {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "userID")
     private Long userID;
+
+    @Column(
+            name = "firstName",
+            nullable = false
+    )
     private String firstName;
+
+    @Column(
+            name = "lastName",
+            nullable = false
+    )
     private String lastName;
+
+    @Column(
+            name = "userName",
+            nullable = false,
+            unique = true
+    )
     private String userName;
+
+    @Column(
+            name = "password",
+            nullable = false)
     private String password;
+
+    @Column(name = "totalGames")
     private int totalGames;
+
+    @Column(name = "gamesWon")
     private int gamesWon;
+
+    @Column(name = "gamesLost")
     private int gamesLost;
 
     public User(long userID, String firstName, String lastName, String userName, String password) {
@@ -18,6 +51,10 @@ public class User {
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
     public long getUserID() {
@@ -85,3 +122,4 @@ public class User {
     }
 
 }
+

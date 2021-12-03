@@ -4,18 +4,41 @@ import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.ArrayList;
 
+@Entity
+@Table(name = "Game")
 public class Game {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "gameId")
     private int gameID;
+
+    @OneToOne
+    @JoinColumn(name = "Game Owner")
     private User GameOwner;
+
+    @OneToOne
+    @JoinColumn(name = "Game Parnter")
     private User GamePartner;
+
+    @OneToOne
+    @JoinColumn(name = "Vocablist")
     private VocabList vocablist;
-    private GameStatistic gameStatistic;
+
+//    @OneToOne
+//    @Column(name = "Game Statistic")
+//    private GameStatistic gameStatistic;
+
+    @OneToOne
+    @JoinColumn(name = "Category")
     private Category gameCategory;
-    private Set<Round> rounds;
+
+    @ManyToMany
+    @JoinColumn(name="Round")
+    private ArrayList<Round> rounds;
 
     public Game(int gameID, User gameOwner, User gamePartner, VocabList vocablist) {
         this.gameID = gameID;
@@ -23,10 +46,23 @@ public class Game {
         GamePartner = gamePartner;
         this.vocablist = vocablist;
         if (this.rounds == null) {
-            this.rounds = new HashSet<Round>();
+            this.rounds = new ArrayList<Round>();
         }
 
     }
+
+    public Game() {
+
+    }
+
+    //    public GameStatistic getGameStatistic() {
+//        return gameStatistic;
+//    }
+//
+//    public void setGameStatistic(GameStatistic gameStatistic) {
+//        this.gameStatistic = gameStatistic;
+//    }
+
     public int getGameID() {
         return gameID;
     }
@@ -59,14 +95,6 @@ public class Game {
         this.vocablist = vocablist;
     }
 
-    public GameStatistic getGameStatistic() {
-        return gameStatistic;
-    }
-
-    public void setGameStatistic(GameStatistic gameStatistic) {
-        this.gameStatistic = gameStatistic;
-    }
-
     public Category getGameCategory() {
         return gameCategory;
     }
@@ -75,11 +103,11 @@ public class Game {
         this.gameCategory = gameCategory;
     }
 
-    public Set<Round> getRounds() {
+    public ArrayList<Round> getRounds() {
         return rounds;
     }
 
-    public void setRounds(Set<Round> rounds) {
+    public void setRounds(ArrayList<Round> rounds) {
         this.rounds = rounds;
     }
 

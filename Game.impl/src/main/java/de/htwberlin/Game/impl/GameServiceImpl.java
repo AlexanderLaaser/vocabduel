@@ -44,29 +44,20 @@ public class GameServiceImpl implements GameService {
 
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
-        System.out.println(game);
+        em.getTransaction().begin();
 
+        game = initRounds(game, 3, getVocabList(1L));
+//         Game gameRound1 = initRounds(game, 3, vLService.getVocabListByID(vocablistId));
         try{
-            em.getTransaction().begin();
             em.persist(game);
-            em.getTransaction().commit();
-
         }
         catch (Exception e){
             System.out.println(e);
         }
 
-
-        initRounds(game, 3, getVocabList(1L));
-        // Game gameRound1 = initRounds(game, 3, vocabList.getVocabListByID(vocablistId));
-
+        em.getTransaction().commit();
         return game;
 
-    }
-
-    @Override
-    public Round initRounds(int RoundId, int AnzahlRunden, Game game) {
-        return null;
     }
 
     public VocabList getVocabList(Long id){
@@ -127,24 +118,25 @@ public class GameServiceImpl implements GameService {
         uService.increaseTotalGames(userId);
     }
 
+//    @Override
+//    public int calculateWinner(Game game){
+//
+//        ArrayList<Round> rounds = game.getRounds();
+//        int winningUserRound1 = rounds.get(0).getWinningUser();
+//        int winningUserRound2 = rounds.get(1).getWinningUser();
+//        int winningUserRound3 = rounds.get(2).getWinningUser();
+//
+//        return calculateTotalWinner(roundWinner1, roundWinner2, roundWinner3);
+//
+//    }
+
     @Override
     public int calculateTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3) {
+
         int winningUser = 0;
-        if (winningUserRound1 == 2){
-            winningUser =+ 1;
-        }else if(winningUserRound1 == 3){
-            winningUser =- 1;
-        }
-        if (winningUserRound2 == 2){
-            winningUser =+ 1;
-        } else if(winningUserRound1 == 3){
-            winningUser =- 1;
-        }
-        if (winningUserRound3 == 2){
-            winningUser=+ 1;
-        } else if(winningUserRound1 == 3){
-            winningUser =- 1;
-        }
+        winningUser = winningUser + addEndWinner(winningUserRound1);
+        winningUser = winningUser + addEndWinner(winningUserRound2);
+        winningUser = winningUser + addEndWinner(winningUserRound3);
 
         if(winningUser == 0){
             System.out.println("Its a tie");
@@ -161,13 +153,15 @@ public class GameServiceImpl implements GameService {
         return winningUser;
     }
 
-    @Override
-    public Map<String, List<String>> generateCustomVocabSet(int anzahlRunden) {
-        return null;
+    public int addEndWinner(int winningUser){
+        int winning;
+        if(winningUser == 2) winning = -1;
+        if(winningUser == 1) return winning = 1;
+        else return winning = 0;
     }
 
     @Override
-    public Round initRounds(int gameId, int roundId, int AnzahlRunden, VocabList vocabList) {
+    public Map<String, List<String>> generateCustomVocabSet(int anzahlRunden) {
         return null;
     }
 
@@ -181,14 +175,22 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game initRounds(Game game, int maxRounds, VocabList vocabList){
 
+        LinkedHashMap<String, List<String>>  TestList;
+
+
         for (int i = 0; i < maxRounds; i++) {
-            //create VocabSet
-            Map vocabSet = null;
-            vocabSet = generateVocabSets(maxRounds, vocabList, vocabSet);
-            Round round = new Round(i, game, vocabSet);
+            // create VocabSet
+            // Map vocabSet = null;
+            // vocabSet = generateVocabSets(maxRounds, vocabList, vocabSet);
+            ArrayList<String> fakeAnswerList = new ArrayList<String>(Arrays.asList(
+                    "Frage" + i+1, "richtige Antwort", "falsche Antwort 1", "falsche Antwort 2", "falsche Antwort 3"));
+            Round round = new Round(i, fakeAnswerList);
+            round.setRightAnswer(fakeAnswerList.get(1));
+//          round.setRightAnswer(vocabSet.get(1));
             game.getRounds().add(round);
 
         }
+
         return game;
 
     }
