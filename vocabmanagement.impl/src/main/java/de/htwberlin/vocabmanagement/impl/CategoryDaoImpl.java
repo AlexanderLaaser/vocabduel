@@ -20,12 +20,10 @@ public class CategoryDaoImpl implements CategoryDao{
     }
 
     @Override
-    public List<Category> getCategoryByCategoryName(String categoryName) {
-        TypedQuery<Category> q = em.createQuery("SELECT c FROM Category AS c WHERE c.categoryName LIKE :pattern", Category.class);
-        q.setParameter("pattern", categoryName);
-        List<Category> CatResult = q.getResultList();
+    public Category getCategoryByCategoryName(String categoryName) {
+        Category category = em.find(Category.class, categoryName);
 
-        return CatResult;
+        return category;
     }
 
     @Override

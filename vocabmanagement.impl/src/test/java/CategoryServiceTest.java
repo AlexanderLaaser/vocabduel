@@ -12,7 +12,7 @@ public class CategoryServiceTest {
 
     @Before
     public void setUp() {
-        this.catService = new CategoryServiceImpl();
+        //this.catService = new CategoryServiceImpl();
     }
 
     @Test

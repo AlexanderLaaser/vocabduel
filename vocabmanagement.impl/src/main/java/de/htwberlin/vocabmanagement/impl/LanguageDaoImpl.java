@@ -6,7 +6,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.List;
+
+;
 
 @Repository
 public class LanguageDaoImpl implements LanguageDao{
@@ -20,11 +21,23 @@ public class LanguageDaoImpl implements LanguageDao{
     }
 
     @Override
-    public List<Language> getLanguageByLanguageName(String languageName) {
-        TypedQuery<Language> q = em.createQuery("SELECT l FROM Language AS l WHERE l.LanguageName LIKE :pattern", Language.class);
-        q.setParameter("pattern", languageName);
-        List<Language> languageResult = q.getResultList();
-
-        return languageResult;
+    public Language getLanguageByName(String languageName) {
+        TypedQuery<Language> LanguageResultList = em.createQuery("SELECT l FROM Language AS l WHERE l.LanguageName LIKE :pattern", Language.class);
+        LanguageResultList.setParameter("pattern", languageName);
+        if(!LanguageResultList.getResultList().isEmpty()){
+            Language language = LanguageResultList.getResultList().get(0);
+            return language;
+        }else{
+            return null;
+        }
     }
+
+    @Override
+    public Language getLanguageById(Long languageId) {
+        Language language = em.find(Language.class, languageId);
+
+        return language;
+    }
+
+
 }

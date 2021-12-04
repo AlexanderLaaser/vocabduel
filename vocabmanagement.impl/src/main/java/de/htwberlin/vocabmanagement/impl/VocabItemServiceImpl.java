@@ -2,31 +2,26 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabItemService;
-import de.htwberlin.vocabmanagement.inter.VocabList;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class VocabItemServiceImpl implements VocabItemService {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
-    private EntityManager em = emf.createEntityManager();
+    VocabItemDao vocabItemDao;
+    private PlatformTransactionManager transactionManager;
 
     @Override
+    @Transactional
     public VocabItem createVocabItem(String leftLan, List<String> rightLan) {
         VocabItem vocabItem = new VocabItem(leftLan, rightLan);
 
-        em.getTransaction().begin();
-        em.persist(vocabItem);
-        em.getTransaction().commit();
-
+        vocabItemDao.saveVocabItem(vocabItem);
         return vocabItem;
     }
 
@@ -40,6 +35,17 @@ public class VocabItemServiceImpl implements VocabItemService {
         }
 
         return VocabItemList;
+    }
+
+    @Override
+    @Transactional
+    public VocabItem getVocabitemById(Long vocabItemId){
+        if(vocabItemDao.getvocabItemById(vocabItemId) == null){
+            VocabItem vocabItem = vocabItemDao.getvocabItemById(vocabItemId);
+            return vocabItem;
+        }else{
+            return null;
+        }
     }
 
     @Override

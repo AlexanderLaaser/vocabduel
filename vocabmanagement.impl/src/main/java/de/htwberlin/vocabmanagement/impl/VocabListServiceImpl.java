@@ -1,11 +1,12 @@
 package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,23 +14,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Component
+@Service
+@Transactional
 public class VocabListServiceImpl implements VocabListService{
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
-    private EntityManager em = emf.createEntityManager();
+    VocabListDao vocabListDao;
+    private PlatformTransactionManager transactionManager;
 
+    @Autowired
+    public VocabListServiceImpl(VocabListDao vocabListDao) {
+        super();
+        this.vocabListDao = vocabListDao;
+    }
+
+    @Transactional
     public VocabList createVocabList(List<VocabItem> VocabItemList, Language languageLeft, Language languageRight, Category category) {
         VocabList vocablist = new VocabList(VocabItemList,languageLeft,languageRight,category);
-        em.getTransaction().begin();
-        em.persist(vocablist);
-        em.getTransaction().commit();
+        vocabListDao.saveVocabList(vocablist);
 
         return vocablist;
     }
 
+    @Transactional
     public VocabList getVocabListByID(long VocabListId){
-        return null;
+        if(vocabListDao.getvocabListById(VocabListId) == null){
+            VocabList vocabList = vocabListDao.getvocabListById(VocabListId);
+            return vocabList;
+        }else{
+            return null;
+        }
     }
 
     public void addItemToVocabSet(int VocabItemId, int VocabListId){
@@ -81,33 +94,30 @@ public class VocabListServiceImpl implements VocabListService{
     }
 
     @Override
+    @Transactional
     //ToDo Try Catch usw. schreiben
     //ToDo Was passiert mit den entsprechenden Vokabeln wenn wir eine VocabList löschen?
     public void deleteVocabListbyId(Long VocabListId) {
-            em.getTransaction().begin();
-            VocabList vocabList = em.find(VocabList.class, VocabListId);
-            em.remove(vocabList);
-            em.getTransaction().commit();
+            VocabList vocabList = vocabListDao.getvocabListById(VocabListId);
+            vocabListDao.deleteVocabList(vocabList);
     }
 
+    @Override
+    @Transactional
     public List<VocabList> getAllExistingVocabLists(){
-        em.getTransaction().begin();
-        TypedQuery<VocabList> vl = em.createQuery("SELECT vl FROM VocabList AS vl", VocabList.class);
-        List<VocabList> VocabListResult = vl.getResultList();
-        em.getTransaction().commit();
-
-        return VocabListResult;
+        if(vocabListDao.getAllVocabLists() == null){
+            List<VocabList> vocabList = vocabListDao.getAllVocabLists();
+            System.out.println(vocabList);
+            return vocabList;
+        }else{
+            return null;
+        }
     }
 
     public List<VocabItem> getAllItemsInVocabList(Long listenId) {
-        em.getTransaction().begin();
-        TypedQuery<VocabItem> vl = null;
-//        (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
-        vl.setParameter("listId", listenId);
-        List<VocabItem> items = vl.getResultList();
-        em.getTransaction().commit();
+        List<VocabItem> ListOfVocabItems = vocabListDao.getItemsInVocabList(listenId);
 
-        return items;
+        return ListOfVocabItems;
     }
 
 
