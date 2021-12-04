@@ -35,7 +35,6 @@ public class VocabListDaoImpl implements VocabListDao{
     public List<VocabList> getAllVocabLists(){
         TypedQuery<VocabList> vl = em.createQuery("SELECT vl FROM VocabList AS vl", VocabList.class);
         List<VocabList> VocabListResult = vl.getResultList();
-        System.out.println(VocabListResult.size());
         return VocabListResult;
     }
 
@@ -44,7 +43,6 @@ public class VocabListDaoImpl implements VocabListDao{
         TypedQuery<VocabItem> vl = (TypedQuery<VocabItem>) em.createQuery("SELECT vl.itemlist FROM VocabList vl WHERE vl.listID like :listId");
         vl.setParameter("listId", ListId);
         List<VocabItem> items = vl.getResultList();
-
 
         return items;
     }

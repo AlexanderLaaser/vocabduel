@@ -24,8 +24,8 @@ public class VocabItemServiceTest {
 
     @Before
     public void setUp() {
-        this.vocService = new VocabItemServiceImpl();
-        this.testRightLan = new ArrayList<String>();
+        //this.vocService = new VocabItemServiceImpl();
+        //this.testRightLan = new ArrayList<String>();
     }
 
     /***

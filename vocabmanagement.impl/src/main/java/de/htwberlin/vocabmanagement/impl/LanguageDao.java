@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 
 public interface LanguageDao {
 
-    @Transactional
     void saveLanguage(Language language);
 
     Language getLanguageByName(String languageName);

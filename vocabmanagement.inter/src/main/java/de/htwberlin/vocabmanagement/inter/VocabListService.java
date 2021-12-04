@@ -45,11 +45,13 @@ public interface VocabListService {
 
     /**
      * Methode löscht eine bestehende VocabListe anhand der Listen ID
-     * @param VocabListId
+     * @param vocabListId
      */
-    void deleteVocabListbyId(Long VocabListId);
+    void deleteVocabListById(long vocabListId);
 
     List<VocabItem> getAllItemsInVocabList(Long listenId);
+
+    List<String> createQuestionList(Long listId);
 
 
 
