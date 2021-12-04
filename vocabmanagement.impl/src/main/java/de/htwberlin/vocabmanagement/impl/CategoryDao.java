@@ -9,7 +9,7 @@ public interface CategoryDao {
     //ToDo Java Doc
     void saveCategory(Category category);
 
-    List<Category> getCategoryByCategoryName(String categoryName);
+    Category getCategoryByCategoryName(String categoryName);
 
     Category getCategoryById(Long id);
 

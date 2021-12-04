@@ -44,7 +44,7 @@ public class User {
     @Column(name = "gamesLost")
     private int gamesLost;
 
-    public User(long userID, String firstName, String lastName, String userName, String password) {
+    public User(String firstName, String lastName, String userName, String password) {
         super();
         this.userID = userID;
         this.firstName = firstName;

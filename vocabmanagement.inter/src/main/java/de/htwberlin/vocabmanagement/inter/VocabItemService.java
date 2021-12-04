@@ -30,4 +30,6 @@ public interface VocabItemService {
     VocabItem getVocabName (int VocabItemId);
 
     List<VocabItem> createVocabItemOufOfMap(Map<String, List<String>> map);
+
+    VocabItem getVocabitemById(Long vocabItemId);
 }

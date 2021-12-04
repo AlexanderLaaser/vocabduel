@@ -3,37 +3,56 @@ package de.htwberlin.vocabmanagement.impl;
 import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 import de.htwberlin.vocabmanagement.inter.Language;
 import de.htwberlin.vocabmanagement.inter.LanguageService;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 
 import javax.transaction.Transactional;
 
-@Component
+@Service
+@Transactional
 public class LanguageServiceImpl implements LanguageService {
 
-    private LanguageDaoImpl languageDao;
+    private LanguageDao languageDao;
+    private PlatformTransactionManager transactionManager;
 
-    @Override
-    @Transactional
-    public Language createLanguage(String languageName) throws InvalidNameException {
-        checkingLanguageName(languageName);
-
-        if(getLanguageByLanguageName(languageName) == null){
-            Language tempLanguage = new Language(languageName);
-            languageDao.saveLanguage(tempLanguage);
-            return tempLanguage;
-        }else{
-            return getLanguageByLanguageName(languageName);
-        }
+    @Autowired
+    public LanguageServiceImpl(LanguageDao languageDao, PlatformTransactionManager transactionManager) {
+        super();
+        this.languageDao = languageDao;
+        this.transactionManager = transactionManager;
     }
 
     @Override
-    @Transactional
+    public Language createLanguage(String languageName) throws InvalidNameException {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        checkingLanguageName(languageName);
+
+        if(languageDao.getLanguageByName(languageName) == null){
+            Language tempLanguage = new Language(languageName);
+            languageDao.saveLanguage(tempLanguage);
+            transactionManager.commit(ts);
+
+            return tempLanguage;
+        }else{
+            return languageDao.getLanguageByName(languageName);
+        }
+      }
+
+    public void storeLanguageInDB(Language language){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        languageDao.saveLanguage(language);
+        transactionManager.commit(ts);
+    }
+
+    @Override
     public Language getLanguageByLanguageName(String languageName) {
-        if(!languageDao.getLanguageByLanguageName(languageName).isEmpty()){
-            Language language = languageDao.getLanguageByLanguageName(languageName).get(0);
+        if(languageDao.getLanguageByName(languageName) == null){
+            Language language = languageDao.getLanguageByName(languageName);
             return language;
         }else{
-            return null;
+            return languageDao.getLanguageByName(languageName);
         }
     }
 

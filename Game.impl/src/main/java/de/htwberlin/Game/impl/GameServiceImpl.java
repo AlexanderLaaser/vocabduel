@@ -39,8 +39,8 @@ public class GameServiceImpl implements GameService {
         //durch JPA autocreate ersetzten
         int gameID = 1;
 
-        User mockuser1 = new User(user1Id,"Peter", "Test","Supertester123", "qwer");
-        User mockuser2 = new User(user2Id,"Peter", "Test","Supertester123", "qwer");
+        User mockuser1 = new User("Peter", "Test","Supertester123", "qwer");
+        User mockuser2 = new User("Peter", "Test","Supertester123", "qwer");
 
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
         Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));

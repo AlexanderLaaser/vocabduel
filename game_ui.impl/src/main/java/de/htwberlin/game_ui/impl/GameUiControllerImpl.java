@@ -6,10 +6,7 @@ import de.htwberlin.game.inter.Round;
 import de.htwberlin.game.inter.RoundService;
 import de.htwberlin.game_ui.inter.GameUiController;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
-import de.htwberlin.vocabmanagement.impl.CategoryServiceImpl;
-import de.htwberlin.vocabmanagement.impl.LanguageServiceImpl;
-import de.htwberlin.vocabmanagement.impl.VocabItemServiceImpl;
-import de.htwberlin.vocabmanagement.impl.VocabListServiceImpl;
+import de.htwberlin.vocabmanagement.impl.*;
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,14 +82,14 @@ public class GameUiControllerImpl implements GameUiController {
 
                     //Alle Vokabellisten anzeigen
                     if (listAction == 1) {
-                        try {
+                        //try {
                             for (int i = 0; i < vocabListService.getAllExistingVocabLists().size(); i++) {
                                 VocabList vocabList = vocabListService.getAllExistingVocabLists().get(i);
                                 System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName());
                             }
-                        } catch (Exception e) {
+                        //} catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-                        }
+                        //}
 
                         //Vokabeln für bestehende Liste anzeigen (Input: ID)
                         //ToDo Listenausgabe der secLanguage von [] in String Listen ändern
@@ -110,7 +107,7 @@ public class GameUiControllerImpl implements GameUiController {
                         //Vocabelliste erstellen
                     } else if (listAction == 3) {
 
-                        try {
+                        //try {
                             String languageLeft = gameUiView.askSomethingString("Welcher Hauptsprache soll die Liste angehören?");
                             Language languageleftObj = languageService.createLanguage(languageLeft);
 
@@ -125,9 +122,9 @@ public class GameUiControllerImpl implements GameUiController {
 
                             VocabList vocabList = vocabListService.createVocabList(VocabItemList, languageleftObj, languagerightObj, categoryObj);
 
-                        } catch (Exception e) {
-                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-                        }
+                        //} catch (Exception e) {
+                            //System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        //}
 
                         //Vokabeln manuell zu bestehender Liste hinzufügen
                         //ToDo ausimplementieren

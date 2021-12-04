@@ -1,5 +1,7 @@
-import usermanagement.inter.User;
-import usermanagement.inter.UserService;
+package de.htwberlin.usermanagement.impl;
+
+import de.htwberlin.usermanagement.inter.User;
+import de.htwberlin.usermanagement.inter.UserService;
 
 import javax.naming.InvalidNameException;
 import java.util.LinkedList;
@@ -8,26 +10,36 @@ public class UserServiceImpl implements UserService {
 
     public LinkedList<User> userList = new LinkedList<User>();
 
-    @Override
+    //@Override
     public User createUser(int userID, String firstName, String lastName, String userName, String password, int totalGames, int gamesWon, int gamesLost) throws InvalidNameException {
         validateName(firstName);
         validateName(lastName);
         validateName(userName);
         validatePassword(password);
-        User createdUser = new User(userID, firstName, lastName, userName, password, totalGames, gamesWon, gamesLost);
+        User createdUser = new User();
         userList.add(createdUser);
 
         return createdUser;
 
     }
 
-    @Override
+    //@Override
     public User getUserById(int userID) {
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getUserID() == userID) {
                 return userList.element();
             }
         } return null;
+    }
+
+    @Override
+    public User createUser(long userID, String firstName, String lastName, String userName, String password) throws InvalidNameException {
+        return null;
+    }
+
+    @Override
+    public User getUserById(long userID) {
+        return null;
     }
 
     @Override

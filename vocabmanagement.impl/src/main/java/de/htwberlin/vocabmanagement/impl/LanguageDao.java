@@ -1,13 +1,15 @@
 package de.htwberlin.vocabmanagement.impl;
-
-import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.Language;
 
-import java.util.List;
+import javax.transaction.Transactional;
+
 
 public interface LanguageDao {
 
+    @Transactional
     void saveLanguage(Language language);
 
-    List<Language> getLanguageByLanguageName(String languageName);
+    Language getLanguageByName(String languageName);
+
+    Language getLanguageById(Long languageId);
 }
