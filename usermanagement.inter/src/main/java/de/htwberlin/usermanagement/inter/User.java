@@ -3,12 +3,12 @@ package de.htwberlin.usermanagement.inter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="`user`")
+@Table(name="UserTable")
 public class User {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "userId")
     private Long userID;
 
     @Column(name = "firstName")

@@ -1,6 +1,7 @@
 package de.htwberlin.game.inter;
 
 import de.htwberlin.usermanagement.inter.InvalidUserException;
+import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
 import java.util.List;
@@ -11,14 +12,14 @@ public interface GameService {
     /**
      * Methode erstellt ein Game Objekt
      *
-     * @param userId1     - Id des Spieleigentümers
-     * @param userId2     - Id des Spielpartners
-     * @param vocabListId - Id der ausgesuchten VocabList
+     * @param gameOwner     - Id des Spieleigentümers
+     * @param gamePartner     - Id des Spielpartners
+     * @param vocabList - Id der ausgesuchten VocabList
      * @return Game Objekt
      * @throws InvalidUserException for invalid User
      */
     //create a Game with 2 existing Users and one VocabList
-    Game createGame(Long userId1, Long userId2, int vocabListId) throws InvalidUserException;
+    Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException;
 
     /**
      * Methode gibt Category ID einer Vocablist mit dem Category Namen des params categoryName

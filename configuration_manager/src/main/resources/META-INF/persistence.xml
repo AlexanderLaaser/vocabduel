@@ -12,6 +12,10 @@
         <class>de.htwberlin.vocabmanagement.inter.Category</class>
         <class>de.htwberlin.vocabmanagement.inter.Language</class>
         <class>de.htwberlin.vocabmanagement.inter.VocabList</class>
+        <class>de.htwberlin.game.inter.Game</class>
+        <class>de.htwberlin.game.inter.Round</class>
+        <class>de.htwberlin.game.inter.Guess</class>
+        <class>de.htwberlin.usermanagement.inter.User</class>
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:sqlserver://localhost:1433"/>

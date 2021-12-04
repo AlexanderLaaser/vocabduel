@@ -6,6 +6,7 @@ import de.htwberlin.vocabmanagement.inter.VocabList;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Game")
@@ -16,15 +17,15 @@ public class Game {
     @Column(name = "gameId")
     private int gameID;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Game Owner")
     private User GameOwner;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Game Parnter")
     private User GamePartner;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Vocablist")
     private VocabList vocablist;
 
@@ -36,12 +37,12 @@ public class Game {
     @JoinColumn(name = "Category")
     private Category gameCategory;
 
+
     @ManyToMany
     @JoinColumn(name="Round")
-    private ArrayList<Round> rounds;
+    private List<Round> rounds = new ArrayList<>();
 
-    public Game(int gameID, User gameOwner, User gamePartner, VocabList vocablist) {
-        this.gameID = gameID;
+    public Game(User gameOwner, User gamePartner, VocabList vocablist) {
         GameOwner = gameOwner;
         GamePartner = gamePartner;
         this.vocablist = vocablist;
@@ -103,7 +104,7 @@ public class Game {
         this.gameCategory = gameCategory;
     }
 
-    public ArrayList<Round> getRounds() {
+    public List<Round> getRounds() {
         return rounds;
     }
 

@@ -1,6 +1,7 @@
 package de.htwberlin.game.inter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface RoundService {
 
@@ -17,5 +18,5 @@ public interface RoundService {
 
     void initNextQuestion(Round round);
 
-    ArrayList<String> mixAnswers(Round round);
+    List<String> mixAnswers(Round round);
 }

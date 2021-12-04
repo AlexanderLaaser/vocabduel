@@ -2,87 +2,97 @@ package de.htwberlin.usermanagement.impl;
 
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
-
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 
 import javax.naming.InvalidNameException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
-    private EntityManager em = emf.createEntityManager();
+//    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
+//    private EntityManager em = emf.createEntityManager();
+    private UserDao userDao;
+    private PlatformTransactionManager transactionManager;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao, PlatformTransactionManager transactionManager){
+        super();
+        this.userDao = userDao;
+        this.transactionManager = transactionManager;
+    }
 
     @Override
     public User createUser(String firstName, String lastName, String userName, String password) throws InvalidNameException {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+
         validateName(firstName);
         validateName(lastName);
 
         User tempUser = new User(firstName, lastName, userName, password);
-        em.getTransaction().begin();
-        em.persist(tempUser);
-        em.getTransaction().commit();
+
+        userDao.saveUser(tempUser);
+        transactionManager.commit(ts);
 
         return tempUser;
     }
 
     @Override
     public User getUserById(Long id) {
-        em.getTransaction().begin();
-        TypedQuery<User> q = em.createQuery("SELECT u FROM User u WHERE u.userID=:id", User.class);
-        q.setParameter("id", id);
-        List<User> userResult = q.getResultList();
-        em.getTransaction().commit();
-        if (!userResult.isEmpty()) {
-            User user = userResult.get(0);
-            return user;
-        } else {
+//        em.getTransaction().begin();
+//        TypedQuery<User> q = em.createQuery("SELECT u FROM User u WHERE u.userID=:id", User.class);
+//        q.setParameter("id", id);
+//        List<User> userResult = q.getResultList();
+//        em.getTransaction().commit();
+//        if (!userResult.isEmpty()) {
+//            User user = userResult.get(0);
+//            return user;
+//        } else {
             return null;
-        }
+//        }
     }
 
     public List<User> getAllUser(){
-        em.getTransaction().begin();
-        TypedQuery<User> q = em.createQuery("SELECT u FROM User AS u", User.class);
-        List<User> allUser = q.getResultList();
-        em.getTransaction().commit();
-        return allUser;
+//        em.getTransaction().begin();
+//        TypedQuery<User> q = em.createQuery("SELECT u FROM User AS u", User.class);
+//        List<User> allUser = q.getResultList();
+//        em.getTransaction().commit();
+//        return allUser;
+            return null;
     }
 
     @Override
     public void removeUser(Long userID) {
-        User user = getUserById(userID);
-
-        em.getTransaction().begin();
-        em.remove(user);
-        em.getTransaction().commit();
+//        User user = getUserById(userID);
+//
+//        em.getTransaction().begin();
+//        em.remove(user);
+//        em.getTransaction().commit();
     }
 
     @Override
     public void changePassword(Long userID, String password) throws InvalidNameException {
-        validatePassword(password);
-        User user = getUserById(userID);
-        user.setPassword(password);
-
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+//        validatePassword(password);
+//        User user = getUserById(userID);
+//        user.setPassword(password);
+//
+//        em.getTransaction().begin();
+//        em.persist(user);
+//        em.getTransaction().commit();
     }
 
     @Override
     public void increaseTotalGames(Long userID) {
-        User user = getUserById(userID);
-        user.setTotalGames(user.getTotalGames()+1);
-
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+//        User user = getUserById(userID);
+//        user.setTotalGames(user.getTotalGames()+1);
+//
+//        em.getTransaction().begin();
+//        em.persist(user);
+//        em.getTransaction().commit();
     }
 
 
