@@ -46,17 +46,10 @@ public class GameServiceImpl implements GameService {
             throw new InvalidUserException("One User is not existing");
         }
 
-        //durch JPA autocreate ersetzten
-        int gameID = 1;
+        Game game = new Game(gameOwner, gamePartner, vocabList);
 
-//        User mockuser1 = new User("Peter", "Test","Supertester123", "qwer");
-//        User mockuser2 = new User("Peter", "Test","Supertester123", "qwer");
+        game = initRounds(game, 3, vocabList);
 
-        //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
-        Game game = new Game(gameOwner, gamePartner, getVocabList(1L));
-
-        game = initRounds(game, 3, getVocabList(1L));
-//         Game gameRound1 = initRounds(game, 3, vLService.getVocabListByID(vocablistId));
         TransactionStatus ts = transactionManager.getTransaction(null);
         gameDao.saveGame(game);
         transactionManager.commit(ts);

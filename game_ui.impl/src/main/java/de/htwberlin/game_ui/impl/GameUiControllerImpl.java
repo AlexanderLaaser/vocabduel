@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class GameUiControllerImpl implements GameUiController {
@@ -189,7 +186,7 @@ public class GameUiControllerImpl implements GameUiController {
 
                 User test = userService.createUser("Peter", "Test","Supertester123", "qwer");
                 User test2 = userService.createUser("Holger", "Test","Supertester123", "qwer");
-                VocabList vocabtest = getVocabList(1L);
+                VocabList vocabtest = vocabListService.getVocabListByID(22);
 
                 Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
                 Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
@@ -252,44 +249,5 @@ public class GameUiControllerImpl implements GameUiController {
         }
 
     }
-    public VocabList getVocabList(Long id){
 
-//          if id null create Test bundle for Testing
-//          delete later for getVocablist by ID
-
-        //create Testlists for VocabItem
-        List<String> testListVI, testListVI2, testListVI3, testListVI4;
-        testListVI = testListVI2 = testListVI3 = testListVI4 = new ArrayList<>();
-        testListVI.add("test-engl1");
-        testListVI.add("different1");
-        testListVI2.add("test-engl2");
-        testListVI2.add("different2");
-        testListVI2.add("moredifferent2");
-        testListVI3.add("test-engl3");
-        testListVI4.add("test-engl4");
-        testListVI4.add("different4");
-
-        //Test VocabItems for Itemlist with ID, vocabname and translationList
-        VocabItem tVI1 = new VocabItem("Test1", testListVI);
-        VocabItem tVI2 = new VocabItem("Test2", testListVI2);
-        VocabItem tVI3 = new VocabItem("Test3", testListVI3);
-        VocabItem tVI4 = new VocabItem("Test4", testListVI4);
-
-        //create ItemList for Vocablist
-        List<VocabItem> testItemList = new ArrayList<>();
-        testItemList.add(tVI1);
-        testItemList.add(tVI2);
-        testItemList.add(tVI3);
-        testItemList.add(tVI4);
-
-        //create Vocablist
-        Map<String,List<VocabItem>> testMap = new HashMap<String, List<VocabItem>>();
-        testMap.put("Test", testItemList);
-
-        VocabList testVocabList = new VocabList(testItemList, new Language("German"),
-                new Language("English"), new Category("Test"));
-
-        return testVocabList;
-
-    };
 }

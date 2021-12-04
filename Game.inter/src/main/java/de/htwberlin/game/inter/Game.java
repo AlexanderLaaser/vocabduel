@@ -1,7 +1,6 @@
 package de.htwberlin.game.inter;
 
 import de.htwberlin.usermanagement.inter.User;
-import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
 import javax.persistence.*;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Game")
+@Table(name = "Game_Table")
 public class Game {
 
     @Id
@@ -33,12 +32,12 @@ public class Game {
 //    @Column(name = "Game Statistic")
 //    private GameStatistic gameStatistic;
 
-    @OneToOne
-    @JoinColumn(name = "Category")
-    private Category gameCategory;
+//    @OneToOne
+//    @JoinColumn(name = "Category")
+//    private Category gameCategory;
 
 
-    @ManyToMany
+    @OneToMany
     @JoinColumn(name="Round")
     private List<Round> rounds = new ArrayList<>();
 
@@ -96,13 +95,13 @@ public class Game {
         this.vocablist = vocablist;
     }
 
-    public Category getGameCategory() {
-        return gameCategory;
-    }
+//    public Category getGameCategory() {
+//        return gameCategory;
+//    }
 
-    public void setGameCategory(Category gameCategory) {
-        this.gameCategory = gameCategory;
-    }
+//    public void setGameCategory(Category gameCategory) {
+//        this.gameCategory = gameCategory;
+//    }
 
     public List<Round> getRounds() {
         return rounds;
