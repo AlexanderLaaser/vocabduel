@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Game_Table")
+@Table(name = "Game")
 public class Game {
 
     @Id
@@ -16,15 +16,15 @@ public class Game {
     @Column(name = "gameId")
     private int gameID;
 
-    @ManyToOne
-    @JoinColumn(name = "Game Owner")
+    @OneToOne
+    @JoinColumn(name = "`GameOwner`")
     private User GameOwner;
 
-    @ManyToOne
-    @JoinColumn(name = "Game Parnter")
+    @OneToOne
+    @JoinColumn(name = "GameParnter")
     private User GamePartner;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "Vocablist")
     private VocabList vocablist;
 
