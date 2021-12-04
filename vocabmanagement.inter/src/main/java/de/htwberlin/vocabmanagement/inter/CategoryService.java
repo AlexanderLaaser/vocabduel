@@ -18,5 +18,7 @@ public interface CategoryService {
     Category getCategoryByCategoryName(String categoryName);
 
     Category getCategoryById(Long catId) throws InvalidNameException;
+
+    void storeCategory(Category category);
 }
 

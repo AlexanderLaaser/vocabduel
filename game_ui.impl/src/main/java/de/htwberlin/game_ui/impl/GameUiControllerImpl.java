@@ -106,23 +106,28 @@ public class GameUiControllerImpl implements GameUiController {
 
                     //Alle Vokabellisten anzeigen
                     if (listAction == 1) {
-                        //try {
-                            for (int i = 0; i < vocabListService.getAllExistingVocabLists().size(); i++) {
-                                VocabList vocabList = vocabListService.getAllExistingVocabLists().get(i);
-                                System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName());
+                        try {
+                            List<VocabList> listOfVocabList = vocabListService.getAllExistingVocabLists();
+                            if(!listOfVocabList.isEmpty()){
+                                for (int i = 0; i < listOfVocabList.size(); i++) {
+                                    VocabList vocabList = listOfVocabList.get(i);
+                                    System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName());
+                                }
                             }
-                        //} catch (Exception e) {
+                        } catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-                        //}
+                        }
 
-                        //Vokabeln für bestehende Liste anzeigen (Input: ID)
-                        //ToDo Listenausgabe der secLanguage von [] in String Listen ändern
+                    //Vokabeln für bestehende Liste anzeigen (Input: ID)
+                    //ToDo Listenausgabe der secLanguage erreichen
                     } else if (listAction == 2) {
                         Long listenIDShow = gameUiView.askSomethingLong("Welche Liste möchten sie anzeigen (Input = ListenID)?");
 
                         try {
-                            for (VocabItem vocabItem : vocabListService.getAllItemsInVocabList(listenIDShow)) {
-                                System.out.println("ItemId: " + vocabItem.getVocabItemID() + " - firstLanguage: " + vocabItem.getFirstLanguage() + " - secLanguage: " + vocabItem.getSecLanguage().toString());
+                            List<VocabItem> listOfVocabitems = vocabListService.getAllItemsInVocabList(listenIDShow);
+
+                            for (VocabItem vocabItem : listOfVocabitems) {
+                                System.out.println("ItemId: " + vocabItem.getVocabItemID() + " - firstLanguage: " + vocabItem.getFirstLanguage());//  + " - secLanguage: " + vocabItem.getSecLanguage().toArray().toString());
                             }
                         } catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
@@ -131,7 +136,7 @@ public class GameUiControllerImpl implements GameUiController {
                         //Vocabelliste erstellen
                     } else if (listAction == 3) {
 
-                        //try {
+                        try {
                             String languageLeft = gameUiView.askSomethingString("Welcher Hauptsprache soll die Liste angehören?");
                             Language languageleftObj = languageService.createLanguage(languageLeft);
 
@@ -146,14 +151,16 @@ public class GameUiControllerImpl implements GameUiController {
 
                             VocabList vocabList = vocabListService.createVocabList(VocabItemList, languageleftObj, languagerightObj, categoryObj);
 
-                        //} catch (Exception e) {
-                            //System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-                        //}
+                        } catch (Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
 
                         //Vokabeln manuell zu bestehender Liste hinzufügen
                         //ToDo ausimplementieren
                     } else if (listAction == 4) {
-                        System.out.println("Noch nicht implementiert!");
+                        //System.out.println("Noch nicht implementiert!");
+                        Long customAction = gameUiView.askSomethingLong("Für welche Liste möchten sie die CustomList erstellen? (Input = ListenID)?");
+                        vocabListService.createQuestionList(customAction);
 
                         //Textfiles zur bestehenden Vokabelliste hinzufügen
                         //ToDo ausimplementieren
@@ -163,12 +170,11 @@ public class GameUiControllerImpl implements GameUiController {
                         //Vokabelliste löschen
                     } else if (listAction == 6) {
                         Long deleteAction = gameUiView.askSomethingLong("Welche Liste möchten sie löschen (Input = ListenID)?");
-                        try {
-                            //getbyId ausimplementieren, sodass eine Überprüfung durchgeführt werden kann
-                            vocabListService.deleteVocabListbyId(deleteAction);
-                        } catch (Exception e) {
-                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-                        }
+                        //try {
+                            vocabListService.deleteVocabListById(deleteAction);
+                        //} catch (Exception e) {
+                            //System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        //}
 
                         //App sofort beenden
                     } else if (listAction == 8) {

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
-import javax.transaction.Transactional;
-
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -23,15 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
     
     @Override
-    @Transactional
     public Category createCategory(String categoryName) throws InvalidNameException {
-        TransactionStatus ts = transactionManager.getTransaction(null);
         checkingCategoryName(categoryName);
 
         if(getCategoryByCategoryName(categoryName) == null){
             Category tempCat = new Category(categoryName);
-            categoryDao.saveCategory(tempCat);
-            transactionManager.commit(ts);
+            storeCategory(tempCat);
             return tempCat;
         }else{
             return getCategoryByCategoryName(categoryName);
@@ -39,22 +34,29 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @Transactional
     public Category getCategoryByCategoryName(String categoryName) {
-        if(categoryDao.getCategoryByCategoryName(categoryName) == null){
-            Category category = categoryDao.getCategoryByCategoryName(categoryName);
-            return category;
-        }else{
-            return null;
-        }
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        Category category = categoryDao.getCategoryByCategoryName(categoryName);
+        transactionManager.commit(ts);
+
+        return category;
     }
 
     @Override
-    @Transactional
     public Category getCategoryById(Long id) throws InvalidNameException {
+        TransactionStatus ts = transactionManager.getTransaction(null);
         Category category = categoryDao.getCategoryById(id);
+        transactionManager.commit(ts);
 
         return category;
+    }
+
+    @Override
+    public void storeCategory(Category category) {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        categoryDao.saveCategory(category);
+        transactionManager.commit(ts);
+
     }
 
     private void checkingCategoryName(String categoryName) throws InvalidNameException {

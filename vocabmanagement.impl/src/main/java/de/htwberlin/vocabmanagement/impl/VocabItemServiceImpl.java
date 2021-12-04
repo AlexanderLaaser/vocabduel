@@ -2,26 +2,33 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabItemService;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.TransactionStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Service
 public class VocabItemServiceImpl implements VocabItemService {
 
     VocabItemDao vocabItemDao;
     private PlatformTransactionManager transactionManager;
 
-    @Override
-    @Transactional
-    public VocabItem createVocabItem(String leftLan, List<String> rightLan) {
-        VocabItem vocabItem = new VocabItem(leftLan, rightLan);
+    @Autowired
+    public VocabItemServiceImpl(VocabItemDao vocabItemDao, PlatformTransactionManager transactionManager) {
+        super();
+        this.vocabItemDao = vocabItemDao;
+        this.transactionManager = transactionManager;
+    }
 
+    @Override
+    public VocabItem createVocabItem(String leftLan, List<String> rightLan) {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        VocabItem vocabItem = new VocabItem(leftLan, rightLan);
         vocabItemDao.saveVocabItem(vocabItem);
+        transactionManager.commit(ts);
         return vocabItem;
     }
 
@@ -38,7 +45,6 @@ public class VocabItemServiceImpl implements VocabItemService {
     }
 
     @Override
-    @Transactional
     public VocabItem getVocabitemById(Long vocabItemId){
         if(vocabItemDao.getvocabItemById(vocabItemId) == null){
             VocabItem vocabItem = vocabItemDao.getvocabItemById(vocabItemId);

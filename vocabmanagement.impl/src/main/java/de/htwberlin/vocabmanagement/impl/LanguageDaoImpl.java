@@ -2,12 +2,9 @@ package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.Language;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
-;
 
 @Repository
 public class LanguageDaoImpl implements LanguageDao{

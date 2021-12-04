@@ -4,13 +4,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(name = "VocabItem")
+@Entity
 public class VocabItem {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long vocabItemID;
+
     private String leftlan;
     @ElementCollection
     @CollectionTable(name = "Translations", joinColumns = @JoinColumn(name = "id")) // 2
