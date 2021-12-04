@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 
-import javax.transaction.Transactional;
-
 @Service
-@Transactional
 public class LanguageServiceImpl implements LanguageService {
 
     private LanguageDao languageDao;
@@ -26,35 +23,31 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public Language createLanguage(String languageName) throws InvalidNameException {
-        TransactionStatus ts = transactionManager.getTransaction(null);
         checkingLanguageName(languageName);
 
-        if(languageDao.getLanguageByName(languageName) == null){
+        if(findLanguageByLanguageName(languageName) == null){
             Language tempLanguage = new Language(languageName);
-            languageDao.saveLanguage(tempLanguage);
-            transactionManager.commit(ts);
-
+            storeLanguage(tempLanguage);
 
             return tempLanguage;
         }else{
-            return languageDao.getLanguageByName(languageName);
+            return findLanguageByLanguageName(languageName);
         }
       }
 
-    public void storeLanguageInDB(Language language){
+    public void storeLanguage(Language language){
         TransactionStatus ts = transactionManager.getTransaction(null);
         languageDao.saveLanguage(language);
         transactionManager.commit(ts);
     }
 
     @Override
-    public Language getLanguageByLanguageName(String languageName) {
-        if(languageDao.getLanguageByName(languageName) == null){
-            Language language = languageDao.getLanguageByName(languageName);
-            return language;
-        }else{
-            return languageDao.getLanguageByName(languageName);
-        }
+    public Language findLanguageByLanguageName(String languageName) {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        Language language = languageDao.getLanguageByName(languageName);
+        transactionManager.commit(ts);
+
+        return language;
     }
 
     private void checkingLanguageName(String LanguageName) throws InvalidNameException {

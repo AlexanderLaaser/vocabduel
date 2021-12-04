@@ -1,6 +1,7 @@
 package de.htwberlin.vocabmanagement.impl;
 
 import de.htwberlin.vocabmanagement.inter.Category;
+import de.htwberlin.vocabmanagement.inter.Language;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,9 +22,14 @@ public class CategoryDaoImpl implements CategoryDao{
 
     @Override
     public Category getCategoryByCategoryName(String categoryName) {
-        Category category = em.find(Category.class, categoryName);
-
-        return category;
+        TypedQuery<Category> CategoryResultList = em.createQuery("SELECT c FROM Category AS c WHERE categoryName LIKE :pattern", Category.class);
+        CategoryResultList.setParameter("pattern", categoryName);
+        if(!CategoryResultList.getResultList().isEmpty()){
+            Category category = CategoryResultList.getResultList().get(0);
+            return category;
+        }else{
+            return null;
+        }
     }
 
     @Override

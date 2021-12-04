@@ -9,5 +9,7 @@ public interface LanguageService {
      */
     Language createLanguage(String LanguageName) throws InvalidNameException;
 
-    Language getLanguageByLanguageName(String LanguageName);
+    Language findLanguageByLanguageName(String LanguageName);
+
+    void storeLanguage(Language language);
 }
