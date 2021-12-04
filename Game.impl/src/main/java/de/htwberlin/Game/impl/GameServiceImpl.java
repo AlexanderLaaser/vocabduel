@@ -7,18 +7,27 @@ import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
 import de.htwberlin.vocabmanagement.inter.*;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.*;
 
-@Component
+@Service
 public class GameServiceImpl implements GameService {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPAKBA");
-    private EntityManager em = emf.createEntityManager();
+    private GameDao gameDao;
+    private PlatformTransactionManager transactionManager;
+    private RoundDao roundDao;
+
+    @Autowired
+    public GameServiceImpl(GameDao gameDao, PlatformTransactionManager transactionManager, RoundDao roundDao) {
+        super();
+        this.gameDao = gameDao;
+        this.transactionManager = transactionManager;
+        this.roundDao = roundDao;
+    }
 
     private UserService uService;
     private VocabList vL;
@@ -27,7 +36,8 @@ public class GameServiceImpl implements GameService {
 
 
     @Override
-    public Game createGame(Long user1Id, Long user2Id, int vocablistId) throws InvalidUserException {
+    public Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException {
+
         // boolean usersExist = userService.allUserExist(int user1Id, int user2Id);
         boolean usersExist = true;
 
@@ -39,23 +49,18 @@ public class GameServiceImpl implements GameService {
         //durch JPA autocreate ersetzten
         int gameID = 1;
 
-        User mockuser1 = new User("Peter", "Test","Supertester123", "qwer");
-        User mockuser2 = new User("Peter", "Test","Supertester123", "qwer");
+//        User mockuser1 = new User("Peter", "Test","Supertester123", "qwer");
+//        User mockuser2 = new User("Peter", "Test","Supertester123", "qwer");
 
         //Game game = new Game(gameID, userService.getUserById(user1Id), userService.getUserById(user2Id), vocabList.getVocabListByID(vocablistId));
-        Game game = new Game(gameID, mockuser1, mockuser2, getVocabList(1L));
-        em.getTransaction().begin();
+        Game game = new Game(gameOwner, gamePartner, getVocabList(1L));
 
         game = initRounds(game, 3, getVocabList(1L));
 //         Game gameRound1 = initRounds(game, 3, vLService.getVocabListByID(vocablistId));
-        try{
-            em.persist(game);
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        gameDao.saveGame(game);
+        transactionManager.commit(ts);
 
-        em.getTransaction().commit();
         return game;
 
     }
@@ -99,7 +104,7 @@ public class GameServiceImpl implements GameService {
 
         return testVocabList;
 
-    };
+    }
 
     @Override
     public void validateUserMatch(Long userId1, Long userId2) throws InvalidUserException {

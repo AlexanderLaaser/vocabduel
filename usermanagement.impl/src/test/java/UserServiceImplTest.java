@@ -1,4 +1,3 @@
-import de.htwberlin.usermanagement.impl.UserServiceImpl;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
 import org.junit.Before;
@@ -8,8 +7,6 @@ import javax.naming.InvalidNameException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-import java.util.List;
 
 public class UserServiceImplTest {
 
@@ -20,7 +17,7 @@ public class UserServiceImplTest {
 
     @Before
     public void setUp() {
-        this.userService = new UserServiceImpl();
+//        this.userService = new UserServiceImpl();
     }
 
     @Test

@@ -2,8 +2,9 @@ package de.htwberlin.game.inter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+@Entity(name = "Round")
 public class Round {
 
     @Id
@@ -11,11 +12,12 @@ public class Round {
     private int roundID;
 
     @ElementCollection
-    private ArrayList<String> vocabSet;
+    private List<String> vocabSet;
 
     private int roundNumber;
     private int winningUser;
     private String rightAnswer;
+
 
     private String answerPlayer1;
     private String answerPlayer2;
@@ -53,7 +55,7 @@ public class Round {
         this.winningUser = winningUser;
     }
 
-    public ArrayList<String> getVocabSet() {
+    public List<String> getVocabSet() {
         return vocabSet;
     }
 

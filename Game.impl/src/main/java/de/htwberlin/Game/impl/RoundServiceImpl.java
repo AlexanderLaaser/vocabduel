@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -44,8 +45,8 @@ public class RoundServiceImpl implements RoundService {
     }
 
     @Override
-    public ArrayList<String> mixAnswers(Round round){
-        ArrayList<String> vocabSet = round.getVocabSet();
+    public java.util.List<String> mixAnswers(Round round){
+        List<String> vocabSet = round.getVocabSet();
 
         ArrayList<String> answers = new ArrayList<String>(Arrays.asList(
                 vocabSet.get(1), vocabSet.get(2), vocabSet.get(3), vocabSet.get(4)));
