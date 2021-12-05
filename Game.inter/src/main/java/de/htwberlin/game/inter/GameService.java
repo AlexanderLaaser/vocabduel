@@ -54,7 +54,7 @@ public interface GameService {
 //     * @param winningUserRound3 - Winner Runde 1
      * @return Winner ID
      */
-    int calculateTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3);
+    int calculateGameWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3);
 
     /**
      * Methode erstellt eine LinkedHashmap von Übersetzungen aus mehreren Items die in diesem Spiel angezeigt werden

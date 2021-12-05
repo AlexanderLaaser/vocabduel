@@ -186,7 +186,7 @@ public class GameUiControllerImpl implements GameUiController {
 
                 User test = userService.createUser("Peter", "Test","Supertester123", "qwer");
                 User test2 = userService.createUser("Holger", "Test","Supertester123", "qwer");
-                VocabList vocabtest = vocabListService.getVocabListByID(22);
+                VocabList vocabtest = vocabListService.getVocabListByID(12);
 
                 Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
                 Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
@@ -219,6 +219,7 @@ public class GameUiControllerImpl implements GameUiController {
                     }
 
                     //Player 2 all Rounds
+                    gameUiView.printMessage("Player 2, its your turn!");
                     for (int i = 0; i < 3; i++) {
                         Round round = rounds.get(i);
                         List<String> vocabSet = round.getVocabSet();
@@ -233,10 +234,11 @@ public class GameUiControllerImpl implements GameUiController {
                                 "Was ist die richtige Antwort? 1, 2, 3 oder 4?")));
 
                         roundService.calculateRoundResults(round);
+                        roundService.saveRound(round);
 
                     }
 
-                    gameUiView.printMessage("Winner of the game is Player: " + gameService.calculateTotalWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser()));
+                    gameUiView.printMessage("Winner of the game is Player: " + gameService.calculateGameWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser()));
 
 
                 } catch (InvalidUserException e) {

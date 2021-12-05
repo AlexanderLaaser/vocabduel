@@ -1,5 +1,7 @@
 package de.htwberlin.game.inter;
 
+import org.springframework.transaction.TransactionStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public interface RoundService {
     void calculateRoundResults(Round round);
 
     Round createRound(int roundId, ArrayList vocabSet);
+    void saveRound(Round round);
 
     void initNextQuestion(Round round);
 
