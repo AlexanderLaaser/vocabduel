@@ -16,4 +16,9 @@ public class GameDaoImpl implements GameDao{
     public void saveGame(Game game){
         em.persist(game);
     }
+
+    @Override
+    public void updateGame(Game game) {
+        em.merge(game);
+    }
 }

@@ -184,19 +184,43 @@ public class GameUiControllerImpl implements GameUiController {
 
             } else if (action == 3) {
 
-                User test = userService.createUser("Peter", "Test","Supertester123", "qwer");
-                User test2 = userService.createUser("Holger", "Test","Supertester123", "qwer");
-                VocabList vocabtest = vocabListService.getVocabListByID(22);
+  //              User test = userService.createUser("Peter", "Test","Superowner", "qwer");
+    //            User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
 
-                Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
-                Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
+                boolean differentUser = true;
+                User gameOwner = null;
+                User gameParnter = null;
+                while(differentUser){
+                   Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
+                   Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
+
+                    if(User1Id != User2Id){
+                        try{
+                            gameOwner = userService.getUserById(User1Id);
+                            gameParnter = userService.getUserById(User2Id);
+                            String name = gameOwner.getUserName();
+                            name = gameParnter.getUserName();
+                            gameUiView.printMessage(name);
+                            differentUser=false;
+
+                        }catch(Exception e){
+                            gameUiView.printMessage("Mindestens einer der User ist nicht in der Datanbank. Bitte probiere es erneut.");
+                            //gameUiView.printMessage(e.getMessage());
+                            differentUser=true;
+                        }
+
+                    }else gameUiView.printMessage("Sie haben leider zweimal die gleiche ID Eingegeben. Owner und Spielpartner müssen unterschiedliche User sein.");
+
+
+                }
+
                 //getUserbyID implem
 
                 int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
 
                 try {
                     gameUiView.printMessage("you creating a Game now.");
-                    Game game = gameService.createGame(test, test2, vocabtest);
+                    Game game = gameService.createGame(gameOwner, gameParnter, vocabListService.getVocabListByID(vocablistId));
                     //Game created Rounds are implemented
                     List<Round> rounds = game.getRounds();
 
@@ -219,6 +243,7 @@ public class GameUiControllerImpl implements GameUiController {
                     }
 
                     //Player 2 all Rounds
+                    gameUiView.printMessage("Player 2, its your turn!");
                     for (int i = 0; i < 3; i++) {
                         Round round = rounds.get(i);
                         List<String> vocabSet = round.getVocabSet();
@@ -233,11 +258,20 @@ public class GameUiControllerImpl implements GameUiController {
                                 "Was ist die richtige Antwort? 1, 2, 3 oder 4?")));
 
                         roundService.calculateRoundResults(round);
+                        roundService.updateRound(round);
 
                     }
-
-                    gameUiView.printMessage("Winner of the game is Player: " + gameService.calculateTotalWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser()));
-
+                    int winningUser = gameService.calculateGameWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser());
+                    String nameWinner;
+                    if(winningUser == 0){
+                        gameUiView.printMessage("Its a tie");
+                    }
+                    if(winningUser < 0){
+                        gameUiView.printMessage("Winner of the game is Player2: " + game.getGamePartner().getUserName());
+                    }
+                    if(winningUser > 0){
+                        gameUiView.printMessage("Winner of the game is Player 1: " + game.getGameOwner().getUserName());
+                    }
 
                 } catch (InvalidUserException e) {
                     e.printStackTrace();

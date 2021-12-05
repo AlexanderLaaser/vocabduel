@@ -20,19 +20,20 @@ public class GameServiceImpl implements GameService {
     private GameDao gameDao;
     private PlatformTransactionManager transactionManager;
     private RoundDao roundDao;
+    private VocabListService vocabListService;
+    private  UserService uService;
 
     @Autowired
-    public GameServiceImpl(GameDao gameDao, PlatformTransactionManager transactionManager, RoundDao roundDao) {
+    public GameServiceImpl(GameDao gameDao, PlatformTransactionManager transactionManager, RoundDao roundDao,
+                            VocabListService vocabListService) {
         super();
         this.gameDao = gameDao;
         this.transactionManager = transactionManager;
         this.roundDao = roundDao;
+        this.vocabListService = vocabListService;
     }
 
-    private UserService uService;
-    private VocabList vL;
-    private VocabListService vLService;
-    private Game g;
+
 
 
     @Override
@@ -41,62 +42,26 @@ public class GameServiceImpl implements GameService {
         // boolean usersExist = userService.allUserExist(int user1Id, int user2Id);
         boolean usersExist = true;
 
+
         if(!usersExist){
             //throw new UserNotFoundException();
             throw new InvalidUserException("One User is not existing");
         }
 
         Game game = new Game(gameOwner, gamePartner, vocabList);
-
         game = initRounds(game, 3, vocabList);
 
         TransactionStatus ts = transactionManager.getTransaction(null);
         gameDao.saveGame(game);
         transactionManager.commit(ts);
-
         return game;
 
     }
 
-    public VocabList getVocabList(Long id){
-
-//          if id null create Test bundle for Testing
-//          delete later for getVocablist by ID
-
-        //create Testlists for VocabItem
-        List<String> testListVI, testListVI2, testListVI3, testListVI4;
-        testListVI = testListVI2 = testListVI3 = testListVI4 = new ArrayList<>();
-        testListVI.add("test-engl1");
-        testListVI.add("different1");
-        testListVI2.add("test-engl2");
-        testListVI2.add("different2");
-        testListVI2.add("moredifferent2");
-        testListVI3.add("test-engl3");
-        testListVI4.add("test-engl4");
-        testListVI4.add("different4");
-
-        //Test VocabItems for Itemlist with ID, vocabname and translationList
-        VocabItem tVI1 = new VocabItem("Test1", testListVI);
-        VocabItem tVI2 = new VocabItem("Test2", testListVI2);
-        VocabItem tVI3 = new VocabItem("Test3", testListVI3);
-        VocabItem tVI4 = new VocabItem("Test4", testListVI4);
-
-        //create ItemList for Vocablist
-        List<VocabItem> testItemList = new ArrayList<>();
-        testItemList.add(tVI1);
-        testItemList.add(tVI2);
-        testItemList.add(tVI3);
-        testItemList.add(tVI4);
-
-        //create Vocablist
-        Map<String,List<VocabItem>> testMap = new HashMap<String, List<VocabItem>>();
-        testMap.put("Test", testItemList);
-
-        VocabList testVocabList = new VocabList(testItemList, new Language("German"),
-                new Language("English"), new Category("Test"));
-
-        return testVocabList;
-
+    public void updateGame(Game game){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        gameDao.updateGame(game);
+        transactionManager.commit(ts);
     }
 
     @Override
@@ -116,46 +81,22 @@ public class GameServiceImpl implements GameService {
         uService.increaseTotalGames(userId);
     }
 
-//    @Override
-//    public int calculateWinner(Game game){
-//
-//        ArrayList<Round> rounds = game.getRounds();
-//        int winningUserRound1 = rounds.get(0).getWinningUser();
-//        int winningUserRound2 = rounds.get(1).getWinningUser();
-//        int winningUserRound3 = rounds.get(2).getWinningUser();
-//
-//        return calculateTotalWinner(roundWinner1, roundWinner2, roundWinner3);
-//
-//    }
-
     @Override
-    public int calculateTotalWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3) {
+    public int calculateGameWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3) {
 
         int winningUser = 0;
         winningUser = winningUser + addEndWinner(winningUserRound1);
         winningUser = winningUser + addEndWinner(winningUserRound2);
         winningUser = winningUser + addEndWinner(winningUserRound3);
 
-        if(winningUser == 0){
-            System.out.println("Its a tie");
-        }
-        if(winningUser < 0){
-            System.out.println("Player 2 won");
-        }
-        if(winningUser > 0){
-            System.out.println("Player 1 won");
-        }
-
-        //User userObj1 = userService.getUserById(userId);
-
         return winningUser;
     }
 
     public int addEndWinner(int winningUser){
-        int winning;
+        int winning = 0;
         if(winningUser == 2) winning = -1;
-        if(winningUser == 1) return winning = 1;
-        else return winning = 0;
+        if(winningUser == 1) winning = 1;
+        return winning;
     }
 
     @Override
@@ -173,39 +114,46 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game initRounds(Game game, int maxRounds, VocabList vocabList){
 
-        LinkedHashMap<String, List<String>>  TestList;
-
-
         for (int i = 0; i < maxRounds; i++) {
+            TransactionStatus ts = transactionManager.getTransaction(null);
             // create VocabSet
             // Map vocabSet = null;
             // vocabSet = generateVocabSets(maxRounds, vocabList, vocabSet);
-            ArrayList<String> fakeAnswerList = new ArrayList<String>(Arrays.asList(
-                    "Frage" + i+1, "richtige Antwort", "falsche Antwort 1", "falsche Antwort 2", "falsche Antwort 3"));
-            Round round = new Round(i, fakeAnswerList);
-            round.setRightAnswer(fakeAnswerList.get(1));
+          //  ArrayList<String> fakeAnswerList = new ArrayList<String>(Arrays.asList(
+          //          "Frage" + i+1, "richtige Antwort", "falsche Antwort 1", "falsche Antwort 2", "falsche Antwort 3"));
+
+            Map<Integer, List<String>> allVocabSetsNeeded = vocabListService.createRandomVocabsets(vocabList.getListID());
+            List<String> vocabSetAlternative = allVocabSetsNeeded.get(i);
+  /*         List<String> tempVocabSet = vocabListService.createQuestionList(vocabList.getListID());
+            List<String> vocabSet = new ArrayList<>();
+            for(int k = 0; k<5; k++){
+                vocabSet.add(tempVocabSet.get(k));
+            }
+
+   */
+            Round round = new Round(vocabSetAlternative);
+            round.setRightAnswer(vocabSetAlternative.get(1));
+            roundDao.saveRound(round);
+            transactionManager.commit(ts);
 //          round.setRightAnswer(vocabSet.get(1));
             game.getRounds().add(round);
-
         }
-
         return game;
-
     }
 
     public Map generateVocabSets(int maxRounds, VocabList vocablist, Map vocabSet){
         Long listId = vocablist.getListID();
-        List<VocabItem> vListItems = vLService.getAllItemsInVocabList(listId);
+        List<VocabItem> vListItems = vocabListService.getAllItemsInVocabList(listId);
         List<String> questions = new ArrayList<String>();
         int vocabLLength = 3;
         for(int i = 0; i < maxRounds; i++){
-            int randomItem = getRandomNumberUsingNextInt(0, vocabLLength);
+            int randomItem = getRandomNumber(0, vocabLLength);
             String Item = vListItems.get(randomItem).toString();
             vocabSet.put(i, Item);
         }
         return vocabSet;
     }
-    public int getRandomNumberUsingNextInt(int min, int max) {
+    public int getRandomNumber(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
