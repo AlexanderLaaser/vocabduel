@@ -17,6 +17,10 @@ public class RoundDaoImpl implements RoundDao{
     public void saveRound(Round round){
         em.persist(round);
     }
+    @Override
+    public void updateRound(Round round){
+        em.merge(round);
+    }
 
 
 }

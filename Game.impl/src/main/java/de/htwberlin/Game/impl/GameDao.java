@@ -8,4 +8,7 @@ public interface GameDao {
 
     @Transactional
     void saveGame(Game game);
+
+    @Transactional
+    void updateGame(Game game);
 }

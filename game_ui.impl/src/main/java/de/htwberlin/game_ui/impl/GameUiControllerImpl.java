@@ -184,8 +184,8 @@ public class GameUiControllerImpl implements GameUiController {
 
             } else if (action == 3) {
 
-                User test = userService.createUser("Peter", "Test","Supertester123", "qwer");
-                User test2 = userService.createUser("Holger", "Test","Supertester123", "qwer");
+                User test = userService.createUser("Peter", "Test","Superowner", "qwer");
+                User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
                 VocabList vocabtest = vocabListService.getVocabListByID(12);
 
                 Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
@@ -234,12 +234,20 @@ public class GameUiControllerImpl implements GameUiController {
                                 "Was ist die richtige Antwort? 1, 2, 3 oder 4?")));
 
                         roundService.calculateRoundResults(round);
-                        roundService.saveRound(round);
+                        roundService.updateRound(round);
 
                     }
-
-                    gameUiView.printMessage("Winner of the game is Player: " + gameService.calculateGameWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser()));
-
+                    int winningUser = gameService.calculateGameWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser());
+                    String nameWinner;
+                    if(winningUser == 0){
+                        gameUiView.printMessage("Its a tie");
+                    }
+                    if(winningUser < 0){
+                        gameUiView.printMessage("Winner of the game is Player2: " + game.getGamePartner().getUserName());
+                    }
+                    if(winningUser > 0){
+                        gameUiView.printMessage("Winner of the game is Player 1: " + game.getGameOwner().getUserName());
+                    }
 
                 } catch (InvalidUserException e) {
                     e.printStackTrace();

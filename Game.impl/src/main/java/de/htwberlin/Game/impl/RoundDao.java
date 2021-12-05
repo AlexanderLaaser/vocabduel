@@ -8,4 +8,7 @@ import javax.transaction.Transactional;
 public interface RoundDao {
     @Transactional
     void saveRound(Round round);
+
+    @Transactional
+    void updateRound(Round round);
 }

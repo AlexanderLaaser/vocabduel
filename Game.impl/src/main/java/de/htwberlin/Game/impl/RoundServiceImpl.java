@@ -50,10 +50,15 @@ public class RoundServiceImpl implements RoundService {
         roundDao.saveRound(round);
         transactionManager.commit(ts);
     }
+    public void updateRound(Round round){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        roundDao.updateRound(round);
+        transactionManager.commit(ts);
+    }
 
     @Override
-    public Round createRound(int roundId, ArrayList vocabSet){
-        Round round = new Round(roundId, vocabSet);
+    public Round createRound(ArrayList vocabSet){
+        Round round = new Round(vocabSet);
 
         return round;
     }

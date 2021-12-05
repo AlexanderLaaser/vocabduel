@@ -53,6 +53,8 @@ public interface VocabListService {
 
     List<String> createQuestionList(Long listId);
 
+    Map<Integer, List<String>> createRandomVocabsets (Long listId);
+
 
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 public class Round {
 
     @Id
+    @GeneratedValue
     @Column(name = "roundId")
     private int roundID;
 
@@ -22,8 +23,7 @@ public class Round {
     private String answerPlayer1;
     private String answerPlayer2;
 
-    public Round(int roundID, ArrayList vocabSet) {
-        this.roundID = roundID;
+    public Round(List vocabSet) {
         this.vocabSet = vocabSet;
     }
 
