@@ -200,7 +200,6 @@ public class GameUiControllerImpl implements GameUiController {
                             gameParnter = userService.getUserById(User2Id);
                             String name = gameOwner.getUserName();
                             name = gameParnter.getUserName();
-                            gameUiView.printMessage(name);
                             differentUser=false;
 
                         }catch(Exception e){
@@ -215,12 +214,25 @@ public class GameUiControllerImpl implements GameUiController {
                 }
 
                 //getUserbyID implem
+                boolean vocablistExist = true;
+                VocabList vocabList = null;
+                while(vocablistExist){
+                    int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
+                    try{
+                        vocabList = vocabListService.getVocabListByID(vocablistId);
+                        Long id = vocabList.getListID();
+                        vocablistExist = false;
+                    }catch(Exception e){
+                        gameUiView.printMessage("Die Vokabelliste ist nicht in der Datenbank. Bitte gib eine andere ID ein.");
+                        vocablistExist=true;
+                    }
 
-                int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
+                }
+
 
                 try {
                     gameUiView.printMessage("you creating a Game now.");
-                    Game game = gameService.createGame(gameOwner, gameParnter, vocabListService.getVocabListByID(vocablistId));
+                    Game game = gameService.createGame(gameOwner, gameParnter, vocabList);
                     //Game created Rounds are implemented
                     List<Round> rounds = game.getRounds();
 

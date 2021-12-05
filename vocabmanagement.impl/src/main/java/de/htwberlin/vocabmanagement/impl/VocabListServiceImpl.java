@@ -130,7 +130,6 @@ public class VocabListServiceImpl implements VocabListService {
         for (int j = 0; j < 3; j++) {
             //Anzahl verbleibender VokabelSets
             int possibleVocabSets = listOfVocabItems.size();
-            System.out.println("Anzahl verbleibender VokabelSets: " + possibleVocabSets);
             int randomItem = getRandomNumber(0,possibleVocabSets);
             finalVocabSets.add(listOfVocabItems.get(randomItem));
             listOfVocabItems.remove(randomItem);
@@ -144,19 +143,15 @@ public class VocabListServiceImpl implements VocabListService {
             questions.add(question);
         }
 
-
         vocabSet1.add(questions.get(0));
         vocabSet2.add(questions.get(1));
         vocabSet3.add(questions.get(2));
         //alle Fragen hinzugefügt
-        System.out.println("alle Fragen hinzugefügt");
 
-        System.out.println("Anzahl aller Vocabsets: " + finalVocabSets.size());
         List<String> rightAnswers = new ArrayList<String>();
         for(int i = 0; i < 3; i++){
             List<String> tempAnswers = finalVocabSets.get(i).getSecLanguage();
             int randomAnswer = getRandomNumber(0, tempAnswers.size());
-            System.out.println("Anzahl restlicher Antworten: " + tempAnswers.size());
             String answer = tempAnswers.get(randomAnswer);
             rightAnswers.add(answer);
         }
@@ -166,7 +161,6 @@ public class VocabListServiceImpl implements VocabListService {
         vocabSet2.add(rightAnswers.get(1));
         vocabSet3.add(rightAnswers.get(2));
         //Alle Antworten hinzugefügt
-        System.out.println("Alle Antworten hinzugefügt");
 
         List<String> allPossibleWrongTranslations = new ArrayList<>();
         for (int m = 0; m < listOfVocabItems.size(); m++){
@@ -176,7 +170,6 @@ public class VocabListServiceImpl implements VocabListService {
                 allPossibleWrongTranslations.add(tempTranslations.get(n));
             }
         }
-
 
         for(int t = 0; t<3; t++){
             int randomInt = getRandomNumber(0, allPossibleWrongTranslations.size());
@@ -190,7 +183,6 @@ public class VocabListServiceImpl implements VocabListService {
             int randomInt = getRandomNumber(0, allPossibleWrongTranslations.size());
             vocabSet3.add(allPossibleWrongTranslations.get(randomInt));
         }
-        System.out.println("Alle falschen Übersetzungen hinzugefügt");
         //alle falschen Übersetzungen in einer Liste
 
         Map<Integer, List<String>> vocabSetsForRounds = new HashMap<>();
@@ -262,7 +254,6 @@ public class VocabListServiceImpl implements VocabListService {
     public int getRandomNumber(int min, int max) {
         Random random = new Random();
         int temp =random.nextInt(max - min) + min;
-        System.out.println("Zufallszahl ist: " + temp);
         return temp;
 
     }
