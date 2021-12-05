@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao{
@@ -15,5 +17,19 @@ public class UserDaoImpl implements UserDao{
     @Override
     public void saveUser(User user){
         em.persist(user);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        TypedQuery<User> q = em.createQuery("SELECT u FROM User u WHERE u.userID=:id", User.class);
+        q.setParameter("id", id);
+        List<User> userResult = q.getResultList();
+        if (!userResult.isEmpty()) {
+            User user = userResult.get(0);
+           return user;
+        } else {
+            return null;
+        }
+
     }
 }

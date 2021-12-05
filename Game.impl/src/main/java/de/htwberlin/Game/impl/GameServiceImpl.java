@@ -42,6 +42,7 @@ public class GameServiceImpl implements GameService {
         // boolean usersExist = userService.allUserExist(int user1Id, int user2Id);
         boolean usersExist = true;
 
+
         if(!usersExist){
             //throw new UserNotFoundException();
             throw new InvalidUserException("One User is not existing");

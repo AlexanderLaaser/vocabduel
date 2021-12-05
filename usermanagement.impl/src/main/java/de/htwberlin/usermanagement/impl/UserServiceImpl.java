@@ -43,17 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-//        em.getTransaction().begin();
-//        TypedQuery<User> q = em.createQuery("SELECT u FROM User u WHERE u.userID=:id", User.class);
-//        q.setParameter("id", id);
-//        List<User> userResult = q.getResultList();
-//        em.getTransaction().commit();
-//        if (!userResult.isEmpty()) {
-//            User user = userResult.get(0);
-//            return user;
-//        } else {
-            return null;
-//        }
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        User user = userDao.getUserById(id);
+        transactionManager.commit(ts);
+        return user;
     }
 
     public List<User> getAllUser(){

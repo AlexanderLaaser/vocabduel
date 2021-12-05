@@ -184,19 +184,43 @@ public class GameUiControllerImpl implements GameUiController {
 
             } else if (action == 3) {
 
-                User test = userService.createUser("Peter", "Test","Superowner", "qwer");
-                User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
-                VocabList vocabtest = vocabListService.getVocabListByID(12);
+  //              User test = userService.createUser("Peter", "Test","Superowner", "qwer");
+    //            User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
 
-                Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
-                Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
+                boolean differentUser = true;
+                User gameOwner = null;
+                User gameParnter = null;
+                while(differentUser){
+                   Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
+                   Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
+
+                    if(User1Id != User2Id){
+                        try{
+                            gameOwner = userService.getUserById(User1Id);
+                            gameParnter = userService.getUserById(User2Id);
+                            String name = gameOwner.getUserName();
+                            name = gameParnter.getUserName();
+                            gameUiView.printMessage(name);
+                            differentUser=false;
+
+                        }catch(Exception e){
+                            gameUiView.printMessage("Mindestens einer der User ist nicht in der Datanbank. Bitte probiere es erneut.");
+                            //gameUiView.printMessage(e.getMessage());
+                            differentUser=true;
+                        }
+
+                    }else gameUiView.printMessage("Sie haben leider zweimal die gleiche ID Eingegeben. Owner und Spielpartner müssen unterschiedliche User sein.");
+
+
+                }
+
                 //getUserbyID implem
 
                 int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
 
                 try {
                     gameUiView.printMessage("you creating a Game now.");
-                    Game game = gameService.createGame(test, test2, vocabtest);
+                    Game game = gameService.createGame(gameOwner, gameParnter, vocabListService.getVocabListByID(vocablistId));
                     //Game created Rounds are implemented
                     List<Round> rounds = game.getRounds();
 
