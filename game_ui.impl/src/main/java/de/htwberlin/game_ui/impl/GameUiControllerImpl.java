@@ -186,7 +186,7 @@ public class GameUiControllerImpl implements GameUiController {
 
                 User test = userService.createUser("Peter", "Test","Supertester123", "qwer");
                 User test2 = userService.createUser("Holger", "Test","Supertester123", "qwer");
-                VocabList vocabtest = vocabListService.getVocabListByID(15);
+                VocabList vocabtest = vocabListService.getVocabListByID(12);
 
                 Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
                 Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
@@ -234,6 +234,7 @@ public class GameUiControllerImpl implements GameUiController {
                                 "Was ist die richtige Antwort? 1, 2, 3 oder 4?")));
 
                         roundService.calculateRoundResults(round);
+                        roundService.saveRound(round);
 
                     }
 

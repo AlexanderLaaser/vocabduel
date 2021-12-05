@@ -2,7 +2,10 @@ package de.htwberlin.Game.impl;
 
 import de.htwberlin.game.inter.Round;
 import de.htwberlin.game.inter.RoundService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +14,16 @@ import java.util.Random;
 
 @Component
 public class RoundServiceImpl implements RoundService {
+
+    private PlatformTransactionManager transactionManager;
+    private RoundDao roundDao;
+
+    @Autowired
+    public RoundServiceImpl(PlatformTransactionManager transactionManager, RoundDao roundDao) {
+        super();
+        this.transactionManager = transactionManager;
+        this.roundDao = roundDao;
+    }
 
     //calculates the Winner of the Round and gives back a Integer
     //0=tie 1= User1 wins 2= User2 wins
@@ -30,6 +43,12 @@ public class RoundServiceImpl implements RoundService {
         }
 
         round.setWinningUser(winningUser);
+    }
+
+    public void saveRound(Round round){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        roundDao.saveRound(round);
+        transactionManager.commit(ts);
     }
 
     @Override
