@@ -119,7 +119,6 @@ public class VocabListServiceImpl implements VocabListService {
     @Override
     public Map<Integer, List<String>> createRandomVocabsets(Long listenId){
         List<VocabItem> listOfVocabItems = getAllItemsInVocabList(listenId);
-        System.out.println(listOfVocabItems);
 
         List<String> vocabSet1 = new ArrayList<>();;
         List<String> vocabSet2 = new ArrayList<>();
