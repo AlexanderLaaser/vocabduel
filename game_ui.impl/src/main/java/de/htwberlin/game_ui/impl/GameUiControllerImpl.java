@@ -91,6 +91,7 @@ public class GameUiControllerImpl implements GameUiController {
         String UserPassword = gameUiView.askSomethingString("Wie lautet das Passwort des Spielers?");
 
         User registeredUser = userService.createUser(UserFirstName,UserLastName,UserUsername,UserPassword);
+        gameUiView.printMessage("Bitte merke oder am besten notiere dir deine folgende UserId: " + registeredUser.getUserID().toString());
 
         return registeredUser;
     }
@@ -197,8 +198,14 @@ public class GameUiControllerImpl implements GameUiController {
 
             } else if (action == 3) {
 
-  //              User test = userService.createUser("Peter", "Test","Superowner", "qwer");
-    //            User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
+                int neuerUserFrage = 1;
+                while(neuerUserFrage == 1){
+                    neuerUserFrage = gameUiView.askSomethingInt("Möchtest du einen neuen User anlegen? (tippe 1)" + " \n" + "Wenn beide User bereits angelegt sind, tippe 2.");
+                    if(neuerUserFrage == 1){
+                        registerUser();
+                    }
+                    else neuerUserFrage = 0;
+                }
 
                 boolean differentUser = true;
                 User gameOwner = null;
