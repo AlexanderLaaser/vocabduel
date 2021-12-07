@@ -11,4 +11,10 @@ public interface GameDao {
 
     @Transactional
     void updateGame(Game game);
+
+    @Transactional
+    public void deleteGame(Game game);
+
+    @Transactional
+    public Game getGameById(Long gameId);
 }

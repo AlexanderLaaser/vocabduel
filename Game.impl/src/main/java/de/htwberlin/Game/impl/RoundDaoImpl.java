@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Repository
 public class RoundDaoImpl implements RoundDao{
@@ -20,6 +21,19 @@ public class RoundDaoImpl implements RoundDao{
     @Override
     public void updateRound(Round round){
         em.merge(round);
+    }
+
+    @Override
+    public void deleteRound(Round round){
+        em.remove(round);
+    }
+
+    @Override
+    public Round getRoundById(Long roundId){
+        TypedQuery<Round> r = (TypedQuery<Round>) em.createQuery("SELECT r.roundId FROM Round r WHERE r.roundId like: roundId ");
+        r.setParameter("roundId", roundId);
+        Round round = r.getSingleResult();
+        return round;
     }
 
 

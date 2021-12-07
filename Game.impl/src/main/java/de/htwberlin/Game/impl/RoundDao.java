@@ -11,4 +11,10 @@ public interface RoundDao {
 
     @Transactional
     void updateRound(Round round);
+
+    @Transactional
+    public Round getRoundById(Long roundId);
+
+    @Transactional
+    public void deleteRound(Round round);
 }
