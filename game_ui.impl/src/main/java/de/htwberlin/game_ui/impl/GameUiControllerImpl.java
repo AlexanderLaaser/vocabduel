@@ -184,13 +184,12 @@ public class GameUiControllerImpl implements GameUiController {
 
             } else if (action == 3) {
 
-//                User test = userService.createUser("Peter", "Test","Superowner", "qwer");
-//                User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
+  //              User test = userService.createUser("Peter", "Test","Superowner", "qwer");
+    //            User test2 = userService.createUser("Holger", "Test","Superpartner", "qwer");
 
                 boolean differentUser = true;
                 User gameOwner = null;
                 User gameParnter = null;
-
                 while(differentUser){
                    Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
                    Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
@@ -217,7 +216,6 @@ public class GameUiControllerImpl implements GameUiController {
                 //getUserbyID implem
                 boolean vocablistExist = true;
                 VocabList vocabList = null;
-
                 while(vocablistExist){
                     int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
                     try{
