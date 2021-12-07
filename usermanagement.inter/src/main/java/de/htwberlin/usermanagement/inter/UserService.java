@@ -24,16 +24,16 @@ public interface UserService {
 
     /**
      * Methode die einen User aus der Liste (später Datenbank löscht)
-     * @param userID
+     * @param user
      */
-    void removeUser(Long userID);
+    void removeUser(User user);
 
     /**
      * Verantwortlich für die Änderung des Passworts
-     * @param userID - ID des Nutzers
+     * @param user
      * @param password - passswort des Nutzers
      */
-    void changePassword (Long userID, String password) throws InvalidNameException;
+    void changePassword (User user, String password) throws InvalidNameException;
 
     /**
      * Verantwortlich für die Erhöhung der gespielten Spiele

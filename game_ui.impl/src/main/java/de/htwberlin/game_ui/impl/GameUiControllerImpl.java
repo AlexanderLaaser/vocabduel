@@ -84,6 +84,17 @@ public class GameUiControllerImpl implements GameUiController {
         this.languageService = languageServiceImpl;
     }
 
+    public User registerUser() throws javax.naming.InvalidNameException {
+        String UserFirstName = gameUiView.askSomethingString("Wie lautet der Vorname des Spielers?");
+        String UserLastName = gameUiView.askSomethingString("Wie lautet der Nachname des Spielers?");
+        String UserUsername = gameUiView.askSomethingString("Wie lautet der Username des Spielers?");
+        String UserPassword = gameUiView.askSomethingString("Wie lautet das Passwort des Spielers?");
+
+        User registeredUser = userService.createUser(UserFirstName,UserLastName,UserUsername,UserPassword);
+
+        return registeredUser;
+    }
+
     @Override
     public void run() throws IOException, InvalidNameException, javax.naming.InvalidNameException {
         //Todo Schleifen und ungültige Werte abfangen -> Eception Handling + Try/Catch
@@ -180,6 +191,8 @@ public class GameUiControllerImpl implements GameUiController {
                 }
             } else if (action == 2) {
                 System.out.println("Noch nicht implementiert!");
+
+
 
 
             } else if (action == 3) {

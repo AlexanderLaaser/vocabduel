@@ -39,16 +39,6 @@ public class UserServiceImplTest {
         User testUser = userService.getUserById(100L);
     }
 
-    @Test
-    public void testRemoveUser() throws InvalidNameException {
-        userService.removeUser(27L);
-    }
-
-    @Test
-    public void testChangePassword() throws  InvalidNameException {
-        userService.changePassword(29L, "Pa121113");
-
-    }
 
     @Test
     public void testIncreaseTotalGames() throws  InvalidNameException {
