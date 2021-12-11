@@ -5,5 +5,5 @@ import java.io.IOException;
 
 public interface GameUiController {
 
-    void run() throws IOException, InvalidNameException, de.htwberlin.vocabmanagement.inter.InvalidNameException;
+    void run() throws IOException, InvalidNameException, de.htwberlin.vocabmanagement.inter.InvalidNameException, de.htwberlin.usermanagement.inter.InvalidUserException;
 }

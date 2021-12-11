@@ -1,46 +1,54 @@
 package de.htwberlin.usermanagement.inter;
 
 import javax.naming.InvalidNameException;
+import java.util.List;
 
 public interface UserService {
 
     /**
-     * Erstellt ein User Objekt
-     * @param firstName - Vorname des Nutzers
-     * @param lastName - Nachname des Nutzers
-     * @param userName - Benutzer des Nutzers im System
-     * @param password - Passwort des Nutzers
-     * @return Es wird ein User Objekt erstellt und zurückgegeben
+     * Methode erstellt einen neuen User
+     * @param firstName Vorname des Users
+     * @param lastName Nachname des Users
+     * @param userName Spielername des Users
+     * @param password Passwort des Users
+     * @return Rückgabe des erstellten Users
      * @throws InvalidNameException
      */
-    User createUser(String firstName, String lastName, String userName, String password) throws InvalidNameException;
+    User createUser(String firstName, String lastName, String userName, String password) throws InvalidUserException, InvalidNameException;
 
     /**
      *
-     * @param userID - ID des Nutzers
-     * @return Es wird ein User Objekt zurückgegeben
+     * @param userId Id des Users
+     * @return gibt einen User zurück
      */
-    User getUserById(Long userID);
+    User getUserById(long userId);
 
     /**
-     * Methode die einen User aus der Liste (später Datenbank löscht)
-     * @param user
+     * Methode löscht einen User aus der Datenbank
+     * @param
      */
-    void removeUser(User user);
+    void removeUser(long userid);
 
     /**
-     * Verantwortlich für die Änderung des Passworts
-     * @param user
-     * @param password - passswort des Nutzers
+     * Methode erzeugt eine Liste aller vorhandenen User
+     * @return
      */
-    void changePassword (User user, String password) throws InvalidNameException;
+    List<User> getAllExistingUser();
 
     /**
-     * Verantwortlich für die Erhöhung der gespielten Spiele
-     * @param userID - ID des Nutzers
-    void increaseTotalGames(Long userID);
+     * Methode verändert das Passwort eines Users
+     * @param userId Id des Users
+     * @param password Passswort des Users
      */
-    void increaseTotalGames(Long userID);
+    void changePassword (long userId, String password) throws InvalidNameException;
+
+    /**
+     * Methode erhöht die Anzahl der Spiele um 1
+     * @param userId - Id des Users
+     */
+    void increaseTotalGames(long userId);
+
+
 
 }
 

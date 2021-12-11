@@ -1,3 +1,4 @@
+import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
 import org.junit.Before;
@@ -20,14 +21,6 @@ public class UserServiceImplTest {
 //        this.userService = new UserServiceImpl();
     }
 
-    @Test
-    public void testCreateUser() throws InvalidNameException {
-        String testFirstName = "Max";
-        String testLastName = "Mustermann";
-        String testUserName = "MaxMustermann";
-        String testPasswort = "Passwort";
-        User testUser = userService.createUser(testFirstName,testLastName,testUserName,testPasswort);
-    }
 
     @Test
     public void testGetUserByIdExist() throws InvalidNameException {

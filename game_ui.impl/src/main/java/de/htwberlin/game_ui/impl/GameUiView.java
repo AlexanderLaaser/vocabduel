@@ -37,6 +37,20 @@ public class GameUiView {
         return input;
     }
 
+    public int askForUserAction() {
+        System.out.println("Was möchten Sie tun?");
+        System.out.println("1 = Alle User anzeigen");
+        System.out.println("2 = Ausgewählten User anzeigen (Input: User ID)");
+        System.out.println("3 = Neuen User anlegen");
+        System.out.println("4 = Passwort eines bestehenden Users verändern (Input: User ID)");
+        System.out.println("5 = Bestehenden User löschen (Input: User ID)");
+        System.out.println("6 = Ins App Menü zurückkehren");
+        System.out.println("7 = App sofort beenden");
+        int input = askSomethingInt("Was möchten Sie tun?");
+
+        return input;
+    }
+
     public String askSomethingString(String message) {
         String input = null;
         boolean rightTypOfAnswer = true;

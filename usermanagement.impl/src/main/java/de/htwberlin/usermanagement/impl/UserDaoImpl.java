@@ -40,21 +40,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void removeUser(User user) {em.remove(user);}
 
+    @Override
+    public void checkingName(String name) {
+    }
 
     @Override
-    public void changePassword(User user, String password) {em.persist(user);  }
-//        validatePassword(password);
-//        User user = getUserById(userID);
-//        user.setPassword(password);
-//        em.getTransaction().begin();
-//        em.persist(user);
-//        em.getTransaction().commit();
+    public void checkingPassword(String password) {
+    }
+
+    @Override
+    public void changePassword(User user) {em.persist(user);}
 
     @Override
     public void increaseTotalGames(User user) {em.persist(user);}
-//        User user = getUserById(userID);
-//        user.setTotalGames(user.getTotalGames()+1);
-//        em.getTransaction().begin();
-//        em.persist(user);
-//        em.getTransaction().commit();
+
 }
