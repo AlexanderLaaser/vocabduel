@@ -8,13 +8,17 @@ public interface UserDao {
 
     void saveUser(User user);
 
-    User getUserById(Long userID);
+    User getUserById(Long userId);
 
     void increaseTotalGames(User user);
 
-    void changePassword(User user, String password);
+    void changePassword(User user);
 
     void removeUser(User user);
+
+    void checkingName(String name);
+
+    void checkingPassword(String password);
 
     List<User> getAllUser();
 

@@ -84,20 +84,20 @@ public class GameUiControllerImpl implements GameUiController {
         this.languageService = languageServiceImpl;
     }
 
-    public User registerUser() throws javax.naming.InvalidNameException {
-        String UserFirstName = gameUiView.askSomethingString("Wie lautet der Vorname des Spielers?");
-        String UserLastName = gameUiView.askSomethingString("Wie lautet der Nachname des Spielers?");
-        String UserUsername = gameUiView.askSomethingString("Wie lautet der Username des Spielers?");
-        String UserPassword = gameUiView.askSomethingString("Wie lautet das Passwort des Spielers?");
+    public User registerUser() throws InvalidUserException, javax.naming.InvalidNameException {
+        String userFirstName = gameUiView.askSomethingString("Wie lautet der Vorname des Spielers?");
+        String userLastName = gameUiView.askSomethingString("Wie lautet der Nachname des Spielers?");
+        String userUsername = gameUiView.askSomethingString("Wie lautet der Username des Spielers?");
+        String userPassword = gameUiView.askSomethingString("Wie lautet das Passwort des Spielers?");
 
-        User registeredUser = userService.createUser(UserFirstName,UserLastName,UserUsername,UserPassword);
-        gameUiView.printMessage("Bitte merke oder am besten notiere dir deine folgende UserId: " + registeredUser.getUserID().toString());
+        User registeredUser = userService.createUser(userFirstName,userLastName,userUsername,userPassword);
+        gameUiView.printMessage("Die User ID des neuen Spielers lautet: " + registeredUser.getUserID().toString());
 
         return registeredUser;
     }
 
     @Override
-    public void run() throws IOException, InvalidNameException, javax.naming.InvalidNameException {
+    public void run() throws IOException, InvalidNameException, javax.naming.InvalidNameException, InvalidUserException {
         //Todo Schleifen und ungültige Werte abfangen -> Eception Handling + Try/Catch
 
         int action = 0;
@@ -191,44 +191,105 @@ public class GameUiControllerImpl implements GameUiController {
                     }
                 }
             } else if (action == 2) {
-                System.out.println("Noch nicht implementiert!");
 
+                gameUiView.printMessage("Willkommen in der Userverwaltung:");
 
+                while (listAction != 7) {
+                    listAction = gameUiView.askForUserAction();
 
+                    //1 = Alle User anzeigen
+                    if (listAction == 1) {
+                        try {
+                            List<User> listOfAllUsers = userService.getAllExistingUser();
+                            if (!listOfAllUsers.isEmpty()) {
+                                for (int i = 0; i < listOfAllUsers.size(); i++) {
+                                    User userList = listOfAllUsers.get(i);
+                                    System.out.println("User ID: " + userList.getUserID() + " Spielername: " + userList.getUserName());
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
+                    }
 
+                    //2 = Ausgewählten User anzeigen (Input: User ID)
+                    else if (listAction == 2) {
+                        try {
+                            Long selectedUserUserId = gameUiView.askSomethingLong("Welcher User soll aufgerufen werden (Input: User ID)");
+                            User selectedUser = userService.getUserById(selectedUserUserId);
+                            System.out.println("Vorname: " + selectedUser.getFirstName());
+                            System.out.println("Nachname: " + selectedUser.getLastName());
+                            System.out.println("Username: " + selectedUser.getUserName());
+                            System.out.println("User ID: " + selectedUser.getUserID());
+                        } catch (Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
+
+                        //3 = Neuen User anlegen
+                    } else if (listAction == 3) {
+                        try {
+                            registerUser();
+                        } catch (InvalidUserException e) {
+                            System.out.println("Der User konnte nicht angelegt werden. Bitte überprüfe die Eingaben.");
+                        }
+
+                        //4 = Passwort eines bestehenden Users verändern (Input: User ID")
+                    } else if (listAction == 4) {
+                        try {
+                            Long toBeUpdatedUserUserId = gameUiView.askSomethingLong("Welcher User soll ein neues Passwort erhalten (Input: User ID)?");
+                            String toBeUpdatedUserPassword = gameUiView.askSomethingString("Wie lautet das neue Passwort?");
+                            userService.changePassword(toBeUpdatedUserUserId, toBeUpdatedUserPassword);
+                        } catch (Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
+
+                        //5 = Bestehenden User löschen (Input: User ID)
+                    } else if (listAction == 5) {
+                        try {
+                            Long toBeDeletedUserId = gameUiView.askSomethingLong("Welcher User soll gelöscht werden (Input: User ID)?");
+                            userService.removeUser(toBeDeletedUserId);
+                            System.out.println("Spieler mit der User ID " + toBeDeletedUserId + " erfolgreich gelöscht.");
+                        } catch (Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
+
+                    } else if (listAction == 7) {
+                        System.exit(0);
+                    }
+                }
             } else if (action == 3) {
 
                 int neuerUserFrage = 1;
-                while(neuerUserFrage == 1){
+                while (neuerUserFrage == 1) {
                     neuerUserFrage = gameUiView.askSomethingInt("Möchtest du einen neuen User anlegen? (tippe 1)" + " \n" + "Wenn beide User bereits angelegt sind, tippe 2.");
-                    if(neuerUserFrage == 1){
+                    if (neuerUserFrage == 1) {
                         registerUser();
-                    }
-                    else neuerUserFrage = 0;
+                    } else neuerUserFrage = 0;
                 }
 
                 boolean differentUser = true;
                 User gameOwner = null;
                 User gameParnter = null;
-                while(differentUser){
-                   Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
-                   Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
+                while (differentUser) {
+                    Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
+                    Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
 
-                    if(User1Id != User2Id){
-                        try{
+                    if (User1Id != User2Id) {
+                        try {
                             gameOwner = userService.getUserById(User1Id);
                             gameParnter = userService.getUserById(User2Id);
                             String name = gameOwner.getUserName();
                             name = gameParnter.getUserName();
-                            differentUser=false;
+                            differentUser = false;
 
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             gameUiView.printMessage("Mindestens einer der User ist nicht in der Datanbank. Bitte probiere es erneut.");
                             //gameUiView.printMessage(e.getMessage());
-                            differentUser=true;
+                            differentUser = true;
                         }
 
-                    }else gameUiView.printMessage("Sie haben leider zweimal die gleiche ID Eingegeben. Owner und Spielpartner müssen unterschiedliche User sein.");
+                    } else
+                        gameUiView.printMessage("Sie haben leider zweimal die gleiche ID Eingegeben. Owner und Spielpartner müssen unterschiedliche User sein.");
 
 
                 }
@@ -236,15 +297,15 @@ public class GameUiControllerImpl implements GameUiController {
                 //getUserbyID implem
                 boolean vocablistExist = true;
                 VocabList vocabList = null;
-                while(vocablistExist){
+                while (vocablistExist) {
                     int vocablistId = gameUiView.askSomethingInt("Gib uns die ID der gewünschten VocabListe");
-                    try{
+                    try {
                         vocabList = vocabListService.getVocabListByID(vocablistId);
                         Long id = vocabList.getListID();
                         vocablistExist = false;
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         gameUiView.printMessage("Die Vokabelliste ist nicht in der Datenbank. Bitte gib eine andere ID ein.");
-                        vocablistExist=true;
+                        vocablistExist = true;
                     }
 
                 }
@@ -266,8 +327,8 @@ public class GameUiControllerImpl implements GameUiController {
 
                         gameUiView.printMessage(
                                 "Frage: " + vocabSet.get(0) + "\n" +
-                                "1: " + vocabSet.get(1) + " \t 2: " + vocabSet.get(2) + "\n" +
-                                "3: " + vocabSet.get(3) + " \t 4: " + vocabSet.get(4)
+                                        "1: " + vocabSet.get(1) + " \t 2: " + vocabSet.get(2) + "\n" +
+                                        "3: " + vocabSet.get(3) + " \t 4: " + vocabSet.get(4)
                         );
                         String answer = vocabSet.get(gameUiView.askSomethingInt(
                                 "Was ist die richtige Antwort? 1, 2, 3 oder 4?"));
@@ -295,20 +356,18 @@ public class GameUiControllerImpl implements GameUiController {
                     }
                     int winningUser = gameService.calculateGameWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser());
                     String nameWinner;
-                    if(winningUser == 0){
+                    if (winningUser == 0) {
                         gameUiView.printMessage("Its a tie");
                     }
-                    if(winningUser < 0){
+                    if (winningUser < 0) {
                         gameUiView.printMessage("Winner of the game is Player2: " + game.getGamePartner().getUserName());
                     }
-                    if(winningUser > 0){
+                    if (winningUser > 0) {
                         gameUiView.printMessage("Winner of the game is Player 1: " + game.getGameOwner().getUserName());
                     }
-
                 } catch (InvalidUserException e) {
                     e.printStackTrace();
                 }
-
             } else if (action == 4) {
                 System.exit(0);
             }
