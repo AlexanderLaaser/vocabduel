@@ -85,15 +85,22 @@ public class GameUiControllerImpl implements GameUiController {
         this.languageService = languageServiceImpl;
     }
 
-    public User registerUser() throws InvalidUserException, javax.naming.InvalidNameException {
+    public User registerUser() {
+
         String userFirstName = gameUiView.askSomethingString("Wie lautet der Vorname des Spielers?");
         String userLastName = gameUiView.askSomethingString("Wie lautet der Nachname des Spielers?");
         String userUsername = gameUiView.askSomethingString("Wie lautet der Username des Spielers?");
         String userPassword = gameUiView.askSomethingString("Wie lautet das Passwort des Spielers?");
 
-        User registeredUser = userService.createUser(userFirstName,userLastName,userUsername,userPassword);
-        gameUiView.printMessage("Die User ID des neuen Spielers lautet: " + registeredUser.getUserID().toString());
-
+        User registeredUser = null;
+        try {
+            registeredUser = userService.createUser(userFirstName,userLastName,userUsername,userPassword);
+            gameUiView.printMessage("Die User ID des neuen Spielers lautet: " + registeredUser.getUserID().toString());
+        } catch (InvalidUserException e) {
+            System.out.println("Der neue Spieler kann nicht angelegt werden. Bitte überprüfen Sie Ihre Eingaben.");
+        } catch (javax.naming.InvalidNameException e) {
+            System.out.println("Die Eingaben für den neuen Spieler sind fehlerhaft.");
+        }
         return registeredUser;
     }
 
@@ -203,7 +210,7 @@ public class GameUiControllerImpl implements GameUiController {
 
                 gameUiView.printMessage("Willkommen in der Userverwaltung:");
 
-                while (listAction != 7) {
+                while (listAction != 6) {
                     listAction = gameUiView.askForUserAction();
 
                     //1 = Alle User anzeigen
@@ -223,45 +230,49 @@ public class GameUiControllerImpl implements GameUiController {
 
                     //2 = Ausgewählten User anzeigen (Input: User ID)
                     else if (listAction == 2) {
+
+                        Long selectedUserUserId = gameUiView.askSomethingLong("Welcher User soll aufgerufen werden (Input: User ID)");
+
                         try {
-                            Long selectedUserUserId = gameUiView.askSomethingLong("Welcher User soll aufgerufen werden (Input: User ID)");
                             User selectedUser = userService.getUserById(selectedUserUserId);
                             System.out.println("Vorname: " + selectedUser.getFirstName());
                             System.out.println("Nachname: " + selectedUser.getLastName());
                             System.out.println("Username: " + selectedUser.getUserName());
                             System.out.println("User ID: " + selectedUser.getUserID());
                         } catch (Exception e) {
-                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                            System.out.println("Diese Auswahl ist nicht möglich.");
                         }
 
                         //3 = Neuen User anlegen
                     } else if (listAction == 3) {
-                        try {
-                            registerUser();
-                        } catch (InvalidUserException e) {
-                            System.out.println("Der User konnte nicht angelegt werden. Bitte überprüfe die Eingaben.");
-                        }
+                        registerUser();
 
                         //4 = Passwort eines bestehenden Users verändern (Input: User ID")
                     } else if (listAction == 4) {
+
+                        Long toBeUpdatedUserUserId = gameUiView.askSomethingLong("Welcher User soll ein neues Passwort erhalten (Input: User ID)?");
+                        String toBeUpdatedUserPassword = gameUiView.askSomethingString("Wie lautet das neue Passwort?");
+
                         try {
-                            Long toBeUpdatedUserUserId = gameUiView.askSomethingLong("Welcher User soll ein neues Passwort erhalten (Input: User ID)?");
-                            String toBeUpdatedUserPassword = gameUiView.askSomethingString("Wie lautet das neue Passwort?");
                             userService.changePassword(toBeUpdatedUserUserId, toBeUpdatedUserPassword);
+                            System.out.println("Der Spieler mit der gewählten User ID " + toBeUpdatedUserUserId + " erhält das neue Passwort: " + userService.getUserById(toBeUpdatedUserUserId).getPassword());
                         } catch (Exception e) {
-                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                            System.out.println("Eine Passwortänderung ist nicht möglich.");
                         }
 
                         //5 = Bestehenden User löschen (Input: User ID)
                     } else if (listAction == 5) {
+
+                        Long toBeDeletedUserId = gameUiView.askSomethingLong("Welcher User soll gelöscht werden (Input: User ID)?");
+
                         try {
-                            Long toBeDeletedUserId = gameUiView.askSomethingLong("Welcher User soll gelöscht werden (Input: User ID)?");
                             userService.removeUser(toBeDeletedUserId);
                             System.out.println("Spieler mit der User ID " + toBeDeletedUserId + " erfolgreich gelöscht.");
-                        } catch (Exception e) {
-                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Der Löschvorgang ist nicht möglich.");
                         }
 
+                        //7 = App sofort beenden
                     } else if (listAction == 7) {
                         System.exit(0);
                     }

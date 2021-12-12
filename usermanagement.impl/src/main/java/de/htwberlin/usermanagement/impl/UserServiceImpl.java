@@ -36,11 +36,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String firstName, String lastName, String userName, String password) throws InvalidUserException {
-        checkingName(firstName);
-        checkingName(lastName);
-        checkingName(userName);
-        checkingPassword(password);
-
         User tempUser = new User(firstName, lastName, userName, password);
         TransactionStatus ts = transactionManager.getTransaction(null);
         userDao.saveUser(tempUser);
@@ -88,26 +83,6 @@ public class UserServiceImpl implements UserService {
         toBeUpdatedUser.setTotalGames(+1);
         userDao.increaseTotalGames(toBeUpdatedUser);
         transactionManager.commit(ts);
-    }
-
-
-    public void checkingName(String name) throws InvalidUserException {
-        if (name == null || name.contains(" ") || name == "") {
-            throw new InvalidUserException("Der Name darf nicht leer sein.");
-        } else if (!name.matches("[a-zA-Z_?]*")) {
-            throw new InvalidUserException("Der Name darf keine Sonderzeichen oder Nummern enthalten.");
-        }
-    }
-
-    public void checkingPassword(String name) throws InvalidUserException {
-        if (name == null || name.contains(" ") || name == "") {
-            throw new InvalidUserException("Das Password darf nicht leer sein.");
-        } else if (name.length() <= 6) {
-            throw new InvalidUserException("Das Passwort ist zu kurz.");
-        }
-        else if (name == "Passwort" || name == "passwort" || name == "kennwort") {
-            throw new InvalidUserException("Das Passwort ist zu leicht zu erraten.");
-        }
     }
 }
 

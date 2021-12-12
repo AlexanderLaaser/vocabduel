@@ -41,14 +41,6 @@ public class UserDaoImpl implements UserDao {
     public void removeUser(User user) {em.remove(user);}
 
     @Override
-    public void checkingName(String name) {
-    }
-
-    @Override
-    public void checkingPassword(String password) {
-    }
-
-    @Override
     public void changePassword(User user) {em.persist(user);}
 
     @Override
