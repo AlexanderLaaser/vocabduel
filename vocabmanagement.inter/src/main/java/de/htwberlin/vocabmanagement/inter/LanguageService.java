@@ -9,7 +9,17 @@ public interface LanguageService {
      */
     Language createLanguage(String LanguageName) throws InvalidNameException;
 
+
+    /**
+     * Methode findet die Sprache
+     * @param LanguageName Name der Sprache
+     * @return gibt die Sprache zurück
+     */
     Language findLanguageByLanguageName(String LanguageName);
 
+    /**
+     * Methode um die Sprache zu speichern
+     * @param language übergibt eine Sprache
+     */
     void storeLanguage(Language language);
 }

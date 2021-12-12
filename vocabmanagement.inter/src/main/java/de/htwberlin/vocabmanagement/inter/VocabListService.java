@@ -49,10 +49,26 @@ public interface VocabListService {
      */
     void deleteVocabListById(long vocabListId) throws InvalidListIdException;
 
+    /**
+     * Methode erhält alle Elemente aus der Vokabelliste
+     * @param listenId übergibt die ID der Liste
+     * @return erhält eine Liste alle Vokabeln
+     * @throws InvalidListIdException Ausnahme bei nicht gültiger Listen ID
+     */
     List<VocabItem> getAllItemsInVocabList(Long listenId) throws InvalidListIdException;
 
+    /**
+     * Methode erstellt zufälliges Vokabelset
+     * @param listId üergibt die ID der Liste
+     * @return erhält ein zufälliges Vokabelset zurück
+     * @throws InvalidListIdException Ausnahme bei nicht gültiger Listen ID
+     */
     Map<Integer, List<String>> createRandomVocabsets (Long listId) throws InvalidListIdException;
 
+    /**
+     * Methode um die Vokabellsite zu speichern
+     * @param vocabList übergibt eine Vokabelliste
+     */
     void safeVocabList(VocabList vocabList);
 
 }

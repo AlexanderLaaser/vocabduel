@@ -118,7 +118,7 @@ public class GameUiControllerImpl implements GameUiController {
             if (action == 1) {
                 gameUiView.printMessage("Willkommen in der Vokabelverwaltung:");
 
-                while (listAction != 7) {
+                while (listAction != 6) {
                     listAction = gameUiView.askForListAction();
 
                     //Alle Vokabellisten anzeigen
