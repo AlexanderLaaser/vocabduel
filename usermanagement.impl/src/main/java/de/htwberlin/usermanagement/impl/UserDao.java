@@ -12,6 +12,10 @@ public interface UserDao {
 
     void increaseTotalGames(User user);
 
+    void increaseGamesWon(User user);
+
+    void increaseGamesLost(User user);
+
     void changePassword(User user);
 
     void removeUser(User user);
