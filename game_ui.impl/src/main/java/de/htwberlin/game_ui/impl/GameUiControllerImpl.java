@@ -421,9 +421,21 @@ public class GameUiControllerImpl implements GameUiController {
                         "1: " + vocabSet.get(1) + " \t 2: " + vocabSet.get(2) + "\n" +
                         "3: " + vocabSet.get(3) + " \t 4: " + vocabSet.get(4)
         );
-        String answer = vocabSet.get(gameUiView.askSomethingInt(
-                "Was ist die richtige Antwort? 1, 2, 3 oder 4?"));
+        boolean answer1to4 = true;
+
+        String answer = "falsche Eingabe";
+        while (answer1to4) {
+
+            try {
+                answer = vocabSet.get(gameUiView.askSomethingInt(
+                        "Was ist die richtige Antwort? 1, 2, 3 oder 4?"));
+                answer1to4 = false;
+            } catch (Exception e) {
+                gameUiView.printMessage("Dies war keine Antwort zwischen 1 und 4 geschrieben als Zahl. Bitte gib eine Zahl zwischen 1 und 4 ein.");
+            }
+        }
         return answer;
+
     }
 
 }
