@@ -46,4 +46,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void increaseTotalGames(User user) {em.persist(user);}
 
+    @Override
+    public void increaseGamesWon(User user) {em.persist(user);}
+
+    @Override
+    public void increaseGamesLost(User user) {em.persist(user);}
+
 }

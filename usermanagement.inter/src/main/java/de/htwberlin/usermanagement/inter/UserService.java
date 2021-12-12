@@ -49,6 +49,11 @@ public interface UserService {
     void increaseTotalGames(long userId);
 
 
+    void increaseGamesWon(long userId);
+
+    void increaseGamesLost(long userId);
+
+
 
 }
 

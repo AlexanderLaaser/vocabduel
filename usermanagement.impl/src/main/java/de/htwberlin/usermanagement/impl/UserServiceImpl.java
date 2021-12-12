@@ -84,6 +84,26 @@ public class UserServiceImpl implements UserService {
         userDao.increaseTotalGames(toBeUpdatedUser);
         transactionManager.commit(ts);
     }
+
+    @Override
+    public void increaseGamesWon(long userID) {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        User toBeUpdatedUser = userDao.getUserById(userID);
+        toBeUpdatedUser.setGamesWon(+1);
+        userDao.increaseTotalGames(toBeUpdatedUser);
+        transactionManager.commit(ts);
+    }
+
+    @Override
+    public void increaseGamesLost(long userID) {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        User toBeUpdatedUser = userDao.getUserById(userID);
+        toBeUpdatedUser.setGamesLost(+1);
+        userDao.increaseTotalGames(toBeUpdatedUser);
+        transactionManager.commit(ts);
+    }
+
+
 }
 
 

@@ -220,7 +220,7 @@ public class GameUiControllerImpl implements GameUiController {
                             if (!listOfAllUsers.isEmpty()) {
                                 for (int i = 0; i < listOfAllUsers.size(); i++) {
                                     User userList = listOfAllUsers.get(i);
-                                    System.out.println("User ID: " + userList.getUserID() + " Spielername: " + userList.getUserName());
+                                    System.out.println("Vorname: " + userList.getFirstName() + " Nachname: " + userList.getLastName() + "\n" + "User ID: " + userList.getUserID() + " Spielername: " + userList.getUserName() + "\n" + "Gespielte Spiele: " + userList.getTotalGames() + " [Gewonnen: " + userList.getGamesWon() + " & Verloren: " + userList.getGamesLost() + "]" + "\n");
                                 }
                             }
                         } catch (Exception e) {
