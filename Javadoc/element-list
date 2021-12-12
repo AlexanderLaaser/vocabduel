@@ -1,4 +1,10 @@
 unnamed package
-game.inter
-usermanagement.inter
-vocabmanagement.inter
+de.htwberlin.configuration_manager
+de.htwberlin.game_ui.impl
+de.htwberlin.game_ui.inter
+de.htwberlin.Game.impl
+de.htwberlin.game.inter
+de.htwberlin.usermanagement.impl
+de.htwberlin.usermanagement.inter
+de.htwberlin.vocabmanagement.impl
+de.htwberlin.vocabmanagement.inter
