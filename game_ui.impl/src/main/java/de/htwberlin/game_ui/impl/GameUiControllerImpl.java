@@ -290,7 +290,7 @@ public class GameUiControllerImpl implements GameUiController {
 
                 boolean differentUser = true;
                 User gameOwner = null;
-                User gameParnter = null;
+                User gamePartner = null;
                 while (differentUser) {
                     Long User1Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Host");
                     Long User2Id = gameUiView.askSomethingLong("Gib uns die ID vom Game Participant");
@@ -298,9 +298,9 @@ public class GameUiControllerImpl implements GameUiController {
                     if (User1Id != User2Id) {
                         try {
                             gameOwner = userService.getUserById(User1Id);
-                            gameParnter = userService.getUserById(User2Id);
+                            gamePartner = userService.getUserById(User2Id);
                             String name = gameOwner.getUserName();
-                            name = gameParnter.getUserName();
+                            name = gamePartner.getUserName();
                             differentUser = false;
 
                         } catch (Exception e) {
@@ -330,7 +330,7 @@ public class GameUiControllerImpl implements GameUiController {
 
                 try {
                     gameUiView.printMessage("you creating a Game now.");
-                    Game game = gameService.createGame(gameOwner, gameParnter, vocabList);
+                    Game game = gameService.createGame(gameOwner, gamePartner, vocabList);
                     //Game created Rounds are implemented
                     List<Round> rounds = game.getRounds();
 
@@ -346,16 +346,22 @@ public class GameUiControllerImpl implements GameUiController {
                             game.getRounds().get(1).getWinningUser(),
                             game.getRounds().get(2).getWinningUser());
 
+                    userService.increaseTotalGames(gameOwner.getUserID());
+                    userService.increaseTotalGames(gamePartner.getUserID());
+
                     if (winningUser == 0) {
-                        gameUiView.printMessage("Es ist ein Unentschieden zwischen den Spielern: " + game.getGamePartner().getUserName() + " und "+ game.getGameOwner().getUserName());
+                        gameUiView.printMessage("Es ist ein Unentschieden zwischen den Spielern: " + game.getGamePartner().getUserName() + " und " + game.getGameOwner().getUserName());
                     }
                     if (winningUser < 0) {
                         gameUiView.printMessage("Gewinner des Spiels ist Spieler 2: " + game.getGamePartner().getUserName());
+                        userService.increaseGamesWon(gamePartner.getUserID());
+                        userService.increaseGamesLost(gameOwner.getUserID());
                     }
                     if (winningUser > 0) {
                         gameUiView.printMessage("Gewinner des Spiels ist Spieler 1: " + game.getGameOwner().getUserName());
+                        userService.increaseGamesWon(gameOwner.getUserID());
+                        userService.increaseGamesLost(gamePartner.getUserID());
                     }
-
                     gameService.updateGame(game);
 
                 } catch (InvalidUserException | InvalidListIdException e) {
