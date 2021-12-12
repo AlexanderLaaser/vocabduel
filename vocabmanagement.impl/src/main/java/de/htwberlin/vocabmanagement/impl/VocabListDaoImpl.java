@@ -1,5 +1,6 @@
 package de.htwberlin.vocabmanagement.impl;
 
+import de.htwberlin.vocabmanagement.inter.InvalidListIdException;
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 import org.springframework.stereotype.Repository;
@@ -23,13 +24,16 @@ public class VocabListDaoImpl implements VocabListDao{
     @Override
     public VocabList getvocabListById(Long vocabListId) {
         VocabList vocabList = em.find(VocabList.class, vocabListId);
-
         return vocabList;
     }
 
     @Override
     public void deleteVocabList(VocabList vocabList) {
         em.remove(vocabList);
+        List<VocabItem> listofVocabItems = vocabList.getItemlist();
+        for (VocabItem item : listofVocabItems){
+            em.remove(item);
+        }
     }
 
     public List<VocabList> getAllVocabLists(){

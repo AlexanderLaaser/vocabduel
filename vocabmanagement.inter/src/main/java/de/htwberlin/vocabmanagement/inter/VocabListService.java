@@ -11,14 +11,14 @@ public interface VocabListService {
      * @param VocabListId - ID einer existierenden Vocabelliste
      * @return VocabList Objekt
      */
-    VocabList getVocabListByID(long VocabListId);
+    VocabList getVocabListByID(long VocabListId) throws InvalidListIdException;
 
     /**
      * Methode fügt ein bestehendes Item einer List hinzu
-     * @param VocabItemId - ID eines VocabItem Objekts
-     * @param VocabListID - ID einer VocabListe
+     * @param vocabItem - ID eines VocabItem Objekts
+     * @param listId - ID einer VocabListe
      */
-    void addItemToVocabSet(int VocabItemId, int VocabListID);
+    void addItemToVocabList(VocabItem vocabItem, Long listId) throws InvalidListIdException;
 
     /**
      * erstellt eine Vocabelliste aus mehreren Vocabitems
@@ -47,14 +47,12 @@ public interface VocabListService {
      * Methode löscht eine bestehende VocabListe anhand der Listen ID
      * @param vocabListId
      */
-    void deleteVocabListById(long vocabListId);
+    void deleteVocabListById(long vocabListId) throws InvalidListIdException;
 
-    List<VocabItem> getAllItemsInVocabList(Long listenId);
+    List<VocabItem> getAllItemsInVocabList(Long listenId) throws InvalidListIdException;
 
-    List<String> createQuestionList(Long listId);
+    Map<Integer, List<String>> createRandomVocabsets (Long listId) throws InvalidListIdException;
 
-    Map<Integer, List<String>> createRandomVocabsets (Long listId);
-
-
+    void safeVocabList(VocabList vocabList);
 
 }

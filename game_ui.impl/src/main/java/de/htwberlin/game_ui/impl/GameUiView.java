@@ -28,10 +28,9 @@ public class GameUiView {
         System.out.println("2 = Vokabeln für bestehende Liste anzeigen (Input: ID)");
         System.out.println("3 = Neue Vokabelliste hinzufügen");
         System.out.println("4 = Vokabeln manuell zu bestehender Liste hinzufügen");
-        System.out.println("5 = Textfiles zur bestehenden Vokabelliste hinzufügen");
-        System.out.println("6 = Bestehende Vokabelliste löschen");
-        System.out.println("7 = Ins App Menü zurückkehren");
-        System.out.println("8 = App sofort beenden");
+        System.out.println("5 = Bestehende Vokabelliste löschen");
+        System.out.println("6 = Ins App Menü zurückkehren");
+        System.out.println("7 = App sofort beenden");
         int input = askSomethingInt("Was möchten Sie tun?");
 
         return input;

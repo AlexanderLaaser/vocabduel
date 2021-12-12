@@ -1,5 +1,8 @@
 package de.htwberlin.vocabmanagement.inter;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +16,7 @@ public class VocabItem {
     private Long vocabItemID;
 
     private String leftlan;
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ElementCollection
     @CollectionTable(name = "Translations", joinColumns = @JoinColumn(name = "id")) // 2
     @Column(name = "TranslationContent") // 3

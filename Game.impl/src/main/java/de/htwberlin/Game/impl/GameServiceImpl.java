@@ -37,7 +37,7 @@ public class GameServiceImpl implements GameService {
 
 
     @Override
-    public Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException {
+    public Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException, InvalidListIdException {
 
         // boolean usersExist = userService.allUserExist(int user1Id, int user2Id);
         boolean usersExist = true;
@@ -112,7 +112,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game initRounds(Game game, int maxRounds, VocabList vocabList){
+    public Game initRounds(Game game, int maxRounds, VocabList vocabList) throws InvalidListIdException {
 
         for (int i = 0; i < maxRounds; i++) {
             TransactionStatus ts = transactionManager.getTransaction(null);
@@ -141,7 +141,7 @@ public class GameServiceImpl implements GameService {
         return game;
     }
 
-    public Map generateVocabSets(int maxRounds, VocabList vocablist, Map vocabSet){
+    public Map generateVocabSets(int maxRounds, VocabList vocablist, Map vocabSet) throws InvalidListIdException {
         Long listId = vocablist.getListID();
         List<VocabItem> vListItems = vocabListService.getAllItemsInVocabList(listId);
         List<String> questions = new ArrayList<String>();

@@ -1,5 +1,1 @@
-{de colores} : {bunt}
-{el colegio} : {die Schule}
-{el mundo} : {die Welt}
-{el sombrero} : {der Hut}
-{el traje tipíco} : {die Tracht}
+{bought}, {bought} : {kaufen}

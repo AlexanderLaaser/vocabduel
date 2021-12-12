@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategoryById(Long id) throws InvalidNameException {
+    public Category getCategoryById(Long id) {
         TransactionStatus ts = transactionManager.getTransaction(null);
         Category category = categoryDao.getCategoryById(id);
         transactionManager.commit(ts);

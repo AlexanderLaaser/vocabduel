@@ -32,25 +32,38 @@ public class VocabListServiceImpl implements VocabListService {
         return vocablist;
     }
 
-    public VocabList getVocabListByID(long VocabListId) {
+    public VocabList getVocabListByID(long VocabListId) throws InvalidListIdException {
         TransactionStatus ts = transactionManager.getTransaction(null);
         VocabList vocabList = vocabListDao.getvocabListById(VocabListId);
         transactionManager.commit(ts);
         if (vocabList != null) {
             return vocabList;
-        } else {
-            return null;
+        }else{
+            throw new InvalidListIdException("Achtung: die angegebene ID ist nicht vergeben!");
         }
     }
 
     @Override
-    //ToDo Try Catch usw. schreiben
-    //ToDo Was passiert mit den entsprechenden Vokabeln wenn wir eine VocabList löschen?
-    public void deleteVocabListById(long vocabListId) {
+    public void addItemToVocabList(VocabItem vocabItem, Long listId) throws InvalidListIdException {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        VocabList vocabList = vocabListDao.getvocabListById(listId);
+        vocabList.getItemlist().add(vocabItem);
+        vocabListDao.saveVocabList(vocabList);
+        transactionManager.commit(ts);
+    }
+
+    @Override
+    public void deleteVocabListById(long vocabListId) throws InvalidListIdException{
         TransactionStatus ts = transactionManager.getTransaction(null);
         VocabList vocabList = vocabListDao.getvocabListById(vocabListId);
-        vocabListDao.deleteVocabList(vocabList);
-        transactionManager.commit(ts);
+
+        if(vocabList != null){
+            vocabListDao.deleteVocabList(vocabList);
+            transactionManager.commit(ts);
+        }else{
+            throw new InvalidListIdException("Achtung: die angegebene ID ist nicht vergeben!");
+        }
+
     }
 
     @Override
@@ -59,8 +72,10 @@ public class VocabListServiceImpl implements VocabListService {
         String filePath = filename;
         HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 
-        String line;
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        reader.readLine();
+        String line = null;
+
         while ((line = reader.readLine()) != null) {
             List ValueList = new ArrayList();
             String[] parts = line.split(":", 2);
@@ -72,7 +87,7 @@ public class VocabListServiceImpl implements VocabListService {
                 String value = parts[1];
                 value = value.replace("{", "");
                 value = value.replace("}", "");
-                value = value.replace(" ", "");
+                value = value.replace("/", "\\");
 
                 String[] listOfValues = value.split(",");
                 for (String ele : listOfValues) {
@@ -100,15 +115,16 @@ public class VocabListServiceImpl implements VocabListService {
         return listofVocabLists;
     }
 
-    public List<VocabItem> getAllItemsInVocabList(Long listenId) {
+    public List<VocabItem> getAllItemsInVocabList(Long listenId) throws InvalidListIdException {
         TransactionStatus ts = transactionManager.getTransaction(null);
         List<VocabItem> ListOfVocabItems = vocabListDao.getItemsInVocabList(listenId);
         transactionManager.commit(ts);
 
-        return ListOfVocabItems;
-    }
+        if(ListOfVocabItems.isEmpty()){
+            throw new InvalidListIdException("Achtung: die angegebene ID ist nicht vergeben!");
+        }
 
-    public void addItemToVocabSet(int VocabItemId, int VocabListId) {
+        return ListOfVocabItems;
     }
 
     @Override
@@ -117,7 +133,7 @@ public class VocabListServiceImpl implements VocabListService {
     }
 
     @Override
-    public Map<Integer, List<String>> createRandomVocabsets(Long listenId){
+    public Map<Integer, List<String>> createRandomVocabsets(Long listenId) throws InvalidListIdException {
         List<VocabItem> listOfVocabItems = getAllItemsInVocabList(listenId);
         System.out.println(listOfVocabItems);
 
@@ -193,62 +209,11 @@ public class VocabListServiceImpl implements VocabListService {
         return vocabSetsForRounds;
     }
 
-    // Todo Muss noch schön gemacht werden -> Methdode extrahieren und Anzahl der "Runden" dynamisieren
-    public List<String> createQuestionList(Long listenId) {
+    @Override
+    public void safeVocabList(VocabList vocabList) {
         TransactionStatus ts = transactionManager.getTransaction(null);
-        List<VocabItem> listOfVocabItems = getAllItemsInVocabList(listenId);
-        System.out.println(listOfVocabItems);
-
-        // Anzahl verbleibender VokabelSets
-        int listSize = listOfVocabItems.size();
-
-        //Randomlist für Auswahl aus Vokabelobjekte
-        ArrayList<Integer> counterOnelist = new ArrayList<Integer>();
-        //Randomlist für Auswahl aus rechten Übersetzungen der Vokalobjekte
-        ArrayList<Integer> counterTwolist = new ArrayList<Integer>();
-        //Randomlist für Auswahl aus rechten Übersetzungen der Fakeobjekte
-        ArrayList<Integer> counterThreelist = new ArrayList<Integer>();
-        //Ausgabeliste
-        ArrayList<String> listOfTranslations = new ArrayList<String>();
-
-        for (int i = 1; i < listSize; i++) {
-            counterOnelist.add(i);
-        }
-        Collections.shuffle(counterOnelist);
-
-        for (int i = 0; i < 3; i++) {
-
-            listOfTranslations.add(listOfVocabItems.get(counterOnelist.get(i)).getFirstLanguage());
-
-            List<String> listOfStringsRightLanItem = listOfVocabItems.get(counterOnelist.get(i)).getSecLanguage();
-            int listOfStringsRightLanItemSize = listOfStringsRightLanItem.size();
-
-            for (int o = 1; o < listOfStringsRightLanItemSize; o++) {
-                counterTwolist.add(o);
-            }
-            Collections.shuffle(counterTwolist);
-            for (int r = 0; r < 1; r++) {
-                listOfTranslations.add(listOfStringsRightLanItem.get(r));
-            }
-
-            for (int k = 0; k < 3; k++) {
-                Random rand = new Random();
-                int index = counterOnelist.get(rand.nextInt(counterOnelist.size()));
-                if (index != i) {
-                    List<String> listOfStringsRightLanItemFake = listOfVocabItems.get(counterOnelist.get(index)).getSecLanguage();
-                    int listOfStringsRightLanItemSizeFake = listOfStringsRightLanItemFake.size();
-
-                    for (int o = 1; o < listOfStringsRightLanItemSizeFake; o++) {
-                        counterTwolist.add(o);
-                    }
-                    Collections.shuffle(counterTwolist);
-                    for (int r = 0; r < 1; r++) {
-                        listOfTranslations.add(listOfStringsRightLanItemFake.get(r));
-                    }
-                }
-            }
-        }
-        return listOfTranslations;
+        vocabListDao.saveVocabList(vocabList);
+        transactionManager.commit(ts);
     }
 
     public int getRandomNumber(int min, int max) {

@@ -2,6 +2,7 @@ package de.htwberlin.game.inter;
 
 import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
+import de.htwberlin.vocabmanagement.inter.InvalidListIdException;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface GameService {
      * @throws InvalidUserException for invalid User
      */
     //create a Game with 2 existing Users and one VocabList
-    Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException;
+    Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException, InvalidListIdException;
 
     /**
      * Methode gibt Category ID einer Vocablist mit dem Category Namen des params categoryName
@@ -72,7 +73,7 @@ public interface GameService {
      * @param vocabList    - Liste mit Voabeln für das Game
      * @return Runden Objekt
      */
-    Game initRounds(Game game, int anzahlRunden, VocabList vocabList);
+    Game initRounds(Game game, int anzahlRunden, VocabList vocabList) throws InvalidListIdException;
 
 //    /**
 //     * berechnet den Gewinner durch ziehen der Rundengewinner und triggern der calculateTotalWinner() methode

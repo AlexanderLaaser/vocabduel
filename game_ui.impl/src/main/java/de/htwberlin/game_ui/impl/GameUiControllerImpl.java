@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -98,7 +99,6 @@ public class GameUiControllerImpl implements GameUiController {
 
     @Override
     public void run() throws IOException, InvalidNameException, javax.naming.InvalidNameException, InvalidUserException {
-        //Todo Schleifen und ungültige Werte abfangen -> Eception Handling + Try/Catch
 
         int action = 0;
         gameUiView.printMessage("Die App wird gestartet:");
@@ -120,7 +120,7 @@ public class GameUiControllerImpl implements GameUiController {
                             if(!listOfVocabList.isEmpty()){
                                 for (int i = 0; i < listOfVocabList.size(); i++) {
                                     VocabList vocabList = listOfVocabList.get(i);
-                                    System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName());
+                                    System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName() + " - Category: " + vocabList.getCategory().getCategoryName());
                                 }
                             }
                         } catch (Exception e) {
@@ -128,7 +128,6 @@ public class GameUiControllerImpl implements GameUiController {
                         }
 
                     //Vokabeln für bestehende Liste anzeigen (Input: ID)
-                    //ToDo Listenausgabe der secLanguage erreichen
                     } else if (listAction == 2) {
                         Long listenIDShow = gameUiView.askSomethingLong("Welche Liste möchten sie anzeigen (Input = ListenID)?");
 
@@ -136,9 +135,11 @@ public class GameUiControllerImpl implements GameUiController {
                             List<VocabItem> listOfVocabitems = vocabListService.getAllItemsInVocabList(listenIDShow);
 
                             for (VocabItem vocabItem : listOfVocabitems) {
-                                System.out.println("ItemId: " + vocabItem.getVocabItemID() + " - firstLanguage: " + vocabItem.getFirstLanguage());//  + " - secLanguage: " + vocabItem.getSecLanguage().toArray().toString());
+                                System.out.println("ItemId: " + vocabItem.getVocabItemID() + " - firstLanguage: " + vocabItem.getFirstLanguage() + " - secLanguage: " + vocabItem.getSecLanguage().toString());
                             }
-                        } catch (Exception e) {
+                        }catch (InvalidListIdException invalidListIdException){
+                            System.out.println(invalidListIdException.getMessage());
+                        }catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
                         }
 
@@ -165,28 +166,36 @@ public class GameUiControllerImpl implements GameUiController {
                         }
 
                         //Vokabeln manuell zu bestehender Liste hinzufügen
-                        //ToDo ausimplementieren
                     } else if (listAction == 4) {
-                        //System.out.println("Noch nicht implementiert!");
-                        Long customAction = gameUiView.askSomethingLong("Für welche Liste möchten sie die CustomList erstellen? (Input = ListenID)?");
-                        vocabListService.createQuestionList(customAction);
+                        Long listenId = gameUiView.askSomethingLong("Zu welcher Liste möchten sie eine einzelne Vokabel hinzufügen? (Input = ListenID)?");
+                        try {
+                            vocabListService.getVocabListByID(listenId);
+                            String leftlan = gameUiView.askSomethingString("Bitte geben sie die Übersetzung der Hauptsprache an");
+                            String rightlan = gameUiView.askSomethingString("Bitte geben sie die Übersetzungen der Fremdsprache an (Bei mehreren getrennt durch ein Komma - X, Y)");
+                            List<String> listOfRightLan = Arrays.asList(rightlan.split("\\s*,\\s*"));
 
-                        //Textfiles zur bestehenden Vokabelliste hinzufügen
-                        //ToDo ausimplementieren
-                    } else if (listAction == 5) {
-                        System.out.println("Noch nicht implementiert!");
+                            VocabItem vocabItem = vocabItemService.createVocabItem(leftlan,listOfRightLan);
+                            vocabListService.addItemToVocabList(vocabItem,listenId);
+
+                        }catch (InvalidListIdException invalidListIdException){
+                            System.out.println(invalidListIdException.getMessage());
+                        }catch(Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
 
                         //Vokabelliste löschen
-                    } else if (listAction == 6) {
+                    } else if (listAction == 5) {
                         Long deleteAction = gameUiView.askSomethingLong("Welche Liste möchten sie löschen (Input = ListenID)?");
-                        //try {
+                        try {
                             vocabListService.deleteVocabListById(deleteAction);
-                        //} catch (Exception e) {
-                            //System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-                        //}
+                        }catch (InvalidListIdException invalidUserException) {
+                            System.out.println(invalidUserException.getMessage());
+                        }catch (Exception e) {
+                            System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+                        }
 
                         //App sofort beenden
-                    } else if (listAction == 8) {
+                    } else if (listAction == 7) {
                         System.exit(0);
                     }
                 }
@@ -365,7 +374,7 @@ public class GameUiControllerImpl implements GameUiController {
                     if (winningUser > 0) {
                         gameUiView.printMessage("Winner of the game is Player 1: " + game.getGameOwner().getUserName());
                     }
-                } catch (InvalidUserException e) {
+                } catch (InvalidUserException | InvalidListIdException e) {
                     e.printStackTrace();
                 }
             } else if (action == 4) {

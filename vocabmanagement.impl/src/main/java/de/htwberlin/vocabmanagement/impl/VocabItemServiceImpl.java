@@ -1,5 +1,4 @@
 package de.htwberlin.vocabmanagement.impl;
-
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +34,19 @@ public class VocabItemServiceImpl implements VocabItemService {
     public List<VocabItem> createVocabItemOufOfMap(Map<String, List<String>> map){
         List<VocabItem> VocabItemList = new ArrayList<VocabItem>();
 
+        TransactionStatus ts = transactionManager.getTransaction(null);
         for (String key : map.keySet())
         {
-            VocabItem vocabItem = createVocabItem(key,map.get(key));
-            VocabItemList.add(vocabItem);
+            if(vocabItemDao.getvocabItemByName(key) == null){
+                VocabItem vocabItem = createVocabItem(key,map.get(key));
+                VocabItemList.add(vocabItem);
+            }else{
+                VocabItem vocabItem = vocabItemDao.getvocabItemByName(key);
+                VocabItemList.add(vocabItem);
+            }
         }
+
+        transactionManager.commit(ts);
 
         return VocabItemList;
     }

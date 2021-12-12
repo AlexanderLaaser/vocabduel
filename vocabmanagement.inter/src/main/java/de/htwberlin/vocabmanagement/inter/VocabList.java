@@ -1,5 +1,8 @@
 package de.htwberlin.vocabmanagement.inter;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class VocabList {
     @JoinColumn(name="Category")
     private Category category;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
     @JoinColumn(name="VocabItem")
     private List<VocabItem> itemlist;

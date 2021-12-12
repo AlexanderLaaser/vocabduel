@@ -1,5 +1,6 @@
 package de.htwberlin.vocabmanagement.impl;
 
+import de.htwberlin.vocabmanagement.inter.InvalidListIdException;
 import de.htwberlin.vocabmanagement.inter.VocabItem;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
