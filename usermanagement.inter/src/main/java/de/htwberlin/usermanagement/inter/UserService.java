@@ -11,8 +11,8 @@ public interface UserService {
      * @param lastName Nachname des Users
      * @param userName Spielername des Users
      * @param password Passwort des Users
-     * @return Rückgabe des erstellten Users
-     * @throws InvalidNameException
+     * @throws InvalidUserException Ausnahme bei ungültigem User
+     * @throws InvalidNameException Ausnahme bei ungültigem Namen
      */
     User createUser(String firstName, String lastName, String userName, String password) throws InvalidUserException, InvalidNameException;
 
@@ -25,13 +25,13 @@ public interface UserService {
 
     /**
      * Methode löscht einen User aus der Datenbank
-     * @param
+     * @param userid des Users
      */
     void removeUser(long userid);
 
     /**
      * Methode erzeugt eine Liste aller vorhandenen User
-     * @return
+     * @return gibt eine Liste aller User zurück
      */
     List<User> getAllExistingUser();
 
@@ -44,13 +44,20 @@ public interface UserService {
 
     /**
      * Methode erhöht die Anzahl der Spiele um 1
-     * @param userId - Id des Users
+     * @param userId Id des Users
      */
     void increaseTotalGames(long userId);
 
-
+    /**
+     * Methode erhöht die Anzahl der gewonnen Spiele um 1
+     * @param userId Id des Users
+     */
     void increaseGamesWon(long userId);
 
+    /**
+     * Methode erhöht die Anzahl der verlorenen Spiele um 1
+     * @param userId Id des Users
+     */
     void increaseGamesLost(long userId);
 
 
