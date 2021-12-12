@@ -16,9 +16,22 @@ public interface RoundService {
 
     void calculateRoundResults(Round round);
 
+    /**
+     * speichern einer Runde
+     * @param round
+     */
     void saveRound(Round round);
 
+    /**
+     * updaten einer Runde
+     * @param round
+     */
     void updateRound(Round round);
 
+    /**
+     * mischt die Antworten eines vocabSets für die Ausgabe auf der Gui, damit nicht immer die erste Antwort richtig ist.
+     * @param vocabSet
+     * @return
+     */
     List<String> mixAnswers(List<String> vocabSet);
 }
