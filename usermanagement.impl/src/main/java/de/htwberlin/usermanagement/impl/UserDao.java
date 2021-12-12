@@ -16,10 +16,6 @@ public interface UserDao {
 
     void removeUser(User user);
 
-    void checkingName(String name);
-
-    void checkingPassword(String password);
-
     List<User> getAllUser();
 
 }
