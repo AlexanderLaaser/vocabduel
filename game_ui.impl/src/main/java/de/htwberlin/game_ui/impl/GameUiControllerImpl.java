@@ -347,13 +347,13 @@ public class GameUiControllerImpl implements GameUiController {
                             game.getRounds().get(2).getWinningUser());
 
                     if (winningUser == 0) {
-                        gameUiView.printMessage("Its a tie");
+                        gameUiView.printMessage("Es ist ein Unentschieden zwischen den Spielern: " + game.getGamePartner().getUserName() + " und "+ game.getGameOwner().getUserName());
                     }
                     if (winningUser < 0) {
-                        gameUiView.printMessage("Winner of the game is Player2: " + game.getGamePartner().getUserName());
+                        gameUiView.printMessage("Gewinner des Spiels ist Spieler 2: " + game.getGamePartner().getUserName());
                     }
                     if (winningUser > 0) {
-                        gameUiView.printMessage("Winner of the game is Player 1: " + game.getGameOwner().getUserName());
+                        gameUiView.printMessage("Gewinner des Spiels ist Spieler 1: " + game.getGameOwner().getUserName());
                     }
 
                     gameService.updateGame(game);
