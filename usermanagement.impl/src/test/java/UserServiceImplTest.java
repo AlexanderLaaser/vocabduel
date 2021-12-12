@@ -16,27 +16,5 @@ public class UserServiceImplTest {
 
     private UserService userService;
 
-    @Before
-    public void setUp() {
-//        this.userService = new UserServiceImpl();
-    }
-
-
-    @Test
-    public void testGetUserByIdExist() throws InvalidNameException {
-        User testUser = userService.getUserById(25L);
-    }
-
-    @Test
-    public void testGetUserByIdNotExistant() throws InvalidNameException {
-        User testUser = userService.getUserById(100L);
-    }
-
-
-    @Test
-    public void testIncreaseTotalGames() throws  InvalidNameException {
-        userService.increaseTotalGames(30L);
-
-    }
 
 }
