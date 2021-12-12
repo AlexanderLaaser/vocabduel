@@ -7,4 +7,6 @@ public interface VocabItemDao {
     void saveVocabItem(VocabItem vocabitem);
 
     VocabItem getvocabItemById(Long vocabitemId);
+
+    VocabItem getvocabItemByName(String vocabName);
 }
