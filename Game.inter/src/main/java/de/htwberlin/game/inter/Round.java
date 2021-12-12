@@ -13,18 +13,25 @@ public class Round {
     private int roundID;
 
     @ElementCollection
-    private List<String> vocabSet;
+    private List<String> vocabSet1;
+    @ElementCollection
+    private List<String> vocabSet2;
+    @ElementCollection
+    private List<String> vocabSet3;
 
-    private int roundNumber;
     private int winningUser;
-    private String rightAnswer;
 
+    @ElementCollection
+    private List<String> rightAnswer;
+    @ElementCollection
+    private List<String> answerPlayer1;
+    @ElementCollection
+    private List<String> answerPlayer2;
 
-    private String answerPlayer1;
-    private String answerPlayer2;
-
-    public Round(List vocabSet) {
-        this.vocabSet = vocabSet;
+    public Round(List vocabSet1, List vocabSet2, List vocabSet3) {
+        this.vocabSet1 = vocabSet1;
+        this.vocabSet2 = vocabSet2;
+        this.vocabSet3 = vocabSet3;
     }
 
     public Round() {
@@ -35,9 +42,6 @@ public class Round {
         return roundID;
     }
 
-    public int getRoundNumber() {
-        return roundNumber;
-    }
 
     public int getWinningUser() {
         return winningUser;
@@ -47,43 +51,56 @@ public class Round {
         this.roundID = roundID;
     }
 
-    public void setRoundNumber(int roundNumber) {
-        this.roundNumber = roundNumber;
-    }
-
     public void setWinningUser(int winningUser) {
         this.winningUser = winningUser;
     }
 
-    public List<String> getVocabSet() {
-        return vocabSet;
+
+    public List<String> getVocabSet1() {
+        return vocabSet1;
     }
 
-    public void setVocabSet(ArrayList vocabSet) {
-        this.vocabSet = vocabSet;
+    public void setVocabSet1(List<String> vocabSet1) {
+        this.vocabSet1 = vocabSet1;
     }
 
-    public String getRightAnswer() {
+    public List<String> getVocabSet2() {
+        return vocabSet2;
+    }
+
+    public void setVocabSet2(List<String> vocabSet2) {
+        this.vocabSet2 = vocabSet2;
+    }
+
+    public List<String> getVocabSet3() {
+        return vocabSet3;
+    }
+
+    public void setVocabSet3(List<String> vocabSet3) {
+        this.vocabSet3 = vocabSet3;
+    }
+
+    public List<String> getRightAnswer() {
         return rightAnswer;
     }
 
-    public void setRightAnswer(String rightAnswer) {
+    public void setRightAnswer(List<String> rightAnswer) {
         this.rightAnswer = rightAnswer;
     }
 
-    public String getAnswerPlayer1() {
+    public List<String> getAnswerPlayer1() {
         return answerPlayer1;
     }
 
-    public void setAnswerPlayer1(String answertPlayer1) {
+    public void setAnswerPlayer1(List<String> answertPlayer1) {
         this.answerPlayer1 = answertPlayer1;
     }
 
-    public String getAnswerPlayer2() {
+    public List<String> getAnswerPlayer2() {
         return answerPlayer2;
     }
 
-    public void setAnswerPlayer2(String answertPlayer2) {
+    public void setAnswerPlayer2(List<String> answertPlayer2) {
         this.answerPlayer2 = answertPlayer2;
     }
 }

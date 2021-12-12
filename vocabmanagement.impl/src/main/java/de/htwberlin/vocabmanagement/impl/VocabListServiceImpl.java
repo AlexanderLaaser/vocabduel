@@ -135,18 +135,23 @@ public class VocabListServiceImpl implements VocabListService {
     @Override
     public Map<Integer, List<String>> createRandomVocabsets(Long listenId) throws InvalidListIdException {
         List<VocabItem> listOfVocabItems = getAllItemsInVocabList(listenId);
-        System.out.println(listOfVocabItems);
 
-        List<String> vocabSet1 = new ArrayList<>();;
+        List<String> vocabSet1 = new ArrayList<>();
         List<String> vocabSet2 = new ArrayList<>();
-        List<String> vocabSet3 = new ArrayList<>();;
+        List<String> vocabSet3 = new ArrayList<>();
+        List<String> vocabSet4 = new ArrayList<>();
+        List<String> vocabSet5 = new ArrayList<>();
+        List<String> vocabSet6 = new ArrayList<>();
+        List<String> vocabSet7 = new ArrayList<>();
+        List<String> vocabSet8 = new ArrayList<>();
+        List<String> vocabSet9 = new ArrayList<>();
 
         List<VocabItem> finalVocabSets = new ArrayList<>();
 
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < 9; j++) {
             //Anzahl verbleibender VokabelSets
             int possibleVocabSets = listOfVocabItems.size();
-            int randomItem = getRandomNumber(0,possibleVocabSets);
+            int randomItem = getRandomNumber(0, possibleVocabSets);
             finalVocabSets.add(listOfVocabItems.get(randomItem));
             listOfVocabItems.remove(randomItem);
         }
@@ -154,7 +159,7 @@ public class VocabListServiceImpl implements VocabListService {
         // und haben diese aus der Liste der anderen Vocabitems gelöscht,damit antworten nicht ausversehen richtig sind
 
         List<String> questions = new ArrayList<String>();
-        for(int i = 0; i<3;i++){
+        for(int i = 0; i<9;i++){
             String question = finalVocabSets.get(i).getFirstLanguage();
             questions.add(question);
         }
@@ -162,10 +167,16 @@ public class VocabListServiceImpl implements VocabListService {
         vocabSet1.add(questions.get(0));
         vocabSet2.add(questions.get(1));
         vocabSet3.add(questions.get(2));
+        vocabSet4.add(questions.get(3));
+        vocabSet5.add(questions.get(4));
+        vocabSet6.add(questions.get(5));
+        vocabSet7.add(questions.get(6));
+        vocabSet8.add(questions.get(7));
+        vocabSet9.add(questions.get(8));
         //alle Fragen hinzugefügt
 
         List<String> rightAnswers = new ArrayList<String>();
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 9; i++){
             List<String> tempAnswers = finalVocabSets.get(i).getSecLanguage();
             int randomAnswer = getRandomNumber(0, tempAnswers.size());
             String answer = tempAnswers.get(randomAnswer);
@@ -176,6 +187,12 @@ public class VocabListServiceImpl implements VocabListService {
         vocabSet1.add(rightAnswers.get(0));
         vocabSet2.add(rightAnswers.get(1));
         vocabSet3.add(rightAnswers.get(2));
+        vocabSet4.add(rightAnswers.get(3));
+        vocabSet5.add(rightAnswers.get(4));
+        vocabSet6.add(rightAnswers.get(5));
+        vocabSet7.add(rightAnswers.get(6));
+        vocabSet8.add(rightAnswers.get(7));
+        vocabSet9.add(rightAnswers.get(8));
         //Alle Antworten hinzugefügt
 
         List<String> allPossibleWrongTranslations = new ArrayList<>();
@@ -187,26 +204,38 @@ public class VocabListServiceImpl implements VocabListService {
             }
         }
 
-        for(int t = 0; t<3; t++){
-            int randomInt = getRandomNumber(0, allPossibleWrongTranslations.size());
-            vocabSet1.add(allPossibleWrongTranslations.get(randomInt));
-        }
-        for(int t = 0; t<3; t++){
-            int randomInt = getRandomNumber(0, allPossibleWrongTranslations.size());
-            vocabSet2.add(allPossibleWrongTranslations.get(randomInt));
-        }
-        for(int t = 0; t<3; t++){
-            int randomInt = getRandomNumber(0, allPossibleWrongTranslations.size());
-            vocabSet3.add(allPossibleWrongTranslations.get(randomInt));
-        }
+        vocabSet1 = addWrongToVocabSet(vocabSet1, allPossibleWrongTranslations);
+        vocabSet2 = addWrongToVocabSet(vocabSet2, allPossibleWrongTranslations);
+        vocabSet3 = addWrongToVocabSet(vocabSet3, allPossibleWrongTranslations);
+        vocabSet4 = addWrongToVocabSet(vocabSet4, allPossibleWrongTranslations);
+        vocabSet5 = addWrongToVocabSet(vocabSet5, allPossibleWrongTranslations);
+        vocabSet6 = addWrongToVocabSet(vocabSet6, allPossibleWrongTranslations);
+        vocabSet7 = addWrongToVocabSet(vocabSet7, allPossibleWrongTranslations);
+        vocabSet8 = addWrongToVocabSet(vocabSet8, allPossibleWrongTranslations);
+        vocabSet9 = addWrongToVocabSet(vocabSet9, allPossibleWrongTranslations);
+
         //alle falschen Übersetzungen in einer Liste
 
         Map<Integer, List<String>> vocabSetsForRounds = new HashMap<>();
         vocabSetsForRounds.put(0,vocabSet1);
         vocabSetsForRounds.put(1,vocabSet2);
         vocabSetsForRounds.put(2,vocabSet3);
+        vocabSetsForRounds.put(3,vocabSet4);
+        vocabSetsForRounds.put(4,vocabSet5);
+        vocabSetsForRounds.put(5,vocabSet6);
+        vocabSetsForRounds.put(6,vocabSet7);
+        vocabSetsForRounds.put(7,vocabSet8);
+        vocabSetsForRounds.put(8,vocabSet9);
 
         return vocabSetsForRounds;
+    }
+
+    private List<String> addWrongToVocabSet(List<String> vocabSet, List<String> allPossibleWrongTranslations) {
+        for(int t = 0; t<3; t++){
+            int randomInt = getRandomNumber(0, allPossibleWrongTranslations.size());
+            vocabSet.add(allPossibleWrongTranslations.get(randomInt));
+        }
+        return vocabSet;
     }
 
     @Override
@@ -218,7 +247,12 @@ public class VocabListServiceImpl implements VocabListService {
 
     public int getRandomNumber(int min, int max) {
         Random random = new Random();
-        int temp =random.nextInt(max - min) + min;
+        int temp = 0;
+        try{
+            temp =random.nextInt(max - min) + min;
+        }catch(Exception e){
+            System.out.println("Die Liste hat nicht genügend Einträge");
+        }
         return temp;
 
     }

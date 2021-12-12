@@ -22,13 +22,6 @@ public interface GameService {
     //create a Game with 2 existing Users and one VocabList
     Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException, InvalidListIdException;
 
-    /**
-     * Methode gibt Category ID einer Vocablist mit dem Category Namen des params categoryName
-     *
-     * @param categoryName - gesuchter Name der VocabList
-     * @return ID der VocabList mit dem Namen categoryName
-     */
-    int getVocabListByCategory(String categoryName);
 
     /**
      * Methode validiert übergebene User
@@ -41,13 +34,6 @@ public interface GameService {
     void validateUserMatch(Long userId1, Long userId2) throws InvalidUserException;
 
     /**
-     * Methode aktualisiert Spieler Daten nach einem Game
-     *
-     * @param userId - Id des zu aktualisierenden Nutzers
-     */
-    void updateUserDataAfterGame(Long userId);
-
-    /**
      * Methode berechnet den Gewinner
      *
 //     * @param winningUserRound1 - Winner Runde 1
@@ -58,12 +44,10 @@ public interface GameService {
     int calculateGameWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3);
 
     /**
-     * Methode erstellt eine LinkedHashmap von Übersetzungen aus mehreren Items die in diesem Spiel angezeigt werden
-     *
-     * @param anzahlRunden - Anzahl zu spielender Runden. Im Regelfall 3
-     * @return gibt eine LinkedHashmap zurück aus Key: Richtige Übersetzung Value; Array aus 3x falschen Übersetzung
+     * speichert existierendes Game in DB
+     * @param game
      */
-    Map<String, List<String>> generateCustomVocabSet(int anzahlRunden);
+    void updateGame(Game game);
 
     /**
      * Initialisiert Runden Objekt

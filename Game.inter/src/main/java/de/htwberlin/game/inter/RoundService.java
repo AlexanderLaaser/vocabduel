@@ -16,13 +16,9 @@ public interface RoundService {
 
     void calculateRoundResults(Round round);
 
-    Round createRound(ArrayList vocabSet);
-
     void saveRound(Round round);
 
     void updateRound(Round round);
 
-    void initNextQuestion(Round round);
-
-    List<String> mixAnswers(Round round);
+    List<String> mixAnswers(List<String> vocabSet);
 }
