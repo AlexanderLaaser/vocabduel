@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class GameUiControllerImpl implements GameUiController {
         String userUsername = gameUiView.askSomethingString("Wie lautet der Username des Spielers?");
         String userPassword = gameUiView.askSomethingString("Wie lautet das Passwort des Spielers?");
 
-        User registeredUser = userService.createUser(userFirstName,userLastName,userUsername,userPassword);
+        User registeredUser = userService.createUser(userFirstName, userLastName, userUsername, userPassword);
         gameUiView.printMessage("Die User ID des neuen Spielers lautet: " + registeredUser.getUserID().toString());
 
         return registeredUser;
@@ -117,7 +118,7 @@ public class GameUiControllerImpl implements GameUiController {
                     if (listAction == 1) {
                         try {
                             List<VocabList> listOfVocabList = vocabListService.getAllExistingVocabLists();
-                            if(!listOfVocabList.isEmpty()){
+                            if (!listOfVocabList.isEmpty()) {
                                 for (int i = 0; i < listOfVocabList.size(); i++) {
                                     VocabList vocabList = listOfVocabList.get(i);
                                     System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName() + " - Category: " + vocabList.getCategory().getCategoryName());
@@ -127,7 +128,7 @@ public class GameUiControllerImpl implements GameUiController {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
                         }
 
-                    //Vokabeln für bestehende Liste anzeigen (Input: ID)
+                        //Vokabeln für bestehende Liste anzeigen (Input: ID)
                     } else if (listAction == 2) {
                         Long listenIDShow = gameUiView.askSomethingLong("Welche Liste möchten sie anzeigen (Input = ListenID)?");
 
@@ -137,9 +138,9 @@ public class GameUiControllerImpl implements GameUiController {
                             for (VocabItem vocabItem : listOfVocabitems) {
                                 System.out.println("ItemId: " + vocabItem.getVocabItemID() + " - firstLanguage: " + vocabItem.getFirstLanguage() + " - secLanguage: " + vocabItem.getSecLanguage().toString());
                             }
-                        }catch (InvalidListIdException invalidListIdException){
+                        } catch (InvalidListIdException invalidListIdException) {
                             System.out.println(invalidListIdException.getMessage());
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
                         }
 
@@ -174,12 +175,12 @@ public class GameUiControllerImpl implements GameUiController {
                             String rightlan = gameUiView.askSomethingString("Bitte geben sie die Übersetzungen der Fremdsprache an (Bei mehreren getrennt durch ein Komma - X, Y)");
                             List<String> listOfRightLan = Arrays.asList(rightlan.split("\\s*,\\s*"));
 
-                            VocabItem vocabItem = vocabItemService.createVocabItem(leftlan,listOfRightLan);
-                            vocabListService.addItemToVocabList(vocabItem,listenId);
+                            VocabItem vocabItem = vocabItemService.createVocabItem(leftlan, listOfRightLan);
+                            vocabListService.addItemToVocabList(vocabItem, listenId);
 
-                        }catch (InvalidListIdException invalidListIdException){
+                        } catch (InvalidListIdException invalidListIdException) {
                             System.out.println(invalidListIdException.getMessage());
-                        }catch(Exception e) {
+                        } catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
                         }
 
@@ -188,9 +189,9 @@ public class GameUiControllerImpl implements GameUiController {
                         Long deleteAction = gameUiView.askSomethingLong("Welche Liste möchten sie löschen (Input = ListenID)?");
                         try {
                             vocabListService.deleteVocabListById(deleteAction);
-                        }catch (InvalidListIdException invalidUserException) {
+                        } catch (InvalidListIdException invalidUserException) {
                             System.out.println(invalidUserException.getMessage());
-                        }catch (Exception e) {
+                        } catch (Exception e) {
                             System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
                         }
 
@@ -299,8 +300,6 @@ public class GameUiControllerImpl implements GameUiController {
 
                     } else
                         gameUiView.printMessage("Sie haben leider zweimal die gleiche ID Eingegeben. Owner und Spielpartner müssen unterschiedliche User sein.");
-
-
                 }
 
                 //getUserbyID implem
@@ -316,9 +315,7 @@ public class GameUiControllerImpl implements GameUiController {
                         gameUiView.printMessage("Die Vokabelliste ist nicht in der Datenbank. Bitte gib eine andere ID ein.");
                         vocablistExist = true;
                     }
-
                 }
-
 
                 try {
                     gameUiView.printMessage("you creating a Game now.");
@@ -326,45 +323,18 @@ public class GameUiControllerImpl implements GameUiController {
                     //Game created Rounds are implemented
                     List<Round> rounds = game.getRounds();
 
-                    //Player 1 all Rounds
-                    for (int i = 0; i < 3; i++) {
+                    for(int i=0; i<3; i++){
+                        gameUiView.printMessage("Round: " + (i+1));
                         Round round = rounds.get(i);
-                        //set the right answer for the round
-                        round.setRightAnswer(round.getVocabSet().get(1));
-                        //mix all answers in vocabset
-                        List<String> vocabSet = roundService.mixAnswers(round);
-
-                        gameUiView.printMessage(
-                                "Frage: " + vocabSet.get(0) + "\n" +
-                                        "1: " + vocabSet.get(1) + " \t 2: " + vocabSet.get(2) + "\n" +
-                                        "3: " + vocabSet.get(3) + " \t 4: " + vocabSet.get(4)
-                        );
-                        String answer = vocabSet.get(gameUiView.askSomethingInt(
-                                "Was ist die richtige Antwort? 1, 2, 3 oder 4?"));
-                        round.setAnswerPlayer1(answer);
+                        playRound(round);
+                        gameService.updateGame(game);
                     }
 
-                    //Player 2 all Rounds
-                    gameUiView.printMessage("Player 2, its your turn!");
-                    for (int i = 0; i < 3; i++) {
-                        Round round = rounds.get(i);
-                        List<String> vocabSet = round.getVocabSet();
+                    int winningUser = gameService.calculateGameWinner(
+                            game.getRounds().get(0).getWinningUser(),
+                            game.getRounds().get(1).getWinningUser(),
+                            game.getRounds().get(2).getWinningUser());
 
-                        gameUiView.printMessage(
-                                "Frage: " + vocabSet.get(0) + "\n" +
-                                        "1: " + vocabSet.get(1) + " \t 2: " + vocabSet.get(2) + "\n" +
-                                        "3: " + vocabSet.get(3) + " \t 4: " + vocabSet.get(4)
-                        );
-
-                        round.setAnswerPlayer2(vocabSet.get(gameUiView.askSomethingInt(
-                                "Was ist die richtige Antwort? 1, 2, 3 oder 4?")));
-
-                        roundService.calculateRoundResults(round);
-                        roundService.updateRound(round);
-
-                    }
-                    int winningUser = gameService.calculateGameWinner(game.getRounds().get(0).getWinningUser(), game.getRounds().get(1).getWinningUser(), game.getRounds().get(2).getWinningUser());
-                    String nameWinner;
                     if (winningUser == 0) {
                         gameUiView.printMessage("Its a tie");
                     }
@@ -374,6 +344,9 @@ public class GameUiControllerImpl implements GameUiController {
                     if (winningUser > 0) {
                         gameUiView.printMessage("Winner of the game is Player 1: " + game.getGameOwner().getUserName());
                     }
+
+                    gameService.updateGame(game);
+
                 } catch (InvalidUserException | InvalidListIdException e) {
                     e.printStackTrace();
                 }
@@ -382,6 +355,58 @@ public class GameUiControllerImpl implements GameUiController {
             }
         }
 
+    }
+
+    private void playRound(Round round) {
+        //mix all answers in vocabset
+        List<String> vocabSet1 = round.getVocabSet1();
+        List<String> vocabSet2 = round.getVocabSet2();
+        List<String> vocabSet3 = round.getVocabSet3();
+
+        vocabSet1 = roundService.mixAnswers(vocabSet1);
+        vocabSet2 = roundService.mixAnswers(vocabSet2);
+        vocabSet3 = roundService.mixAnswers(vocabSet3);
+
+        //all Answers from Player1
+        List<String> answers = new ArrayList<>();
+        gameUiView.printMessage("Frage 1 Spieler 1");
+        answers.add(askQuestion(round, vocabSet1));
+        gameUiView.printMessage("Frage 2 Spieler 1");
+        answers.add(askQuestion(round, vocabSet2));
+        gameUiView.printMessage("Frage 3 Spieler 1");
+        answers.add(askQuestion(round, vocabSet3));
+
+        round.setAnswerPlayer1(answers);
+
+
+        //Player 2 Round 1
+        gameUiView.printMessage("Player 2, its your turn!");
+        //all Answers from Player1
+        List<String> answers2 = new ArrayList<>();
+
+        gameUiView.printMessage("Frage 1 Spieler 2");
+        answers2.add(askQuestion(round, vocabSet1));
+        gameUiView.printMessage("Frage  Spieler 2");
+        answers2.add(askQuestion(round, vocabSet2));
+        gameUiView.printMessage("Frage 3 Spieler 2");
+        answers2.add(askQuestion(round, vocabSet3));
+
+        round.setAnswerPlayer2(answers2);
+
+        roundService.calculateRoundResults(round);
+        roundService.updateRound(round);
+
+    }
+
+    private String askQuestion(Round round, List<String> vocabSet) {
+        gameUiView.printMessage(
+                "Frage: " + vocabSet.get(0) + "\n" +
+                        "1: " + vocabSet.get(1) + " \t 2: " + vocabSet.get(2) + "\n" +
+                        "3: " + vocabSet.get(3) + " \t 4: " + vocabSet.get(4)
+        );
+        String answer = vocabSet.get(gameUiView.askSomethingInt(
+                "Was ist die richtige Antwort? 1, 2, 3 oder 4?"));
+        return answer;
     }
 
 }

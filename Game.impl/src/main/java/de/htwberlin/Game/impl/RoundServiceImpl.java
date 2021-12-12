@@ -29,21 +29,51 @@ public class RoundServiceImpl implements RoundService {
     //0=tie 1= User1 wins 2= User2 wins
     @Override
     public void calculateRoundResults(Round round){
-        int winningUser = 0;
-        String answerPlayer1 = round.getAnswerPlayer1();
-        String answerPlayer2 = round.getAnswerPlayer2();
-        String rightAnswer = round.getRightAnswer();
 
-        if(answerPlayer1.equals(rightAnswer)){
-            if(answerPlayer2.equals(rightAnswer))
-                winningUser = 0;
-            else winningUser= 1;
-        }else{
-            if(answerPlayer2.equals(rightAnswer)) winningUser = 2;
+        List<String> answerPlayer1 = round.getAnswerPlayer1();
+        List<String> answerPlayer2 = round.getAnswerPlayer2();
+        List<String> rightAnswer = round.getRightAnswer();
+        List<Integer> roundWinnerTotal = new ArrayList<>();
+
+
+        for(int i = 0; i<3; i++){
+            int winningUser = 0;
+            if(answerPlayer1.get(i).equals(rightAnswer.get(i))){
+                if(answerPlayer2.get(i).equals(rightAnswer.get(i)))
+                    winningUser = 0;
+                else winningUser= 1;
+            }else{
+                if(answerPlayer2.get(i).equals(rightAnswer.get(i))) winningUser = 2;
+            }
+            roundWinnerTotal.add(winningUser);
         }
 
-        round.setWinningUser(winningUser);
+        int finalRoundWinner = 0;
+        finalRoundWinner = finalRoundWinner + addEndWinner(roundWinnerTotal.get(0));
+        finalRoundWinner = finalRoundWinner + addEndWinner(roundWinnerTotal.get(1));
+        finalRoundWinner = finalRoundWinner + addEndWinner(roundWinnerTotal.get(2));
+
+        int winner = 0;
+        if (finalRoundWinner == 0) {
+            winner = 0;
+        }
+        if (finalRoundWinner < 0) {
+            winner = 2;
+        }
+        if (finalRoundWinner > 0) {
+            winner = 1;
+        }
+
+        round.setWinningUser(winner);
     }
+
+    public int addEndWinner(int winningUser){
+        int winning = 0;
+        if(winningUser == 2) winning = -1;
+        if(winningUser == 1) winning = 1;
+        return winning;
+    }
+
 
     public void saveRound(Round round){
         TransactionStatus ts = transactionManager.getTransaction(null);
@@ -57,20 +87,7 @@ public class RoundServiceImpl implements RoundService {
     }
 
     @Override
-    public Round createRound(ArrayList vocabSet){
-        Round round = new Round(vocabSet);
-
-        return round;
-    }
-
-    @Override
-    public void initNextQuestion(Round round){
-
-    }
-
-    @Override
-    public java.util.List<String> mixAnswers(Round round){
-        List<String> vocabSet = round.getVocabSet();
+    public List<String> mixAnswers(List<String> vocabSet){
 
         ArrayList<String> answers = new ArrayList<String>(Arrays.asList(
                 vocabSet.get(1), vocabSet.get(2), vocabSet.get(3), vocabSet.get(4)));
