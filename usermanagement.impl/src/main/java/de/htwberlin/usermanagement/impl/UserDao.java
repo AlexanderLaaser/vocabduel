@@ -10,6 +10,8 @@ public interface UserDao {
 
     User getUserById(Long userId);
 
+    User getUserByUsername(String username);
+
     void increaseTotalGames(User user);
 
     void increaseGamesWon(User user);

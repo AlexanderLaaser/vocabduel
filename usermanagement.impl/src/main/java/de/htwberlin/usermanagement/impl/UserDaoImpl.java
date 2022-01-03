@@ -31,6 +31,19 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        TypedQuery<User> q = em.createQuery("SELECT u FROM User u WHERE u.userName=:username", User.class);
+        q.setParameter("username", username);
+        List<User> userResult = q.getResultList();
+        if (!userResult.isEmpty()) {
+            User user = userResult.get(0);
+            return user;
+        } else {
+            return null;
+        }
+    }
+
     public List<User> getAllUser() {
         TypedQuery<User> q = em.createQuery("SELECT u FROM User AS u", User.class);
         List<User> allUser = q.getResultList();

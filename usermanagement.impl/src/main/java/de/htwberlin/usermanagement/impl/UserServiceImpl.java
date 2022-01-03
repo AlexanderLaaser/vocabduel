@@ -50,6 +50,13 @@ public class UserServiceImpl implements UserService {
         transactionManager.commit(ts);
         return userWithID;
     }
+    @Override
+    public User getUserByUsername(String username) {
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        User userWithUsername = userDao.getUserByUsername(username);
+        transactionManager.commit(ts);
+        return userWithUsername;
+    }
 
 
     public List<User> getAllUser(){
