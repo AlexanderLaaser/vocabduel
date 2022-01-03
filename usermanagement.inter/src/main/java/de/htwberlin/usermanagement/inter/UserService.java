@@ -23,6 +23,8 @@ public interface UserService {
      */
     User getUserById(long userId);
 
+    User getUserByUsername(String username);
+
     /**
      * Methode löscht einen User aus der Datenbank
      * @param userid des Users

@@ -36,9 +36,9 @@ public interface GameService {
     /**
      * Methode berechnet den Gewinner
      *
-//     * @param winningUserRound1 - Winner Runde 1
-//     * @param winningUserRound2 - Winner Runde 1
-//     * @param winningUserRound3 - Winner Runde 1
+     * @param winningUserRound1 - Winner Runde 1
+     * @param winningUserRound2 - Winner Runde 1
+     * @param winningUserRound3 - Winner Runde 1
      * @return Winner ID
      */
     int calculateGameWinner(int winningUserRound1, int winningUserRound2, int winningUserRound3);

@@ -17,15 +17,12 @@ public class Game {
     private int gameID;
 
     @OneToOne
-    @JoinColumn(name = "`GameOwner`")
-    private User GameOwner;
+    private User gameOwner;
 
     @OneToOne
-    @JoinColumn(name = "GameParnter")
-    private User GamePartner;
+    private User gamePartner;
 
     @OneToOne
-    @JoinColumn(name = "Vocablist")
     private VocabList vocablist;
 
 //    @OneToOne
@@ -38,17 +35,12 @@ public class Game {
 
 
     @OneToMany
-    @JoinColumn(name="Round")
     private List<Round> rounds = new ArrayList<>();
 
     public Game(User gameOwner, User gamePartner, VocabList vocablist) {
-        GameOwner = gameOwner;
-        GamePartner = gamePartner;
+        this.gameOwner = gameOwner;
+        this.gamePartner = gamePartner;
         this.vocablist = vocablist;
-        if (this.rounds == null) {
-            this.rounds = new ArrayList<Round>();
-        }
-
     }
 
     public Game() {
@@ -72,19 +64,19 @@ public class Game {
     }
 
     public User getGameOwner() {
-        return GameOwner;
+        return gameOwner;
     }
 
     public void setGameOwner(User gameOwner) {
-        GameOwner = gameOwner;
+        this.gameOwner = gameOwner;
     }
 
     public User getGamePartner() {
-        return GamePartner;
+        return gamePartner;
     }
 
     public void setGamePartner(User gamePartner) {
-        GamePartner = gamePartner;
+        this.gamePartner = gamePartner;
     }
 
     public VocabList getVocablist() {
