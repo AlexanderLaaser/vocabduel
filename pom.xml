@@ -18,6 +18,7 @@
         <module>configuration_manager</module>
         <module>game_ui.inter</module>
         <module>game_ui.impl</module>
+        <module>vocabmanagement.controller</module>
     </modules>
 
     <dependencies>
