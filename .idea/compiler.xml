@@ -6,20 +6,39 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="App" />
         <module name="usermanagement.impl" />
         <module name="game.impl" />
         <module name="vocabduel.Game.inter" />
         <module name="vocabmanagement.inter" />
-        <module name="vocabmanagement.controller" />
         <module name="usermanagement.inter" />
         <module name="game_ui.inter" />
         <module name="game_ui.impl" />
         <module name="vocabmanagement.impl" />
         <module name="Game.impl" />
         <module name="Game.inter" />
-        <module name="configuration_manager" />
         <module name="vocabduel.Game.impl" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="configuration_manager" target="17" />
+      <module name="vocabmanagement.controller" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="App" options="-parameters" />
+      <module name="Game.impl" options="" />
+      <module name="Game.inter" options="" />
+      <module name="configuration_manager" options="" />
+      <module name="game_ui.impl" options="" />
+      <module name="game_ui.inter" options="" />
+      <module name="usermanagement.impl" options="" />
+      <module name="usermanagement.inter" options="" />
+      <module name="vocabduel" options="-parameters" />
+      <module name="vocabmanagement.controller" options="" />
+      <module name="vocabmanagement.impl" options="" />
+      <module name="vocabmanagement.inter" options="" />
+    </option>
   </component>
 </project>

@@ -15,10 +15,8 @@
         <module>usermanagement.inter</module>
         <module>game.impl</module>
         <module>game.inter</module>
-        <module>configuration_manager</module>
         <module>game_ui.inter</module>
         <module>game_ui.impl</module>
-        <module>vocabmanagement.controller</module>
     </modules>
 
     <dependencies>
@@ -54,14 +52,13 @@
             <version>1.0.2</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>5.3.7</version>
         </dependency>
-    </dependencies>
 
+    </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

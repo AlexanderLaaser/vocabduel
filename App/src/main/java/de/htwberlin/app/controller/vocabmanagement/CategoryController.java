@@ -1,4 +1,4 @@
-package de.htwberlin.vocabmanagement.controller;
+package de.htwberlin.app.controller.vocabmanagement;
 
 import de.htwberlin.vocabmanagement.inter.Category;
 import de.htwberlin.vocabmanagement.inter.CategoryService;
@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/category")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -22,8 +23,8 @@ public class CategoryController {
      * @return Category obj
      * @throws InvalidNameException
      */
-    @PostMapping("/category")
-    public Category newCategory(@RequestBody String categoryName) throws InvalidNameException {
+    @PostMapping(value = "/add")
+    public Category newCategory(@RequestParam String categoryName) throws InvalidNameException {
         return categoryService.createCategory(categoryName);
     }
 
@@ -33,8 +34,20 @@ public class CategoryController {
      * @param id
      * @return
      */
-    @GetMapping("/category/{id}")
+    @GetMapping("/id/{id}")
     public Category searchCategoryById(@PathVariable Long id){
         return categoryService.getCategoryById(id);
     }
+
+    /**
+     * GET: Get Category by Name
+     * @param name - of Category
+     * @return Category obj
+     */
+    @GetMapping("/name/{name}")
+    public Category searchCategoryByName(@PathVariable String name){
+        return categoryService.getCategoryByCategoryName(name);
+    }
+
+
 }

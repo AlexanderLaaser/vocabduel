@@ -42,6 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
         return category;
     }
 
+
+    //Todo: Eventuell noch Schleife anpassen -> Beispiel getVocabItemById
     @Override
     public Category getCategoryById(Long id) {
         TransactionStatus ts = transactionManager.getTransaction(null);

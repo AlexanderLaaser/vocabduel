@@ -53,10 +53,11 @@ public class VocabItemServiceImpl implements VocabItemService {
 
     @Override
     public VocabItem getVocabitemById(Long vocabItemId){
-        if(vocabItemDao.getvocabItemById(vocabItemId) == null){
+        if(vocabItemDao.getvocabItemById(vocabItemId) != null){
             VocabItem vocabItem = vocabItemDao.getvocabItemById(vocabItemId);
             return vocabItem;
         }else{
+            System.err.print("Fehler");
             return null;
         }
     }

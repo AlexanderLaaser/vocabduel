@@ -33,12 +33,6 @@ public class LanguageServiceImpl implements LanguageService {
         }else{
             return findLanguageByLanguageName(languageName);
         }
-      }
-
-    public void storeLanguage(Language language){
-        TransactionStatus ts = transactionManager.getTransaction(null);
-        languageDao.saveLanguage(language);
-        transactionManager.commit(ts);
     }
 
     @Override
@@ -48,6 +42,12 @@ public class LanguageServiceImpl implements LanguageService {
         transactionManager.commit(ts);
 
         return language;
+    }
+
+    public void storeLanguage(Language language){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        languageDao.saveLanguage(language);
+        transactionManager.commit(ts);
     }
 
     private void checkingLanguageName(String LanguageName) throws InvalidNameException {
