@@ -34,8 +34,9 @@ public class CategoryDaoImpl implements CategoryDao{
 
     @Override
     public Category getCategoryById(Long id) {
+        System.err.println(id);
         Category actualCategory = em.find(Category.class, id);
-
+        System.err.println(actualCategory.getClass());
         return actualCategory;
     }
 

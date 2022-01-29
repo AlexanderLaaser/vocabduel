@@ -10,12 +10,12 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/App/pom.xml" />
+        <option value="$PROJECT_DIR$/restApp/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/configuration_manager/pom.xml" />
-        <option value="$PROJECT_DIR$/vocabmanagement.controller/pom.xml" />
       </set>
     </option>
   </component>
