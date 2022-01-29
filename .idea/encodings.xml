@@ -2,16 +2,19 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/App/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/App/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Game.impl/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Game.inter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/controllertest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/configuration_manager/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/game_ui.impl/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/game_ui.inter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/restApp/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usermanagement.impl/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usermanagement.inter/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/vocabmanagement.controller/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/vocabmanagement.impl/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/vocabmanagement.inter/src/main/java" charset="UTF-8" />
   </component>
