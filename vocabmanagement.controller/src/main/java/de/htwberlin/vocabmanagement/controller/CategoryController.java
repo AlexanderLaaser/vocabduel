@@ -25,7 +25,7 @@ public class CategoryController {
      * @throws InvalidNameException
      */
     @PostMapping(value = "/add")
-    public Category newCategory(@RequestParam String categoryName) throws InvalidNameException {
+    public Category createCategory(@RequestParam String categoryName) throws InvalidNameException {
         return categoryService.createCategory(categoryName);
     }
 
@@ -36,7 +36,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/id/{id}")
-    public Category searchCategoryById(@PathVariable Long id){
+    public Category getCategoryById(@PathVariable Long id){
         return categoryService.getCategoryById(id);
     }
 
@@ -46,12 +46,7 @@ public class CategoryController {
      * @return Category obj
      */
     @GetMapping("/name/{name}")
-    public Category searchCategoryByName(@PathVariable String name){
+    public Category getCategoryByCategoryName(@PathVariable String name){
         return categoryService.getCategoryByCategoryName(name);
-    }
-
-    @GetMapping("/")
-    public String test(){
-        return "test";
     }
 }

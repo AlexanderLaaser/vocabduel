@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="App" />
         <module name="usermanagement.impl" />
-        <module name="restApp" />
         <module name="game.impl" />
         <module name="vocabduel.Game.inter" />
         <module name="vocabmanagement.inter" />
@@ -17,8 +16,10 @@
         <module name="game_ui.inter" />
         <module name="game_ui.impl" />
         <module name="vocabmanagement.impl" />
+        <module name="backend" />
         <module name="Game.impl" />
         <module name="Game.inter" />
+        <module name="frontend" />
         <module name="vocabduel.Game.impl" />
       </profile>
     </annotationProcessing>
@@ -33,10 +34,10 @@
       <module name="App" options="-parameters" />
       <module name="Game.impl" options="" />
       <module name="Game.inter" options="" />
+      <module name="backend" options="-parameters" />
       <module name="configuration_manager" options="" />
       <module name="game_ui.impl" options="" />
       <module name="game_ui.inter" options="" />
-      <module name="restApp" options="-parameters" />
       <module name="usermanagement.impl" options="" />
       <module name="usermanagement.inter" options="" />
       <module name="vocabduel" options="-parameters" />

@@ -17,8 +17,9 @@
         <module>game.inter</module>
         <module>game_ui.inter</module>
         <module>game_ui.impl</module>
-        <module>restApp</module>
+        <module>backend</module>
         <module>vocabmanagement.controller</module>
+        <module>frontend</module>
     </modules>
 
     <dependencies>
@@ -63,8 +64,8 @@
     </dependencies>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
 </project>

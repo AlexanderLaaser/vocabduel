@@ -8,9 +8,12 @@ import de.htwberlin.game_ui.inter.GameUiController;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
+import de.htwberlin.vocabmanagement.controller.CategoryController;
 import de.htwberlin.vocabmanagement.inter.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,16 +31,21 @@ public class GameUiControllerImpl implements GameUiController {
     private GameService gameService;
     private UserService userService;
     private RoundService roundService;
+    private CategoryController categoryController;
+
+    //List of API Calls
+    private static final String URI_LISTOFALLVOCABLISTS = "http://localhost:8080/vocablist/vocablists";
 
     public GameUiControllerImpl() {
         super();
     }
 
+    static RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     public GameUiControllerImpl(GameUiView gameuiView, VocabListService vocabListService, VocabItemService vocabItemService,
                                 LanguageService languageService, CategoryService categoryService, GameService gameService,
-                                UserService userService, RoundService roundService) {
+                                UserService userService, RoundService roundService, CategoryController categoryController) {
         super();
         this.gameUiView = gameuiView;
         this.vocabListService = vocabListService;
@@ -47,6 +55,7 @@ public class GameUiControllerImpl implements GameUiController {
         this.gameService = gameService;
         this.userService = userService;
         this.roundService = roundService;
+        this.categoryController = categoryController;
     }
 
     @Override
@@ -95,6 +104,19 @@ public class GameUiControllerImpl implements GameUiController {
         }
     }
 
+    /**
+     * Erste Test Klasse als Client Call der API
+     */
+    public static void TestMethodForCallingAllVocabLists(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> entity = new HttpEntity<>("parameters",headers);
+
+        ResponseEntity<String> result = restTemplate.exchange(URI_LISTOFALLVOCABLISTS, HttpMethod.GET, entity,String.class);
+        System.out.println(result);
+    }
+
    private void startVocabMenu(int listAction){
        gameUiView.printMessage("Willkommen in der Vokabelverwaltung:");
        while (listAction != 6) {
@@ -102,17 +124,18 @@ public class GameUiControllerImpl implements GameUiController {
 
            //Alle Vokabellisten anzeigen
            if (listAction == 1) {
-               try {
-                   List<VocabList> listOfVocabList = vocabListService.getAllExistingVocabLists();
-                   if (!listOfVocabList.isEmpty()) {
-                       for (int i = 0; i < listOfVocabList.size(); i++) {
-                           VocabList vocabList = listOfVocabList.get(i);
-                           System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName() + " - Category: " + vocabList.getCategory().getCategoryName());
-                       }
-                   }
-               } catch (Exception e) {
-                   System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
-               }
+               //try {
+//                   List<VocabList> listOfVocabList = vocabListService.getAllExistingVocabLists();
+//                   if (!listOfVocabList.isEmpty()) {
+//                       for (int i = 0; i < listOfVocabList.size(); i++) {
+//                           VocabList vocabList = listOfVocabList.get(i);
+//                           System.out.println("ID: " + vocabList.getListID() + " - firstLanguage: " + vocabList.getFirstLanguage().getLanguageName() + " - secLanguage: " + vocabList.getSecLanguage().getLanguageName() + " - Category: " + vocabList.getCategory().getCategoryName());
+//                       }
+//                   }
+                   TestMethodForCallingAllVocabLists();
+               //} catch (Exception e) {
+                   //System.out.println("Ein unerwarteter Fehler ist aufgetreten. Bitte kontaktieren Sie den Systemadministrator!");
+               //}
 
                //Vokabeln für bestehende Liste anzeigen (Input: ID)
            } else if (listAction == 2) {

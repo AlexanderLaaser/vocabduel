@@ -10,12 +10,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Game.impl</artifactId>
+    <artifactId>game.impl</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>de.htwberlin</groupId>
-            <artifactId>Game.inter</artifactId>
+            <artifactId>game.inter</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -48,7 +48,6 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.6.0.Final</version>
         </dependency>
-
     </dependencies>
 
 </project>
