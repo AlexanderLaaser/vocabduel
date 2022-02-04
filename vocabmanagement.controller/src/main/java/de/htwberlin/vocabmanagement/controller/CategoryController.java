@@ -6,7 +6,6 @@ import de.htwberlin.vocabmanagement.inter.InvalidNameException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
