@@ -25,15 +25,6 @@ public class AppConfig {
         return new JpaTransactionManager(emf);
     }
 
-    @Bean
-    public DataSource datasource() {
-        return DataSourceBuilder.create()
-                .driverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver")
-                .url("jdbc:sqlserver://localhost:1433")
-                .username("sa")
-                .password("Kbaislit123+")
-                .build();
-    }
 
 
 }
