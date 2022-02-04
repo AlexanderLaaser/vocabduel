@@ -43,7 +43,7 @@
         </dependency>
         <dependency>
             <groupId>de.htwberlin</groupId>
-            <artifactId>Game.inter</artifactId>
+            <artifactId>game.inter</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -62,7 +62,7 @@
         </dependency>
         <dependency>
             <groupId>de.htwberlin</groupId>
-            <artifactId>Game.impl</artifactId>
+            <artifactId>game.impl</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -70,6 +70,18 @@
             <groupId>de.htwberlin</groupId>
             <artifactId>usermanagement.impl</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.htwberlin</groupId>
+            <artifactId>vocabmanagement.controller</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.12</version>
             <scope>compile</scope>
         </dependency>
 

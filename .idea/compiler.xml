@@ -6,28 +6,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="App" />
         <module name="usermanagement.impl" />
-        <module name="restApp" />
         <module name="game.impl" />
         <module name="vocabduel.Game.inter" />
         <module name="vocabmanagement.inter" />
+        <module name="vocabmanagement.controller" />
         <module name="usermanagement.inter" />
         <module name="game_ui.inter" />
         <module name="game_ui.impl" />
         <module name="vocabmanagement.impl" />
+        <module name="backend" />
         <module name="Game.impl" />
         <module name="Game.inter" />
+        <module name="frontend" />
         <module name="vocabduel.Game.impl" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="App" target="17" />
-      <module name="backend" target="17" />
       <module name="configuration_manager" target="17" />
       <module name="controller" target="17" />
-      <module name="controllertest" target="17" />
       <module name="test" target="17" />
-      <module name="vocabmanagement.controller" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -37,10 +36,8 @@
       <module name="Game.inter" options="" />
       <module name="backend" options="-parameters" />
       <module name="configuration_manager" options="" />
-      <module name="controllertest" options="-parameters" />
       <module name="game_ui.impl" options="" />
       <module name="game_ui.inter" options="" />
-      <module name="restApp" options="-parameters" />
       <module name="usermanagement.impl" options="" />
       <module name="usermanagement.inter" options="" />
       <module name="vocabduel" options="-parameters" />

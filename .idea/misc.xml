@@ -9,16 +9,13 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/Backend/pom.xml" />
-        <option value="$PROJECT_DIR$/Backend/App/pom.xml" />
+        <option value="$PROJECT_DIR$/App/pom.xml" />
         <option value="$PROJECT_DIR$/restApp/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/configuration_manager/pom.xml" />
-        <option value="$PROJECT_DIR$/controller/pom.xml" />
-        <option value="$PROJECT_DIR$/test/pom.xml" />
       </set>
     </option>
   </component>
