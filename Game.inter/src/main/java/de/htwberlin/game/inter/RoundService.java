@@ -14,19 +14,19 @@ public interface RoundService {
      * @return integer contains the number of the winning Round User
      */
 
-    void calculateRoundResults(Round round);
+    Round calculateRoundResults(Round round);
 
     /**
      * speichern einer Runde
      * @param round
      */
-    void saveRound(Round round);
+    Round saveRound(Round round);
 
     /**
      * updaten einer Runde
      * @param round
      */
-    void updateRound(Round round);
+    Round updateRound(Round round);
     
     /**
      * mischt die Antworten eines vocabSets für die Ausgabe auf der Gui, damit nicht immer die erste Antwort richtig ist.
@@ -34,4 +34,6 @@ public interface RoundService {
      * @return
      */
     List<String> mixAnswers(List<String> vocabSet);
+
+    Round getRoundById(int roundId);
 }

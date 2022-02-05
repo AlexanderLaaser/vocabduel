@@ -5,9 +5,6 @@ import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.vocabmanagement.inter.InvalidListIdException;
 import de.htwberlin.vocabmanagement.inter.VocabList;
 
-import java.util.List;
-import java.util.Map;
-
 public interface GameService {
 
     /**
@@ -58,6 +55,10 @@ public interface GameService {
      * @return Runden Objekt
      */
     Game initRounds(Game game, int anzahlRunden, VocabList vocabList) throws InvalidListIdException;
+
+    void createGameController(int gameOwnerId, int gamePartnerId, int vocablistId) throws InvalidListIdException;
+
+    Game getGameById(int gameId);
 
 //    /**
 //     * berechnet den Gewinner durch ziehen der Rundengewinner und triggern der calculateTotalWinner() methode

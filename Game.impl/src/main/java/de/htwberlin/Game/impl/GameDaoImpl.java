@@ -2,6 +2,7 @@ package de.htwberlin.Game.impl;
 
 import de.htwberlin.game.inter.Game;
 import de.htwberlin.game.inter.Round;
+import de.htwberlin.vocabmanagement.inter.Category;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -39,10 +40,15 @@ public class GameDaoImpl implements GameDao{
     }
 
     @Override
-    public Game getGameById(Long gameId){
-        TypedQuery<Game> g = (TypedQuery<Game>) em.createQuery("SELECT g.gameId FROM Game g WHERE g.gameID like: gameId ");
-        g.setParameter("gameId", gameId);
-        Game game = g.getSingleResult();
+    public Game getGameById(int id){
+//        TypedQuery<Game> g = (TypedQuery<Game>) em.createQuery("SELECT g.gameId FROM Game g WHERE g.gameID like: gameId ");
+//        g.setParameter("gameId", gameId);
+//        Game game = g.getSingleResult();
+
+        System.err.println(id);
+        Game game = em.find(Game.class, id);
+        System.err.println(game.getClass());
+
         return game;
     }
 }
