@@ -28,7 +28,7 @@ public class RoundServiceImpl implements RoundService {
     //calculates the Winner of the Round and gives back a Integer
     //0=tie 1= User1 wins 2= User2 wins
     @Override
-    public void calculateRoundResults(Round round){
+    public Round calculateRoundResults(Round round){
 
         List<String> answerPlayer1 = round.getAnswerPlayer1();
         List<String> answerPlayer2 = round.getAnswerPlayer2();
@@ -65,6 +65,7 @@ public class RoundServiceImpl implements RoundService {
         }
 
         round.setWinningUser(winner);
+        return round;
     }
 
     public int addEndWinner(int winningUser){
@@ -75,15 +76,17 @@ public class RoundServiceImpl implements RoundService {
     }
 
 
-    public void saveRound(Round round){
+    public Round saveRound(Round round){
         TransactionStatus ts = transactionManager.getTransaction(null);
         roundDao.saveRound(round);
         transactionManager.commit(ts);
+        return round;
     }
-    public void updateRound(Round round){
+    public Round updateRound(Round round){
         TransactionStatus ts = transactionManager.getTransaction(null);
         roundDao.updateRound(round);
         transactionManager.commit(ts);
+        return round;
     }
 
     @Override
@@ -105,4 +108,14 @@ public class RoundServiceImpl implements RoundService {
         }
         return vocabSet;
     }
+
+    @Override
+    public Round getRoundById(int roundId){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        Round round = roundDao.getRoundById(roundId);
+        transactionManager.commit(ts);
+
+        return round;
+    }
+
 }

@@ -29,10 +29,13 @@ public class RoundDaoImpl implements RoundDao{
     }
 
     @Override
-    public Round getRoundById(Long roundId){
-        TypedQuery<Round> r = (TypedQuery<Round>) em.createQuery("SELECT r.roundId FROM Round r WHERE r.roundId like: roundId ");
-        r.setParameter("roundId", roundId);
-        Round round = r.getSingleResult();
+    public Round getRoundById(int id){
+//        TypedQuery<Round> r = (TypedQuery<Round>) em.createQuery("SELECT r.roundId FROM Round r WHERE r.roundId like: roundId ");
+//        r.setParameter("roundId", roundId);
+//        Round round = r.getSingleResult();
+        System.err.println(id);
+        Round round = em.find(Round.class, id);
+        System.err.println(round.getClass());
         return round;
     }
 

@@ -373,8 +373,6 @@ public class GameUiControllerImpl implements GameUiController {
        }
    }
 
-
-
     private void playRound(Round round) {
         //mix all answers in vocabset
         List<String> vocabSet1 = round.getVocabSet1();

@@ -21,6 +21,7 @@
         <module name="Game.inter" />
         <module name="frontend" />
         <module name="vocabduel.Game.impl" />
+        <module name="game.controller" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

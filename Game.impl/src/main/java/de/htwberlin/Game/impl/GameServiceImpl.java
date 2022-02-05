@@ -6,13 +6,20 @@ import de.htwberlin.game.inter.Round;
 import de.htwberlin.usermanagement.inter.InvalidUserException;
 import de.htwberlin.usermanagement.inter.User;
 import de.htwberlin.usermanagement.inter.UserService;
-import de.htwberlin.vocabmanagement.inter.*;
+import de.htwberlin.vocabmanagement.inter.InvalidListIdException;
+import de.htwberlin.vocabmanagement.inter.VocabList;
+import de.htwberlin.vocabmanagement.inter.VocabListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -21,28 +28,30 @@ public class GameServiceImpl implements GameService {
     private PlatformTransactionManager transactionManager;
     private RoundDao roundDao;
     private VocabListService vocabListService;
-    private  UserService uService;
+    private UserService uService;
 
     @Autowired
     public GameServiceImpl(GameDao gameDao, PlatformTransactionManager transactionManager, RoundDao roundDao,
-                            VocabListService vocabListService) {
+                            VocabListService vocabListService, UserService uService) {
         super();
         this.gameDao = gameDao;
         this.transactionManager = transactionManager;
         this.roundDao = roundDao;
         this.vocabListService = vocabListService;
+        this.uService = uService;
     }
 
     @Override
     public Game createGame(User gameOwner, User gamePartner, VocabList vocabList) throws InvalidUserException, InvalidListIdException {
 
         Game game = new Game(gameOwner, gamePartner, vocabList);
-
         game = initRounds(game, 9, vocabList);
 
-        TransactionStatus ts = transactionManager.getTransaction(null);
-        gameDao.saveGame(game);
-        transactionManager.commit(ts);
+        addGame(gameOwner, gamePartner, vocabList);
+
+//        TransactionStatus ts = transactionManager.getTransaction(null);
+//        gameDao.saveGame(game);
+//        transactionManager.commit(ts);
         return game;
 
     }
@@ -105,5 +114,55 @@ public class GameServiceImpl implements GameService {
         if(winningUser == 2) winning = -1;
         if(winningUser == 1) winning = 1;
         return winning;
+    }
+
+    public void addGame(User gameOwner, User gamePartner, VocabList vocablist ){
+        //List of API Calls
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        Long gameOwnerId =gameOwner.getUserID();
+        Long gamePartnerId = gamePartner.getUserID();
+        Long vocablistId = vocablist.getListID();
+
+        final String finalURL = "http://localhost:8080/game/add/" +
+                gameOwnerId.toString() + "/" +
+                gamePartnerId.toString() + "/" +
+                vocablistId.toString();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        HttpEntity<String> entity = new HttpEntity<>("parameters",headers);
+
+        ResponseEntity<String> result = restTemplate.exchange(finalURL, HttpMethod.POST, entity,String.class);
+        System.out.println(result);
+
+    }
+
+    @Override
+    public Game getGameById(int gameId){
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        Game game = gameDao.getGameById(gameId);
+        transactionManager.commit(ts);
+
+        return game;
+    }
+
+    @Override
+    public void createGameController(int gameOwnerId, int gamePartnerId, int vocabListId) throws InvalidListIdException {
+
+        Long gameOwnerId2 = Long.valueOf(gameOwnerId);
+        Long gamePartnerId2 = Long.valueOf(gamePartnerId);
+        Long vocabListId2 = Long.valueOf(vocabListId);
+
+        VocabList vocablist = vocabListService.getVocabListByID(vocabListId2);
+        Game game = new Game(uService.getUserById(gameOwnerId2), uService.getUserById(gamePartnerId2), vocablist);
+        game = initRounds(game, 9, vocablist);
+
+        TransactionStatus ts = transactionManager.getTransaction(null);
+        gameDao.saveGame(game);
+        transactionManager.commit(ts);
+
     }
 }

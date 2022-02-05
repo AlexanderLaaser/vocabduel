@@ -13,7 +13,7 @@ public interface RoundDao {
     void updateRound(Round round);
 
     @Transactional
-    public Round getRoundById(Long roundId);
+     Round getRoundById(int roundId);
 
     @Transactional
     public void deleteRound(Round round);

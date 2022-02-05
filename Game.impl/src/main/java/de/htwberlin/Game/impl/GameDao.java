@@ -16,5 +16,5 @@ public interface GameDao {
     public void deleteGame(Game game);
 
     @Transactional
-    public Game getGameById(Long gameId);
+    public Game getGameById(int gameId);
 }
