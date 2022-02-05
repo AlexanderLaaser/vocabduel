@@ -36,6 +36,4 @@ public class GameController {
         return gameService.getGameById(id);
     }
 
-
-
 }
