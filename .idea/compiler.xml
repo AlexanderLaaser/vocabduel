@@ -21,12 +21,12 @@
         <module name="Game.inter" />
         <module name="frontend" />
         <module name="vocabduel.Game.impl" />
-        <module name="game.controller" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="configuration_manager" target="17" />
       <module name="controller" target="17" />
+      <module name="game.controller" target="17" />
       <module name="restApp" target="17" />
       <module name="test" target="17" />
     </bytecodeTargetLevel>
