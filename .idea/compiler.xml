@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="App" />
         <module name="usermanagement.impl" />
+        <module name="restApp" />
         <module name="game.impl" />
         <module name="vocabduel.Game.inter" />
         <module name="vocabmanagement.inter" />
@@ -21,14 +22,18 @@
         <module name="Game.inter" />
         <module name="frontend" />
         <module name="vocabduel.Game.impl" />
+        <module name="game.controller" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="configuration_manager" target="17" />
       <module name="controller" target="17" />
-      <module name="game.controller" target="17" />
-      <module name="restApp" target="17" />
+      <module name="game.rest_server" target="17" />
       <module name="test" target="17" />
+      <module name="usermanagement.rest_client" target="17" />
+      <module name="usermanagement.rest_server" target="17" />
+      <module name="vocabmanagement.rest_client" target="17" />
+      <module name="vocabmanagement.rest_server" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -40,6 +45,7 @@
       <module name="configuration_manager" options="" />
       <module name="game_ui.impl" options="" />
       <module name="game_ui.inter" options="" />
+      <module name="restApp" options="-parameters" />
       <module name="usermanagement.impl" options="" />
       <module name="usermanagement.inter" options="" />
       <module name="vocabduel" options="-parameters" />
